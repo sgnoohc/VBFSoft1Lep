@@ -68,6 +68,9 @@ int MT2TREELOOPER(TChain* chain, bool isSignal, TString output_name, int nevents
   // Save plots
   PlotUtil::savePlots(h_1d, output_name+".root");
 
+  // Fun exit
+  PrintUtilities::exit();
+
   return 0;
 
 }

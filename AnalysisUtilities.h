@@ -86,6 +86,7 @@ namespace AnalysisUtilities
     TObjArrayIter* file_iter = 0;
     TStopwatch timer;
     int bar_id = 0;
+    int print_rate = 432;
 
     void loadFileIter();
     void loadTotalNEvents();

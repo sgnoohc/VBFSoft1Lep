@@ -122,8 +122,8 @@ namespace AnalysisUtilities
     {
       if (!is_error)
         return;
+      //exit();
       print("ERROR - "+msg+", exiting.\n");
-      exit();
       abort();
     }
 
@@ -317,8 +317,8 @@ namespace AnalysisUtilities
     void resetLoopCondition(TChain* chain, int nevents)
     {
       setCurrentTChain(chain);
-      setMaxNEvents(nevents);
       loadTotalNEvents();
+      setMaxNEvents(nevents);
       loadListOfFiles();
       loadFileIter();
       resetCurrentTTreeEventIndex();
@@ -341,7 +341,7 @@ namespace AnalysisUtilities
     //
     void loadFileIter()
     {
-      PrintUtilities::print("LoopUtilities::loadFileIter() loaded file iterator from list of input files");
+      //PrintUtilities::print("LoopUtilities::loadFileIter() loaded file iterator from list of input files");
       if (!list_of_input_files)
         loadListOfFiles();
       file_iter = new TObjArrayIter(list_of_input_files);
@@ -460,14 +460,14 @@ namespace AnalysisUtilities
     //################################################################################################
     void resetCurrentTTreeEventIndex()
     {
-      PrintUtilities::print("LoopUtilities::resetCurrentTTreeEventIndex(): set current ttree event index to 0");
+      //PrintUtilities::print("LoopUtilities::resetCurrentTTreeEventIndex(): set current ttree event index to 0");
       current_ttree_event_index = 0;
     }
 
     //################################################################################################
     void resetTotalNEventsProcessed()
     {
-      PrintUtilities::print("LoopUtilities::TotalNEventsProcessed(): set total nevents processed to 0");
+      //PrintUtilities::print("LoopUtilities::resetTotalNEventsProcessed(): set total nevents processed to 0");
       total_nevents_processed = 0;
     }
 
@@ -486,28 +486,28 @@ namespace AnalysisUtilities
     //################################################################################################
     void setCurrentTChain(TChain* chain)
     {
-      PrintUtilities::print("LoopUtilities::setCurrentTChain(): set current tchain");
+      //PrintUtilities::print("LoopUtilities::setCurrentTChain(): set current tchain");
       current_tchain = chain;
     }
 
     //################################################################################################
     void setCurrentTFile(TFile* file)
     {
-      PrintUtilities::print("LoopUtilities::setCurrentTFile(): set current tfile");
+      //PrintUtilities::print("LoopUtilities::setCurrentTFile(): set current tfile");
       current_tfile = file;
     }
 
     //################################################################################################
     void setCurrentTFileByPath(const char* path)
     {
-      PrintUtilities::print("LoopUtilities::setCurrentTFileByPath(): set current tfile");
+      //PrintUtilities::print("LoopUtilities::setCurrentTFileByPath(): set current tfile");
       current_tfile = new TFile(path);
     }
 
     //################################################################################################
     void setCurrentTTree(TTree* tree)
     {
-      PrintUtilities::print("LoopUtilities::setCurrentTTree(): set current ttree");
+      //PrintUtilities::print("LoopUtilities::setCurrentTTree(): set current ttree");
       current_ttree = tree;
     }
 
@@ -517,13 +517,16 @@ namespace AnalysisUtilities
       PrintUtilities::print(
         TString::Format("LoopUtilities::setMaxNEvents(): set max events to %d", nevents).Data()
       );
-      max_nevents = nevents;
+      if (nevents < 0)
+        max_nevents = total_nevents;
+      else
+        max_nevents = nevents;
     }
 
     //################################################################################################
     void loadListOfFiles()
     {
-      PrintUtilities::print("LoopUtilities::loadListOfFiles(): loaded list of files");
+      //PrintUtilities::print("LoopUtilities::loadListOfFiles(): loaded list of files");
       list_of_input_files = getCurrentTChain()->GetListOfFiles();
     }
 
@@ -540,12 +543,12 @@ namespace AnalysisUtilities
         totalN = 20;
 
       // Progress bar
-      if (entry%432 == 0)
+      if (entry%print_rate == 0)
       {
 
         // sanity check
         if (entry+1 > totalN)
-          PrintUtilities::error("Total number of events processed went over max allowed!\nCheck your loop boundary conditions!!");
+          PrintUtilities::error("Total number of events processed went over max allowed! Check your loop boundary conditions!!");
 
         int nbars = entry/(totalN/20);
         Double_t elapsed = timer.RealTime();
@@ -561,6 +564,8 @@ namespace AnalysisUtilities
         Int_t seconds = input_seconds % secs_to_min;
         Int_t minutes = input_seconds / secs_to_min % mins_in_hour;
         Int_t hours   = input_seconds / secs_to_min / mins_in_hour;
+
+        print_rate = (int) (rate/4.);
 
         printf("\r");
         if (bar_id%4 == 3) printf("-");
