@@ -5,8 +5,8 @@
 // found on file: signal.root
 //////////////////////////////////////////////////////////
 
-#ifndef MT2TreeSig_h
-#define MT2TreeSig_h
+#ifndef MT2Tree_h
+#define MT2Tree_h
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -14,7 +14,7 @@
 
 // Header file for the classes stored in the TTree if any.
 
-class MT2TreeSig {
+class MT2Tree {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
@@ -683,8 +683,8 @@ public :
    TBranch        *b_genTop_pt;   //!
    TBranch        *b_genTbar_pt;   //!
 
-   MT2TreeSig(TTree *tree=0);
-   virtual ~MT2TreeSig();
+   MT2Tree(TTree *tree=0);
+   virtual ~MT2Tree();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);

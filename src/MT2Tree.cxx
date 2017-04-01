@@ -1,9 +1,9 @@
-#include "MT2TreeSig.h"
+#include "MT2Tree.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 
-MT2TreeSig::MT2TreeSig(TTree *tree) : fChain(0) 
+MT2Tree::MT2Tree(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
@@ -18,19 +18,19 @@ MT2TreeSig::MT2TreeSig(TTree *tree) : fChain(0)
    Init(tree);
 }
 
-MT2TreeSig::~MT2TreeSig()
+MT2Tree::~MT2Tree()
 {
    if (!fChain) return;
    delete fChain->GetCurrentFile();
 }
 
-Int_t MT2TreeSig::GetEntry(Long64_t entry)
+Int_t MT2Tree::GetEntry(Long64_t entry)
 {
 // Read contents of entry.
    if (!fChain) return 0;
    return fChain->GetEntry(entry);
 }
-Long64_t MT2TreeSig::LoadTree(Long64_t entry)
+Long64_t MT2Tree::LoadTree(Long64_t entry)
 {
 // Set the environment to read one entry
    if (!fChain) return -5;
@@ -43,7 +43,7 @@ Long64_t MT2TreeSig::LoadTree(Long64_t entry)
    return centry;
 }
 
-void MT2TreeSig::Init(TTree *tree)
+void MT2Tree::Init(TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -391,7 +391,7 @@ void MT2TreeSig::Init(TTree *tree)
    Notify();
 }
 
-Bool_t MT2TreeSig::Notify()
+Bool_t MT2Tree::Notify()
 {
    // The Notify() function is called when a new file is opened. This
    // can be either for a new TTree in a TChain or when when a new TTree
@@ -402,14 +402,14 @@ Bool_t MT2TreeSig::Notify()
    return kTRUE;
 }
 
-void MT2TreeSig::Show(Long64_t entry)
+void MT2Tree::Show(Long64_t entry)
 {
 // Print contents of entry.
 // If entry is not specified, print current entry
    if (!fChain) return;
    fChain->Show(entry);
 }
-Int_t MT2TreeSig::Cut(Long64_t entry)
+Int_t MT2Tree::Cut(Long64_t entry)
 {
 // This function may be called from Loop.
 // returns  1 if entry is accepted.
@@ -417,11 +417,11 @@ Int_t MT2TreeSig::Cut(Long64_t entry)
    return 1;
 }
 
-void MT2TreeSig::Loop()
+void MT2Tree::Loop()
 {
 //   In a ROOT session, you can do:
-//      root> .L MT2TreeSig.C
-//      root> MT2TreeSig t
+//      root> .L MT2Tree.C
+//      root> MT2Tree t
 //      root> t.GetEntry(12); // Fill t data members with entry number 12
 //      root> t.Show();       // Show values of entry 12
 //      root> t.Show(16);     // Read and show values of entry 16

@@ -74,19 +74,19 @@ namespace AnalysisUtilities
   {
 
     // Total number of events in the input
-    unsigned int max_nevents = 0;
-    unsigned int total_nevents = 0;
-    unsigned int current_ttree_max_nevents = 0;
-    unsigned int current_ttree_event_index = 0;
-    unsigned int total_nevents_processed = 0;
-    TObjArray* list_of_input_files = 0;
-    TChain* current_tchain = 0;
-    TFile* current_tfile = 0;
-    TTree* current_ttree = 0;
-    TObjArrayIter* file_iter = 0;
-    TStopwatch timer;
-    int bar_id = 0;
-    int print_rate = 432;
+    extern unsigned int max_nevents;
+    extern unsigned int total_nevents;
+    extern unsigned int current_ttree_max_nevents;
+    extern unsigned int current_ttree_event_index;
+    extern unsigned int total_nevents_processed;
+    extern TObjArray* list_of_input_files;
+    extern TChain* current_tchain;
+    extern TFile* current_tfile;
+    extern TTree* current_ttree;
+    extern TObjArrayIter* file_iter;
+    extern TStopwatch my_timer;
+    extern int bar_id;
+    extern int print_rate;
 
     void loadFileIter();
     void loadTotalNEvents();

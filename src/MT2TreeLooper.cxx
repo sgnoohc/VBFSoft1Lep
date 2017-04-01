@@ -8,7 +8,7 @@
 //===============================================================================================
 // Main Loop
 //
-int MT2TREELOOPER(TChain* chain, bool isSignal, TString output_name, int nevents)
+int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 {
 
   // histograms
@@ -25,7 +25,7 @@ int MT2TREELOOPER(TChain* chain, bool isSignal, TString output_name, int nevents
   {
 
     // Load the Class
-    MT2TREECLASS MT2TREE(LoopUtilities::getCurrentTTree());
+    MT2Tree mt2tree(LoopUtilities::getCurrentTTree());
 
     // Loop over the TTree
     while (LoopUtilities::nextEvent())
@@ -34,16 +34,16 @@ int MT2TREELOOPER(TChain* chain, bool isSignal, TString output_name, int nevents
         break;
 
       // Load MT2Trees
-      MT2TREE.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
-      MT2TREE.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
+      mt2tree.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
+      mt2tree.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
 
       // Event variables
       float evt_scale1fb;
-      evt_scale1fb = MT2TREE.evt_scale1fb;
+      evt_scale1fb = mt2tree.evt_scale1fb;
 
       // Multiplicity variables
       int nlep;
-      nlep = MT2TREE.nlep;
+      nlep = mt2tree.nlep;
 
       int nsoftlep = 0;
 
@@ -51,7 +51,7 @@ int MT2TREELOOPER(TChain* chain, bool isSignal, TString output_name, int nevents
       for (int ilep = 0; ilep < 4; ++ilep)
       {
         if (nlep > ilep)
-          if (MT2TREE.lep_pt[ilep] < 20.)
+          if (mt2tree.lep_pt[ilep] < 20.)
             nsoftlep++;
       }
 

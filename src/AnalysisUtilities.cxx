@@ -237,6 +237,21 @@ namespace AnalysisUtilities
   namespace LoopUtilities
   {
 
+    // Total number of events in the input
+    unsigned int max_nevents               = 0;
+    unsigned int total_nevents             = 0;
+    unsigned int current_ttree_max_nevents = 0;
+    unsigned int current_ttree_event_index = 0;
+    unsigned int total_nevents_processed   = 0;
+    TObjArray* list_of_input_files         = 0;
+    TChain* current_tchain                 = 0;
+    TFile* current_tfile                   = 0;
+    TTree* current_ttree                   = 0;
+    TObjArrayIter* file_iter               = 0;
+    TStopwatch my_timer;
+    int bar_id                             = 0;
+    int print_rate                         = 432;
+
     //################################################################################################
     // Get current ttree from the current file
     //
@@ -551,7 +566,7 @@ namespace AnalysisUtilities
           PrintUtilities::error("Total number of events processed went over max allowed! Check your loop boundary conditions!!");
 
         int nbars = entry/(totalN/20);
-        Double_t elapsed = timer.RealTime();
+        Double_t elapsed = my_timer.RealTime();
         Double_t rate;
         if (elapsed!=0)
           rate = entry / elapsed;
@@ -585,7 +600,7 @@ namespace AnalysisUtilities
         fflush(stdout);
       }
       else if ( entry == totalN - 1 ) {
-        Double_t elapsed = timer.RealTime();
+        Double_t elapsed = my_timer.RealTime();
         Double_t rate;
         if (elapsed!=0)
           rate = entry / elapsed;
@@ -612,7 +627,7 @@ namespace AnalysisUtilities
         printf("\n");
       }
 
-      timer.Start(kFALSE);
+      my_timer.Start(kFALSE);
     }
 
     //################################################################################################
@@ -620,7 +635,7 @@ namespace AnalysisUtilities
     //
     void initProgressBar()
     {
-      timer.Start();
+      my_timer.Start();
       bar_id = 0;
     }
   }

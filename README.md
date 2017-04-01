@@ -3,6 +3,15 @@
 
 Repository to study VBF soft 1 lep analysis possibility.
 
+### To run the code
+
+Set up vanilla ROOT (tested with 6.06)
+
+    sh scripts/link_input_files.sh
+    make clean
+    make
+    sh scripts/xargs_run.sh
+
 ### Ntuples
 
 Slightly outdated MT2 soft lepton ntuples.

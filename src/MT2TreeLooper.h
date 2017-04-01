@@ -14,12 +14,12 @@
 
 // AnalysisUtilties
 #include "AnalysisUtilities.h"
-using namespace AnalysisUtilities;
 
 // VBF SUSY analysis headers
-#include "MT2TreeBkg.h"
-#include "MT2TreeSig.h"
+#include "MT2Tree.h"
 
-int MT2TREELOOPER(TChain* chain, bool isSignal, TString output_name, int nEvents);
+using namespace AnalysisUtilities;
+
+int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
 
 #endif
