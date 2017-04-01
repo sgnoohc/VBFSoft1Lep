@@ -5,7 +5,9 @@ Repository to study VBF soft 1 lep analysis possibility.
 
 ### To run the code
 
-Set up vanilla ROOT (tested with 6.06)
+Must be ran on uaf as it uses input ntuples from uaf.
+
+Set up vanilla ROOT (tested with 6.06).
 
     sh scripts/link_input_files.sh
     make clean
