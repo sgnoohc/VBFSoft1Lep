@@ -316,7 +316,6 @@ namespace AnalysisUtilities
     //
     void resetLoopCondition(TChain* chain, int nevents)
     {
-      PrintUtilities::announce("reset loop condition");
       setCurrentTChain(chain);
       setMaxNEvents(nevents);
       loadTotalNEvents();
@@ -543,6 +542,11 @@ namespace AnalysisUtilities
       // Progress bar
       if (entry%432 == 0)
       {
+
+        // sanity check
+        if (entry+1 > totalN)
+          PrintUtilities::error("Total number of events processed went over max allowed!\nCheck your loop boundary conditions!!");
+
         int nbars = entry/(totalN/20);
         Double_t elapsed = timer.RealTime();
         Double_t rate;
