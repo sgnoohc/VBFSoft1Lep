@@ -46,6 +46,7 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
       nlep = mt2tree.nlep;
 
       int nsoftlep = 0;
+      int nhardlep = 0;
 
       // Plotting integrated lepPt
       for (int ilep = 0; ilep < 4; ++ilep)
@@ -53,6 +54,9 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
         if (nlep > ilep)
           if (mt2tree.lep_pt[ilep] < 20.)
             nsoftlep++;
+        if (nlep > ilep)
+          if (mt2tree.lep_pt[ilep] > 20.)
+            nhardlep++;
       }
 
       // Cutflow
@@ -60,7 +64,10 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 
       // Plots
       PlotUtil::plot1D("nlep"    , nlep    , evt_scale1fb, h_1d, "nlep"    , 4, 0, 4);
-      PlotUtil::plot1D("nsoftlep", nsoftlep, evt_scale1fb, h_1d, "nsoftlep", 4, 0, 4);
+      if (nhardlep == 0)
+        PlotUtil::plot1D("nsoftlep", nsoftlep, evt_scale1fb, h_1d, "nsoftlep", 4, 0, 4);
+      else
+        PlotUtil::plot1D("nsoftlep", 0, evt_scale1fb, h_1d, "nsoftlep", 4, 0, 4);
     }
 
   }
