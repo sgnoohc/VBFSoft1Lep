@@ -62,12 +62,16 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
       // Cutflow
       if (true)     PlotUtil::plot1D("cutflow", 0, evt_scale1fb, h_1d, "cutflow", 20, 0, 20);
 
+      if (mt2tree.met_pt<200.)
+        continue;
+
       // Plots
       PlotUtil::plot1D("nlep"    , nlep    , evt_scale1fb, h_1d, "nlep"    , 4, 0, 4);
+      PlotUtil::plot1D("nsoftlep", nsoftlep, evt_scale1fb, h_1d, "nsoftlep", 4, 0, 4);
       if (nhardlep == 0)
-        PlotUtil::plot1D("nsoftlep", nsoftlep, evt_scale1fb, h_1d, "nsoftlep", 4, 0, 4);
+        PlotUtil::plot1D("nonlysoftlep", nsoftlep, evt_scale1fb, h_1d, "nonlysoftlep", 4, 0, 4);
       else
-        PlotUtil::plot1D("nsoftlep", 0, evt_scale1fb, h_1d, "nsoftlep", 4, 0, 4);
+        PlotUtil::plot1D("nonlysoftlep", 0, evt_scale1fb, h_1d, "nonlysoftlep", 4, 0, 4);
     }
 
   }

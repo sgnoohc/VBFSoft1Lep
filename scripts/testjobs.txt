@@ -1,3 +1,4 @@
+./susyvbf signal.root testsig &> hist_signal.log
 ./susyvbf softLep-v3_V00-01-10_25ns_miniaodv2/dyjetsll_ht100to200.root              output/hist_dyjetsll_ht100to200.root                    &> output/hist_dyjetsll_ht100to200.log
 ./susyvbf softLep-v3_V00-01-10_25ns_miniaodv2/dyjetsll_ht200to400.root              output/hist_dyjetsll_ht200to400.root                    &> output/hist_dyjetsll_ht200to400.log
 ./susyvbf softLep-v3_V00-01-10_25ns_miniaodv2/dyjetsll_ht400to600.root              output/hist_dyjetsll_ht400to600.root                    &> output/hist_dyjetsll_ht400to600.log
