@@ -16,7 +16,8 @@ else
   LINEWIDTH=2
 fi
 
-python ~/login/python/scripts/makeplot.py \
+#python ~/login/python/scripts/makeplot.py \
+python scripts/makeplot.py \
   --plottype plot1d \
   --plotname ~/public_html/test \
   --sighist 'haddoutput/hist_signal.root            ::: '$1' ::: SetLineColor=>2 , SetLineWidth=>2 , SetName=>signal%l, Scale=>'$SIGSCALE'' \
