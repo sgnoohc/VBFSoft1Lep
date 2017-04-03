@@ -15,6 +15,7 @@ Set up vanilla ROOT (tested with 6.06).
     sh scripts/xargs_run.sh
     sh scripts/hadd.sh
     ls haddoutput/* # to see the outputs
+    sh scripts/plot.sh cutflow # to create cutflow plot to ~/public_html/test.pdf
 
 ### Ntuples
 
