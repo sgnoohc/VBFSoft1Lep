@@ -1,3 +1,8 @@
+// vim: tabstop=2:softtabstop=2:shiftwidth=2:expandtab
+
+//  .
+// ..: P. Chang, philip@physics.ucsd.edu
+
 #ifndef SUSYVBF_H
 #define SUSYVBF_H
 
@@ -10,3 +15,4 @@
 #include "MT2TreeLooper.h"
 
 #endif
+//eof
