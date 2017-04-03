@@ -20,6 +20,8 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
   // Set configurations for event looping
   LoopUtilities::resetLoopCondition(chain, nevents);
 
+  // Parse output name to obtain mass values of interest
+
   // Loop over file:ttree -> and loop over events in ttree
   while (LoopUtilities::nextFileAndLoadTTreeWithName("mt2")) // two parantheses to suppress warning
   {
