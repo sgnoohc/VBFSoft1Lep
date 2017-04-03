@@ -1,4 +1,4 @@
-cores=77
+cores=20
 mkdir -p output
 sh scripts/link_input_files.sh
 xargs --arg-file=scripts/jobs.txt \

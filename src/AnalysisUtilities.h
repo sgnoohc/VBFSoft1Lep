@@ -79,6 +79,7 @@ namespace AnalysisUtilities
     extern unsigned int current_ttree_max_nevents;
     extern unsigned int current_ttree_event_index;
     extern unsigned int total_nevents_processed;
+    extern double fraction_of_booked_nevents;
     extern TObjArray* list_of_input_files;
     extern TChain* current_tchain;
     extern TFile* current_tfile;
@@ -96,6 +97,7 @@ namespace AnalysisUtilities
     TChain* getCurrentTChain();
     int getCurrentTTreeEventIndex();
     void setCurrentTTreeMaxNEvents();
+    void setFractionOfBookedNEvents();
     bool nextFile();
     bool nextFileAndLoadTTreeWithName(const char* treename);
     void resetLoopCondition(TChain* chain, int nevents = -1);
@@ -117,6 +119,8 @@ namespace AnalysisUtilities
     void resetPreviousFile();
     void printProgressBar();
     void initProgressBar();
+    void loadFractionOfBookedNEvents();
+    double getFractionOfBookedNEvents();
   }
 
   //#################################################################################################

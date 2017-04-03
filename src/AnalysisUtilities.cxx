@@ -243,6 +243,7 @@ namespace AnalysisUtilities
     unsigned int current_ttree_max_nevents = 0;
     unsigned int current_ttree_event_index = 0;
     unsigned int total_nevents_processed   = 0;
+    double fraction_of_booked_nevents      = 1;
     TObjArray* list_of_input_files         = 0;
     TChain* current_tchain                 = 0;
     TFile* current_tfile                   = 0;
@@ -334,6 +335,7 @@ namespace AnalysisUtilities
       setCurrentTChain(chain);
       loadTotalNEvents();
       setMaxNEvents(nevents);
+      loadFractionOfBookedNEvents();
       loadListOfFiles();
       loadFileIter();
       resetCurrentTTreeEventIndex();
@@ -529,13 +531,21 @@ namespace AnalysisUtilities
     //################################################################################################
     void setMaxNEvents(int nevents)
     {
-      PrintUtilities::print(
-        TString::Format("LoopUtilities::setMaxNEvents(): set max events to %d", nevents).Data()
-      );
       if (nevents < 0)
+      {
+        PrintUtilities::print(TString::Format("LoopUtilities::setMaxNEvents(): The requested nevents < 0. Set max events to %d", total_nevents).Data());
         max_nevents = total_nevents;
+      }
+      else if (nevents > (int) total_nevents)
+      {
+        PrintUtilities::print(TString::Format("LoopUtilities::setMaxNEvents(): The requested nevents > total_nevents. Set max events to %d", total_nevents).Data());
+        max_nevents = total_nevents;
+      }
       else
+      {
+        PrintUtilities::print(TString::Format("LoopUtilities::setMaxNEvents(): set max events to %d", nevents).Data());
         max_nevents = nevents;
+      }
     }
 
     //################################################################################################
@@ -637,6 +647,23 @@ namespace AnalysisUtilities
     {
       my_timer.Start();
       bar_id = 0;
+    }
+
+    //################################################################################################
+    // compute fraction of booked events
+    //
+    void loadFractionOfBookedNEvents()
+    {
+      fraction_of_booked_nevents = ((double) max_nevents) / ((double) total_nevents);
+      PrintUtilities::print(TString::Format("LoopUtilities::loadFractionOfBookedNEvents(): fraction_of_booked_nevents = %.2f percent", (fraction_of_booked_nevents*100.)).Data());
+    }
+
+    //################################################################################################
+    // Return the fraction of number of events being processed
+    //
+    double getFractionOfBookedNEvents()
+    {
+      return fraction_of_booked_nevents;
     }
   }
 
