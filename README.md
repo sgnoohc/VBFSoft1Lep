@@ -11,8 +11,10 @@ Set up vanilla ROOT (tested with 6.06).
 
     sh scripts/link_input_files.sh
     make clean
-    make
+    make -j4
     sh scripts/xargs_run.sh
+    sh scripts/hadd.sh
+    ls haddoutput/* # to see the outputs
 
 ### Ntuples
 
