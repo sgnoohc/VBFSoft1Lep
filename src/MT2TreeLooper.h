@@ -25,6 +25,8 @@
 
 using namespace AnalysisUtilities;
 
+VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree(MT2Tree& mt2tree);
+VBFSUSYUtilities::Jets getJetsFromMT2Tree(MT2Tree& mt2tree);
 int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
 
 #endif

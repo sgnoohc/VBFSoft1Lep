@@ -670,19 +670,30 @@ class HistogramPainter:
             latex.SetTextAlign(10)
             latex.DrawLatexNDC(self.args.plotlabelXcoord,self.args.plotlabelYcoord,self.args.plotlabel)
         if self.args.draw_cms_logo:
-            latex.SetTextFont(62)
-            latex.SetTextSize(0.062*self.args.labeltextsize)
-            latex.SetTextAlign(11)
-            latex.DrawLatexNDC(self.args.labelXcoord,self.args.labelYcoord,'CMS')
-            latex.SetTextFont(52)
-            latex.SetTextSize(0.062*self.args.labeltextsize)
-            latex.SetTextAlign(11)
-            latex.DrawLatexNDC(self.args.labelXcoordInternal,self.args.labelYcoord,'internal')
 
+
+            #latex.SetTextFont(62)
+            #latex.SetTextSize(0.062*self.args.labeltextsize)
+            #latex.SetTextAlign(11)
+            #latex.DrawLatexNDC(self.args.labelXcoord,self.args.labelYcoord,'CMS')
+            #latex.SetTextFont(52)
+            #latex.SetTextSize(0.062*self.args.labeltextsize)
+            #latex.SetTextAlign(11)
+            #latex.DrawLatexNDC(self.args.labelXcoordInternal,self.args.labelYcoord,'internal')
+            #latex.SetTextFont(42)
+            #latex.SetTextSize(0.062*self.args.labeltextsize)
+            #latex.SetTextAlign(11)
+            #latex.DrawLatexNDC(self.args.labelXcoordLumi,self.args.labelYcoordLumi,'36 fb^{-1} (13 TeV)')
+
+            # no "CMS blah" at all
             latex.SetTextFont(42)
             latex.SetTextSize(0.062*self.args.labeltextsize)
             latex.SetTextAlign(11)
-            latex.DrawLatexNDC(self.args.labelXcoordLumi,self.args.labelYcoordLumi,'36 fb^{-1} (13 TeV)')
+            latex.DrawLatexNDC(self.args.labelXcoord-0.035,self.args.labelYcoord+0.01,'36 fb^{-1} (13 TeV)')
+
+
+
+
 
             ##tf2 = ROOT.TF1('fit', 'TMath::Voigt(TMath::Abs(x-[0]),[1],[2])*[3]+pol1(4)', 80., 100.)
             #tf2 = ROOT.TF1('fit', 'TMath::Voigt(TMath::Abs(x-[0]),[1],[2])*[3]', 85., 95.)

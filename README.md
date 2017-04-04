@@ -27,7 +27,7 @@ Mark Derdzinsky has a new version somewhere.
 
 One signal sample can be found here:
 
-    /home/users/phchang/analyses/vbfsusysoft1lep/analysis/VBFSoft1Lep/signal.root
+    /home/users/phchang/analyses/vbfsusysoft1lep/samples/miniaod/*/*.root
 
 To produce the above signal sample the following were used
 

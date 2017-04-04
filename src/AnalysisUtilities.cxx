@@ -767,6 +767,145 @@ namespace AnalysisUtilities
     }
   }
 
+  //#################################################################################################
+  //
+  //
+  // VBF SUSY study utilities
+  //
+  //
+  //#################################################################################################
+  namespace VBFSUSYUtilities
+  {
+
+    double mC1_event = 0;
+    double mN2_event = 0;
+    double mN1_event = 0;
+
+    Leptons selected_leptons;
+    Jets    selected_jets;
+
+    //################################################################################################
+    void setMC1(double mC1) { mC1_event = mC1; }
+    void setMN2(double mN2) { mN2_event = mN2; }
+    void setMN1(double mN1) { mN1_event = mN1; }
+    double getMC1() { return mC1_event; }
+    double getMN2() { return mN2_event; }
+    double getMN1() { return mN1_event; }
+
+    //################################################################################################
+    // Parse the generator particles pdgId and status to read the masses and set it to member variable
+    //
+    void parseEwkinoMasses(int ngen, int* gen_pdgId, int* gen_status, float* gen_mass)
+    {
+
+      // parse the ewkino masses
+      setMC1(0);
+      setMN2(0);
+      setMN1(0);
+
+      // If signal sample by checking whether the output name contains "sig"
+      for (int igen = 0; igen < ngen; ++igen)
+      {
+        if (abs(gen_pdgId[igen]) == 1000024 && gen_status[igen] == 22) setMC1(gen_mass[igen]);
+        if (abs(gen_pdgId[igen]) == 1000023 && gen_status[igen] == 22) setMN2(gen_mass[igen]);
+        if (abs(gen_pdgId[igen]) == 1000022 && gen_status[igen] == 23) setMN1(gen_mass[igen]);
+      }
+
+      return;
+    }
+
+    //################################################################################################
+    // Create the mass suffix for the ewkino spectrum
+    //
+    TString getMassSuffixTString()
+    {
+      return TString::Format("_%.1f_%.1f_%.1f", mC1_event, mN2_event, mN1_event).Data();
+    }
+
+    //################################################################################################
+    // return a new name with suffix attached.
+    //
+    TString getNameWithMassSuffix(TString name)
+    {
+      return (name + getMassSuffixTString()).Data();
+    }
+
+    //################################################################################################
+    // Clear leptons
+    //
+    void resetSelectedLeptons()
+    {
+      selected_leptons.clear();
+    }
+
+    //################################################################################################
+    // Add leptons
+    //
+    void addLepton(Lepton lepton)
+    {
+      selected_leptons.push_back(lepton);
+    }
+
+    //################################################################################################
+    // Is good lepton
+    //
+    bool isGoodLepton(Lepton lepton)
+    {
+      bool fail = false;
+      if ( !(lepton.lep_pt >= 5.) ) fail |= true;
+      if ( !(lepton.lep_pt < 20.) ) fail |= true;
+      return ( !fail );
+    }
+
+    //################################################################################################
+    // Select leptons
+    //
+    void selectGoodLeptons(Leptons leptons)
+    {
+      resetSelectedLeptons();
+      for (auto& lep: leptons)
+        if (isGoodLepton(lep))
+          addLepton(lep);
+    }
+
+    //################################################################################################
+    // Clear jets
+    //
+    void resetSelectedJets()
+    {
+      selected_jets.clear();
+    }
+
+    //################################################################################################
+    // Add jets
+    //
+    void addJet(Jet jet)
+    {
+      selected_jets.push_back(jet);
+    }
+
+    //################################################################################################
+    // Is good jet
+    //
+    bool isGoodJet(Jet jet)
+    {
+      bool fail = false;
+      if ( !(jet.jet_pt > 20.) ) fail |= true;
+      return ( !fail );
+    }
+
+    //################################################################################################
+    // Select jets
+    //
+    void selectGoodJets(Jets jets)
+    {
+      resetSelectedJets();
+      for (auto& jet: jets)
+        if (isGoodJet(jet))
+          addJet(jet);
+    }
+  }
+
 }
 
 

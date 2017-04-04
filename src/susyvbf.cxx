@@ -12,14 +12,16 @@ int main(int argc, char* argv[])
   {
     PrintUtilities::print("Usage:");
     PrintUtilities::print("");
-    PrintUtilities::print("        ./susyvbf INPUT_FILE_PATH OUTPUT.root [MAXEVENTS]");
+    PrintUtilities::print("        ./susyvbf INPUT_FILE_PATH OUTPUT.root [MAXEVENTS]  # the last three argument must be provided at the same time");
     PrintUtilities::print("");
     PrintUtilities::error("Please check your arguement!");
   }
 
   const char* input_file_path = argv[1];
   const char* output_file_path = argv[2];
+
   int max_nevents = -1;
+  // When 4 arguments are provided
   if (argc == 4)
     max_nevents = atoi(argv[3]);
 
