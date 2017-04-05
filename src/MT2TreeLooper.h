@@ -27,29 +27,42 @@ using namespace AnalysisUtilities;
 
 int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
 
+// Looping over events
 void loop();
 void beforeLoop(TChain* chain, TString output_name, int nevents);
 void afterLoop();
 
+// Reading MT2Tree
 VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree();
 VBFSUSYUtilities::Jets getJetsFromMT2Tree();
 void initMT2Tree();
 void loadMT2TreeEvent();
-void processMT2TreeEvent();
 
+// Processing MT2Tree events
+void processMT2TreeEvent();
 void parseEwkinoMasses();
 void selectObjects();
 void selectLeptons();
 void selectJets();
+void loadScale1fb();
 
 // variables
 namespace Vbf {
+
+  // Analysis level variables
   extern bool is_signal;
   extern TString output_name;
   extern PlotUtil::Hist1D_DB h_1d;
+
+  // Event data
   extern MT2Tree mt2tree;
+  extern float evt_scale1fb;
+
+  // Objects
   extern VBFSUSYUtilities::Leptons mt2leptons;
   extern VBFSUSYUtilities::Jets mt2jets;
+
+
 }
 
 #endif

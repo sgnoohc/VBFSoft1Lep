@@ -179,6 +179,7 @@ namespace AnalysisUtilities
       float lep_ptRel;
       int   lep_tightIdNoIso;
       float lep_sip3d;
+      TLorentzVector p4;
     };
     typedef std::vector<Lepton> Leptons;
     extern Leptons selected_leptons;
@@ -204,6 +205,7 @@ namespace AnalysisUtilities
       float jet_area;
       int   jet_id;
       int   jet_puId;
+      TLorentzVector p4;
     };
     typedef std::vector<Jet> Jets;
     extern Jets selected_jets;
@@ -211,6 +213,16 @@ namespace AnalysisUtilities
     void addJet(Jet jet);
     bool isGoodJet(Jet jet);
     void selectGoodJets(Jets jets);
+
+    int getNSelectedJets();
+    Jet getLeadingVBFJet();
+    Jet getSubleadingVBFJet();
+
+    bool hasVBFJets();
+    bool isCenJet(Jet jet);
+    bool doesCenJetsExist();
+    float getVBFDeltaEta();
+    float getVBFMjj();
   }
 }
 

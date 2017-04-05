@@ -904,6 +904,91 @@ namespace AnalysisUtilities
         if (isGoodJet(jet))
           addJet(jet);
     }
+
+    //################################################################################################
+    // get number of selected jets
+    //
+    int getNSelectedJets()
+    {
+      return selected_jets.size();
+    }
+
+    //################################################################################################
+    // has VBF jets
+    //
+    bool hasVBFJets()
+    {
+      if (getNSelectedJets() < 2)
+        return false;
+      else
+        return true;
+    }
+
+    //################################################################################################
+    // get leading VBF jet
+    Jet getLeadingVBFJet()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getLeadingVBFJet() asked to retrieve leading vbf jet when the event does not even have >=2 n selected jets.");
+      return selected_jets.at(0);
+    }
+
+    //################################################################################################
+    // get subleading VBF jet
+    Jet getSubleadingVBFJet()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getSubleadingVBFJet() asked to retrieve subleading vbf jet when the event does not even have >=2 n selected jets.");
+      return selected_jets.at(1);
+    }
+
+    //################################################################################################
+    // Is this jet a central jet
+    //
+    bool isCenJet(Jet jet)
+    {
+      // case 1: if n(selected_jets) < 3, the question doesn't even make sense. return false.
+      if (getNSelectedJets() < 3)
+        return false;
+      // case 2: check against the two leading jet
+      return (
+              (getLeadingVBFJet   ().p4.Eta() - jet.p4.Eta())*
+              (getSubleadingVBFJet().p4.Eta() - jet.p4.Eta())
+             ) < 0;
+    }
+
+    //################################################################################################
+    // Does central jet exists between the two leading jets
+    //
+    bool doesCenJetsExist()
+    {
+      for (unsigned int ijet = 2; ijet < selected_jets.size(); ++ijet)
+        if (isCenJet(selected_jets.at(ijet)))
+          return true;
+      return false;
+    }
+
+    //################################################################################################
+    // compute VBF Delta Eta variable
+    //
+    float getVBFDeltaEta()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getVBFDeltaEta() asked to compute delta eta but does not have vbf jets");
+      return fabs(getLeadingVBFJet().p4.Eta() - getSubleadingVBFJet().p4.Eta());
+    }
+
+    //################################################################################################
+    // compute VBF Delta Eta variable
+    //
+    float getVBFMjj()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getVBFMjj() asked to compute Mjj but does not have VBF jets");
+      return (getLeadingVBFJet().p4 + getSubleadingVBFJet().p4).M();
+    }
+
+
   }
 
 }
