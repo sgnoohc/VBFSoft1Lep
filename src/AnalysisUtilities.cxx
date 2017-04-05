@@ -906,12 +906,13 @@ namespace AnalysisUtilities
       bool fail = false;
       if ( !(lepton.lep_pt >= 5.) ) fail |= true;
       if ( !( (abs(lepton.lep_pdgId) == 11) && (fabs(lepton.lep_eta) < 2.5) ) ) fail |= true;
-      if ( !( (abs(lepton.lep_pdgId) == 13) && (fabs(lepton.lep_eta) < 2.4) ) ) fail |= true;
-      if ( !( fabs(lepton.lep_sip3d) < 2.                                   ) ) fail |= true;
-      if ( !( fabs(lepton.lep_dxy)   < 0.01                                 ) ) fail |= true;
-      if ( !( fabs(lepton.lep_dz)    < 0.01                                 ) ) fail |= true;
-      if ( !( fabs(lepton.lep_relIso03) < 0.5                               ) ) fail |= true;
+      //if ( !( (abs(lepton.lep_pdgId) == 13) && (fabs(lepton.lep_eta) < 2.4) ) ) fail |= true;
+      //if ( !( fabs(lepton.lep_sip3d) < 2.                                   ) ) fail |= true;
+      //if ( !( fabs(lepton.lep_dxy)   < 0.01                                 ) ) fail |= true;
+      //if ( !( fabs(lepton.lep_dz)    < 0.01                                 ) ) fail |= true;
+      //if ( !( fabs(lepton.lep_relIso03) < 0.5                               ) ) fail |= true;
       // abs iso missing?
+      std::cout << " " << fail << std::endl;
       return ( !fail );
     }
 

@@ -201,6 +201,7 @@ void selectLeptons()
   VBFSUSYUtilities::Leptons mt2tree_leptons = getLeptonsFromMT2Tree();
   VBFSUSYUtilities::selectVBFLeptons(mt2tree_leptons);
   VBFSUSYUtilities::selectISRLeptons(mt2tree_leptons);
+  VBFSUSYUtilities::selectGoodLeptons(mt2tree_leptons);
 
 }
 
