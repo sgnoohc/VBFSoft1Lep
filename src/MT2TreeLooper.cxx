@@ -5,69 +5,60 @@
 
 #include "MT2TreeLooper.h"
 
-//===============================================================================================
+//##################################################################################################
 // Main Loop
 //
 int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 {
 
-  // histograms
-  PlotUtil::Hist1D_DB h_1d;
-
-  // Fun start
+  //=================================================================
+  // BEFORE LOOP
+  //=================================================================
+  // Fun start ASCII art
   PrintUtilities::start();
 
-  // Set configurations for event looping
+  // Initialize configurations for event looping
   LoopUtilities::resetLoopCondition(chain, nevents);
 
-  // Parse output name to obtain mass values of interest
 
+
+  //=================================================================
+  // LOOP
+  //=================================================================
   // Loop over file:ttree -> and loop over events in ttree
-  while (LoopUtilities::nextFileAndLoadTTreeWithName("mt2")) // two parantheses to suppress warning
+  // (usually I only have one file each.. so kinda redundant)
+  while (LoopUtilities::nextFileAndLoadTTreeWithName("mt2"))
   {
 
-    // Load the Class
-    MT2Tree mt2tree(LoopUtilities::getCurrentTTree());
+    initMT2Tree();
 
     // Loop over the TTree
     while (LoopUtilities::nextEvent())
     {
 
-      // If required events are processed break the loop
-      if (LoopUtilities::isAllEventsProcessed())
-        break;
+      if (LoopUtilities::isAllEventsProcessed()) break;
 
-      // Load MT2Trees
-      mt2tree.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
-      mt2tree.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
+      loadMT2TreeEvent();
 
-      // Event variables
-      float evt_scale1fb;
-      evt_scale1fb = mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
+      //=================================================================
+      //
+      // <3 of the code
+      // Do whatever you want to in the following function for each event
+      //
+      //
+      //=================================================================
+      // pass a bool whether output name has "sig" or not
+      processMT2TreeEvent(output_name.Contains("sig"));
 
-      // Parse the ewkino mass
-      if (output_name.Contains("sig"))
-        VBFSUSYUtilities::parseEwkinoMasses(mt2tree.ngenStat23,
-                                            mt2tree.genStat23_pdgId,
-                                            mt2tree.genStat23_status,
-                                            mt2tree.genStat23_mass);
+    } // End TTree loop
 
-      // histogram names
-      TString cutflow_name = "cutflow";
-      if (output_name.Contains("sig"))
-        cutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(cutflow_name);
+  } // End Loop over files
 
-      PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, h_1d, cutflow_name.Data(), 50, 0, 50);
 
-      // Select leptons
-      VBFSUSYUtilities::Leptons mt2leptons = getLeptonsFromMT2Tree(mt2tree);
-      VBFSUSYUtilities::selectGoodLeptons(mt2leptons);
 
-      PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, h_1d, cutflow_name.Data(), 50, 0, 50);
-    }
-
-  }
-
+  //=================================================================
+  // AFTER LOOP
+  //=================================================================
   // Save plots
   PlotUtil::savePlots(h_1d, output_name+".root");
 
@@ -78,6 +69,62 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 
 }
 
+
+
+//--------------------====================--------------------====================--------------------
+//
+//--------------------====================--------------------====================--------------------
+//
+//--------------------====================--------------------====================--------------------
+
+
+
+
+
+
+//##################################################################################################
+void processMT2TreeEvent(bool is_signal)
+{
+  // Event variables
+  float evt_scale1fb;
+  evt_scale1fb = mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
+
+  // Parse the ewkino mass
+  if (is_signal)
+    VBFSUSYUtilities::parseEwkinoMasses(mt2tree.ngenStat23,
+                                        mt2tree.genStat23_pdgId,
+                                        mt2tree.genStat23_status,
+                                        mt2tree.genStat23_mass);
+
+  // histogram names
+  TString cutflow_name = "cutflow";
+  if (is_signal)
+    cutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(cutflow_name);
+
+  PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, h_1d, cutflow_name.Data(), 50, 0, 50);
+
+  // Select leptons
+  VBFSUSYUtilities::Leptons mt2leptons = getLeptonsFromMT2Tree(mt2tree);
+  VBFSUSYUtilities::selectGoodLeptons(mt2leptons);
+
+  PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, h_1d, cutflow_name.Data(), 50, 0, 50);
+}
+
+//##################################################################################################
+void initMT2Tree()
+{
+  // Init the Class
+  mt2tree.Init(LoopUtilities::getCurrentTTree());
+}
+
+//##################################################################################################
+void loadMT2TreeEvent()
+{
+  mt2tree.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
+  mt2tree.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
+}
+
+//##################################################################################################
 VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree(MT2Tree& mt2tree)
 {
   VBFSUSYUtilities::Leptons leptons;
@@ -112,6 +159,7 @@ VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree(MT2Tree& mt2tree)
   return leptons;
 }
 
+//##################################################################################################
 VBFSUSYUtilities::Jets getJetsFromMT2Tree(MT2Tree& mt2tree)
 {
   VBFSUSYUtilities::Jets jets;
