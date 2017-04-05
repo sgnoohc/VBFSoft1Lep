@@ -154,6 +154,10 @@ namespace AnalysisUtilities
     TString getMassSuffixTString();
     TString getNameWithMassSuffix(TString name);
 
+    //
+    // Lepton objects
+    //
+
     // Lepton struct
     struct Lepton {
       float lep_pt;
@@ -182,11 +186,34 @@ namespace AnalysisUtilities
       TLorentzVector p4;
     };
     typedef std::vector<Lepton> Leptons;
-    extern Leptons selected_leptons;
-    void resetSelectedLeptons();
-    void addLepton(Lepton lepton);
+    extern Leptons selected_good_leptons;
+    extern Leptons selected_vbf_leptons;
+    extern Leptons selected_isr_leptons;
+
+    void resetSelectedGoodLeptons();
+    void addGoodLepton(Lepton lepton);
     bool isGoodLepton(Lepton lepton);
     void selectGoodLeptons(Leptons leptons);
+    int getNSelectedGoodLeptons();
+
+    Lepton getLeadingGoodLepton();
+    Lepton getSubleadingGoodLepton();
+
+    void resetSelectedVBFLeptons();
+    void addVBFLepton(Lepton lepton);
+    bool isVBFLepton(Lepton lepton);
+    void selectVBFLeptons(Leptons leptons);
+    int getNSelectedVBFLeptons();
+
+    void resetSelectedISRLeptons();
+    void addISRLepton(Lepton lepton);
+    bool isISRLepton(Lepton lepton);
+    void selectISRLeptons(Leptons leptons);
+    int getNSelectedISRLeptons();
+
+    //
+    // Jet variables
+    //
 
     // Jet struct
     struct Jet {
@@ -208,21 +235,43 @@ namespace AnalysisUtilities
       TLorentzVector p4;
     };
     typedef std::vector<Jet> Jets;
-    extern Jets selected_jets;
+    extern Jets selected_good_jets;
     void resetSelectedJets();
     void addJet(Jet jet);
     bool isGoodJet(Jet jet);
     void selectGoodJets(Jets jets);
 
-    int getNSelectedJets();
+    int getNSelectedGoodJets();
     Jet getLeadingVBFJet();
     Jet getSubleadingVBFJet();
 
+    extern float met_pt;
+    extern float met_phi;
+    extern TLorentzVector met_p4;
+    void setMET(float met);
+    void setMETphi(float met_phi);
+    void setMETp4();
+
+    //
+    // VBF Topology variables
+    //
     bool hasVBFJets();
     bool isCenJet(Jet jet);
     bool doesCenJetsExist();
     float getVBFDeltaEta();
     float getVBFMjj();
+
+    //
+    // Lepton variables
+    //
+    bool isEEChannel();
+    bool isMMChannel();
+    float getMll();
+    float getPtll();
+    float getMT(Lepton lep);
+    float getMTleadLep();
+    float getMTsubleadLep();
+
   }
 }
 

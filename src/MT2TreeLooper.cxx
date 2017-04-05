@@ -51,13 +51,115 @@ void processMT2TreeEvent()
   // select objects
   selectObjects();
 
+  //===============================================================================================
+  //
+  //
+  // reproducing ISR analysis
+  //
+  //
+  //===============================================================================================
+
   // histogram names
   TString cutflow_name = "cutflow";
-  if (Vbf::is_signal)
-    cutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(cutflow_name);
+  if (Vbf::is_signal) cutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(cutflow_name);
+
+  TString mee_name = "mee";
+  if (Vbf::is_signal) mee_name = VBFSUSYUtilities::getNameWithMassSuffix(mee_name);
+
+  TString mmm_name = "mmm";
+  if (Vbf::is_signal) mmm_name = VBFSUSYUtilities::getNameWithMassSuffix(mmm_name);
 
   // cutflow histogram
-  PlotUtil::plot1D(cutflow_name.Data(), 0, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+  if ((true))
+  {
+    PlotUtil::plot1D(cutflow_name.Data(), 0, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+    if ((VBFSUSYUtilities::getNSelectedGoodLeptons() == 2 && VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 30.))
+    {
+      PlotUtil::plot1D(cutflow_name.Data(), 1, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+      if ((VBFSUSYUtilities::isEEChannel()))
+      {
+        PlotUtil::plot1D(cutflow_name.Data(), 2, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+        if (Vbf::mt2tree.nBJet25 == 0)
+        {
+          PlotUtil::plot1D(cutflow_name.Data(), 3, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+          if (VBFSUSYUtilities::getMll() < 50.)
+          {
+            PlotUtil::plot1D(cutflow_name.Data(), 4, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+            if (VBFSUSYUtilities::getPtll() > 3.)
+            {
+              PlotUtil::plot1D(cutflow_name.Data(), 5, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+              if (Vbf::mt2tree.met_pt > 125.)
+              {
+                PlotUtil::plot1D(cutflow_name.Data(), 6, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                if (Vbf::mt2tree.met_pt / Vbf::mt2tree.ht > 0.6 && Vbf::mt2tree.met_pt / Vbf::mt2tree.ht > 1.4)
+                {
+                  PlotUtil::plot1D(cutflow_name.Data(), 7, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                  if (Vbf::mt2tree.ht > 100.)
+                  {
+                    PlotUtil::plot1D(cutflow_name.Data(), 8, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                    if (VBFSUSYUtilities::getMll() > 4.)
+                    {
+                      PlotUtil::plot1D(cutflow_name.Data(), 9, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                      if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
+                      {
+                        PlotUtil::plot1D(cutflow_name.Data(), 10, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                        if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
+                        {
+                          PlotUtil::plot1D(cutflow_name.Data(), 11, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                          PlotUtil::plot1D(mee_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mee_name.Data(), 50., 0, 50.);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      if ((VBFSUSYUtilities::isMMChannel()))
+      {
+        PlotUtil::plot1D(cutflow_name.Data(), 12, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+        if (Vbf::mt2tree.nBJet25 == 0)
+        {
+          PlotUtil::plot1D(cutflow_name.Data(), 13, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+          if (VBFSUSYUtilities::getMll() < 50.)
+          {
+            PlotUtil::plot1D(cutflow_name.Data(), 14, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+            if (VBFSUSYUtilities::getPtll() > 3.)
+            {
+              PlotUtil::plot1D(cutflow_name.Data(), 15, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+              if (Vbf::mt2tree.met_pt > 125.)
+              {
+                PlotUtil::plot1D(cutflow_name.Data(), 16, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                if (Vbf::mt2tree.met_pt / Vbf::mt2tree.ht > 0.6 && Vbf::mt2tree.met_pt / Vbf::mt2tree.ht > 1.4)
+                {
+                  PlotUtil::plot1D(cutflow_name.Data(), 17, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                  if (Vbf::mt2tree.ht > 100.)
+                  {
+                    PlotUtil::plot1D(cutflow_name.Data(), 18, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                    if (VBFSUSYUtilities::getMll() > 4.)
+                    {
+                      PlotUtil::plot1D(cutflow_name.Data(), 19, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                      if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
+                      {
+                        PlotUtil::plot1D(cutflow_name.Data(), 20, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                        if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
+                        {
+                          PlotUtil::plot1D(cutflow_name.Data(), 21, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
+                          PlotUtil::plot1D(mmm_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mmm_name.Data(), 50., 0, 50.);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 //##################################################################################################
@@ -97,7 +199,8 @@ void selectLeptons()
 {
   // Select leptons
   VBFSUSYUtilities::Leptons mt2tree_leptons = getLeptonsFromMT2Tree();
-  VBFSUSYUtilities::selectGoodLeptons(mt2tree_leptons);
+  VBFSUSYUtilities::selectVBFLeptons(mt2tree_leptons);
+  VBFSUSYUtilities::selectISRLeptons(mt2tree_leptons);
 
 }
 

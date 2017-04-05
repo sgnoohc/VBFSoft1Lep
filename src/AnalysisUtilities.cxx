@@ -781,8 +781,14 @@ namespace AnalysisUtilities
     double mN2_event = 0;
     double mN1_event = 0;
 
-    Leptons selected_leptons;
-    Jets    selected_jets;
+    Leptons selected_good_leptons;
+    Leptons selected_vbf_leptons;
+    Leptons selected_isr_leptons;
+    Jets    selected_good_jets;
+
+    float met_pt;
+    float met_phi;
+    TLorentzVector met_p4;
 
     //################################################################################################
     void setMC1(double mC1) { mC1_event = mC1; }
@@ -833,17 +839,63 @@ namespace AnalysisUtilities
     //################################################################################################
     // Clear leptons
     //
-    void resetSelectedLeptons()
+    void resetSelectedISRLeptons()
     {
-      selected_leptons.clear();
+      selected_isr_leptons.clear();
     }
 
     //################################################################################################
     // Add leptons
     //
-    void addLepton(Lepton lepton)
+    void addISRLepton(Lepton lepton)
     {
-      selected_leptons.push_back(lepton);
+      selected_isr_leptons.push_back(lepton);
+    }
+
+    //################################################################################################
+    // Is good lepton
+    //
+    bool isISRLepton(Lepton lepton)
+    {
+      bool fail = false;
+      if ( !(lepton.lep_pt >= 5.) ) fail |= true;
+      if ( !(lepton.lep_pt < 30.) ) fail |= true;
+      return ( !fail );
+    }
+
+    //################################################################################################
+    // get n selected good leptons
+    //
+    int getNSelectedISRLeptons()
+    {
+      return selected_isr_leptons.size();
+    }
+
+    //################################################################################################
+    // Select leptons
+    //
+    void selectISRLeptons(Leptons leptons)
+    {
+      resetSelectedISRLeptons();
+      for (auto& lep: leptons)
+        if (isISRLepton(lep))
+          addISRLepton(lep);
+    }
+
+    //################################################################################################
+    // Clear leptons
+    //
+    void resetSelectedGoodLeptons()
+    {
+      selected_good_leptons.clear();
+    }
+
+    //################################################################################################
+    // Add leptons
+    //
+    void addGoodLepton(Lepton lepton)
+    {
+      selected_good_leptons.push_back(lepton);
     }
 
     //################################################################################################
@@ -853,19 +905,100 @@ namespace AnalysisUtilities
     {
       bool fail = false;
       if ( !(lepton.lep_pt >= 5.) ) fail |= true;
-      if ( !(lepton.lep_pt < 20.) ) fail |= true;
+      if ( !( (abs(lepton.lep_pdgId) == 11) && (fabs(lepton.lep_eta) < 2.5) ) ) fail |= true;
+      if ( !( (abs(lepton.lep_pdgId) == 13) && (fabs(lepton.lep_eta) < 2.4) ) ) fail |= true;
+      if ( !( fabs(lepton.lep_sip3d) < 2.                                   ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dxy)   < 0.01                                 ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dz)    < 0.01                                 ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03) < 0.5                               ) ) fail |= true;
+      // abs iso missing?
       return ( !fail );
     }
+
+    //################################################################################################
+    // get n selected good leptons
+    //
+    int getNSelectedGoodLeptons()
+    {
+      return selected_good_leptons.size();
+    }
+
+    //################################################################################################
+    // get leading good lepton
+    //
+    Lepton getLeadingGoodLepton()
+    {
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getLeadingGoodLepton() asked for leading good lepton when there are no good leptons");
+      return selected_good_leptons.at(0);
+    }
+
+    //################################################################################################
+    // get leading good lepton
+    //
+    Lepton getSubleadingGoodLepton()
+    {
+      if (getNSelectedGoodLeptons() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getLeadingGoodLepton() asked for subleading good lepton when there are no good leptons");
+      return selected_good_leptons.at(1);
+    }
+
 
     //################################################################################################
     // Select leptons
     //
     void selectGoodLeptons(Leptons leptons)
     {
-      resetSelectedLeptons();
+      resetSelectedGoodLeptons();
       for (auto& lep: leptons)
         if (isGoodLepton(lep))
-          addLepton(lep);
+          addGoodLepton(lep);
+    }
+
+    //################################################################################################
+    // Clear leptons
+    //
+    void resetSelectedVBFLeptons()
+    {
+      selected_vbf_leptons.clear();
+    }
+
+    //################################################################################################
+    // Add leptons
+    //
+    void addVBFLepton(Lepton lepton)
+    {
+      selected_vbf_leptons.push_back(lepton);
+    }
+
+    //################################################################################################
+    // Is good lepton
+    //
+    bool isVBFLepton(Lepton lepton)
+    {
+      bool fail = false;
+      if ( !(lepton.lep_pt >= 5.) ) fail |= true;
+      if ( !(lepton.lep_pt < 20.) ) fail |= true;
+      return ( !fail );
+    }
+
+    //################################################################################################
+    // get n selected good leptons
+    //
+    int getNSelectedVBFLeptons()
+    {
+      return selected_vbf_leptons.size();
+    }
+
+    //################################################################################################
+    // Select leptons
+    //
+    void selectVBFLeptons(Leptons leptons)
+    {
+      resetSelectedVBFLeptons();
+      for (auto& lep: leptons)
+        if (isVBFLepton(lep))
+          addVBFLepton(lep);
     }
 
     //################################################################################################
@@ -873,7 +1006,7 @@ namespace AnalysisUtilities
     //
     void resetSelectedJets()
     {
-      selected_jets.clear();
+      selected_good_jets.clear();
     }
 
     //################################################################################################
@@ -881,7 +1014,7 @@ namespace AnalysisUtilities
     //
     void addJet(Jet jet)
     {
-      selected_jets.push_back(jet);
+      selected_good_jets.push_back(jet);
     }
 
     //################################################################################################
@@ -890,7 +1023,8 @@ namespace AnalysisUtilities
     bool isGoodJet(Jet jet)
     {
       bool fail = false;
-      if ( !(jet.jet_pt > 20.) ) fail |= true;
+      if ( !(jet.jet_pt > 25.       ) ) fail |= true;
+      if ( !(fabs(jet.jet_eta) < 2.4) ) fail |= true;
       return ( !fail );
     }
 
@@ -908,9 +1042,9 @@ namespace AnalysisUtilities
     //################################################################################################
     // get number of selected jets
     //
-    int getNSelectedJets()
+    int getNSelectedGoodJets()
     {
-      return selected_jets.size();
+      return selected_good_jets.size();
     }
 
     //################################################################################################
@@ -918,7 +1052,7 @@ namespace AnalysisUtilities
     //
     bool hasVBFJets()
     {
-      if (getNSelectedJets() < 2)
+      if (getNSelectedGoodJets() < 2)
         return false;
       else
         return true;
@@ -930,7 +1064,7 @@ namespace AnalysisUtilities
     {
       if (!hasVBFJets())
         PrintUtilities::error("VBFSUSYUtilities::getLeadingVBFJet() asked to retrieve leading vbf jet when the event does not even have >=2 n selected jets.");
-      return selected_jets.at(0);
+      return selected_good_jets.at(0);
     }
 
     //################################################################################################
@@ -939,16 +1073,23 @@ namespace AnalysisUtilities
     {
       if (!hasVBFJets())
         PrintUtilities::error("VBFSUSYUtilities::getSubleadingVBFJet() asked to retrieve subleading vbf jet when the event does not even have >=2 n selected jets.");
-      return selected_jets.at(1);
+      return selected_good_jets.at(1);
     }
+
+    //################################################################################################
+    // Set MET and MET phi
+    //
+    void setMET   (float met_pt_ ) { met_pt  = met_pt_;  setMETp4(); }
+    void setMETphi(float met_phi_) { met_phi = met_phi_; setMETp4(); }
+    void setMETp4 () { met_p4.SetPtEtaPhiM(met_pt, 0, met_phi, 0); }
 
     //################################################################################################
     // Is this jet a central jet
     //
     bool isCenJet(Jet jet)
     {
-      // case 1: if n(selected_jets) < 3, the question doesn't even make sense. return false.
-      if (getNSelectedJets() < 3)
+      // case 1: if n(selected_good_jets) < 3, the question doesn't even make sense. return false.
+      if (getNSelectedGoodJets() < 3)
         return false;
       // case 2: check against the two leading jet
       return (
@@ -962,8 +1103,8 @@ namespace AnalysisUtilities
     //
     bool doesCenJetsExist()
     {
-      for (unsigned int ijet = 2; ijet < selected_jets.size(); ++ijet)
-        if (isCenJet(selected_jets.at(ijet)))
+      for (unsigned int ijet = 2; ijet < selected_good_jets.size(); ++ijet)
+        if (isCenJet(selected_good_jets.at(ijet)))
           return true;
       return false;
     }
@@ -988,7 +1129,69 @@ namespace AnalysisUtilities
       return (getLeadingVBFJet().p4 + getSubleadingVBFJet().p4).M();
     }
 
+    //################################################################################################
+    // isEEChannel()
+    //
+    bool isEEChannel()
+    {
+      if (getNSelectedGoodLeptons() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::isEEChannel() asked whether it's ee channel when there are no more than 1 leptons");
+      return (abs(getLeadingGoodLepton().lep_pdgId) == 11) && (abs(getSubleadingGoodLepton().lep_pdgId) == 11);
+    }
 
+    //################################################################################################
+    // isMMChannel()
+    //
+    bool isMMChannel()
+    {
+      if (getNSelectedGoodLeptons() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::isMMChannel() asked whether it's mm channel when there are no more than 1 leptons");
+      return (abs(getLeadingGoodLepton().lep_pdgId) == 13) && (abs(getSubleadingGoodLepton().lep_pdgId) == 13);
+    }
+
+    //################################################################################################
+    // get Mll
+    //
+    float getMll()
+    {
+      if (getNSelectedGoodLeptons() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getMll() asked for Mll when no two leptons exist");
+      return (getLeadingGoodLepton().p4 + getSubleadingGoodLepton().p4).M();
+    }
+
+    //################################################################################################
+    // get Ptll
+    //
+    float getPtll()
+    {
+      if (getNSelectedGoodLeptons() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getPtll() asked for Ptll when no two leptons exist");
+      return (getLeadingGoodLepton().p4 + getSubleadingGoodLepton().p4).Pt();
+    }
+
+    //################################################################################################
+    // get MT
+    //
+    float getMT(Lepton lep)
+    {
+      return (met_p4 + lep.p4).Mt();
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getMTleadLep()
+    {
+      return getMT(getLeadingGoodLepton());
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getMTsubleadLep()
+    {
+      return getMT(getSubleadingGoodLepton());
+    }
   }
 
 }
