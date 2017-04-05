@@ -25,16 +25,32 @@
 
 using namespace AnalysisUtilities;
 
-// Instantiate histograms
-PlotUtil::Hist1D_DB h_1d;
-MT2Tree mt2tree;
+int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
 
-VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree(MT2Tree& mt2tree);
-VBFSUSYUtilities::Jets getJetsFromMT2Tree(MT2Tree& mt2tree);
+void loop();
+void beforeLoop(TChain* chain, TString output_name, int nevents);
+void afterLoop();
+
+VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree();
+VBFSUSYUtilities::Jets getJetsFromMT2Tree();
 void initMT2Tree();
 void loadMT2TreeEvent();
-void processMT2TreeEvent(bool is_signal);
-int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
+void processMT2TreeEvent();
+
+void parseEwkinoMasses();
+void selectObjects();
+void selectLeptons();
+void selectJets();
+
+// variables
+namespace Vbf {
+  extern bool is_signal;
+  extern TString output_name;
+  extern PlotUtil::Hist1D_DB h_1d;
+  extern MT2Tree mt2tree;
+  extern VBFSUSYUtilities::Leptons mt2leptons;
+  extern VBFSUSYUtilities::Jets mt2jets;
+}
 
 #endif
 //eof

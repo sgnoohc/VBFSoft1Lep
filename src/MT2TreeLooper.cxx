@@ -5,23 +5,39 @@
 
 #include "MT2TreeLooper.h"
 
+// Variables
+namespace Vbf {
+  bool is_signal;
+  TString output_name;
+  PlotUtil::Hist1D_DB h_1d;
+  MT2Tree mt2tree;
+  VBFSUSYUtilities::Leptons mt2leptons;
+  VBFSUSYUtilities::Jets mt2jets;
+}
+
 //##################################################################################################
-// Main Loop
+// Main
 //
 int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 {
-
-  //=================================================================
-  // BEFORE LOOP
-  //=================================================================
-  // Fun start ASCII art
-  PrintUtilities::start();
-
-  // Initialize configurations for event looping
-  LoopUtilities::resetLoopCondition(chain, nevents);
+  beforeLoop(chain, output_name, nevents);
+  loop();
+  afterLoop();
+  return 0;
+}
 
 
 
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+
+
+
+
+//##################################################################################################
+void loop()
+{
   //=================================================================
   // LOOP
   //=================================================================
@@ -48,137 +64,168 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
       //
       //=================================================================
       // pass a bool whether output name has "sig" or not
-      processMT2TreeEvent(output_name.Contains("sig"));
+      processMT2TreeEvent();
 
     } // End TTree loop
 
   } // End Loop over files
-
-
-
-  //=================================================================
-  // AFTER LOOP
-  //=================================================================
-  // Save plots
-  PlotUtil::savePlots(h_1d, output_name+".root");
-
-  // Fun exit
-  PrintUtilities::exit();
-
-  return 0;
-
 }
-
-
-
-//--------------------====================--------------------====================--------------------
-//
-//--------------------====================--------------------====================--------------------
-//
-//--------------------====================--------------------====================--------------------
-
-
 
 
 
 
 //##################################################################################################
-void processMT2TreeEvent(bool is_signal)
+void beforeLoop(TChain* chain, TString output_name, int nevents)
+{
+
+  // Fun start ASCII art
+  PrintUtilities::start();
+
+  // Initialize configurations for event looping
+  LoopUtilities::resetLoopCondition(chain, nevents);
+
+  // Set whether the sample being processed is signal or not
+  // by checking the output file name
+  Vbf::is_signal = output_name.Contains("sig");
+
+  // Set output name
+  Vbf::output_name = output_name;
+}
+
+
+
+//##################################################################################################
+void afterLoop()
+{
+  // Save plots
+  PlotUtil::savePlots(Vbf::h_1d, Vbf::output_name+".root");
+
+  // Fun exit
+  PrintUtilities::exit();
+}
+
+
+
+//##################################################################################################
+void processMT2TreeEvent()
 {
   // Event variables
   float evt_scale1fb;
-  evt_scale1fb = mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
+  evt_scale1fb = Vbf::mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
 
   // Parse the ewkino mass
-  if (is_signal)
-    VBFSUSYUtilities::parseEwkinoMasses(mt2tree.ngenStat23,
-                                        mt2tree.genStat23_pdgId,
-                                        mt2tree.genStat23_status,
-                                        mt2tree.genStat23_mass);
+  if (Vbf::is_signal)
+    VBFSUSYUtilities::parseEwkinoMasses(Vbf::mt2tree.ngenStat23,
+                                        Vbf::mt2tree.genStat23_pdgId,
+                                        Vbf::mt2tree.genStat23_status,
+                                        Vbf::mt2tree.genStat23_mass);
 
   // histogram names
   TString cutflow_name = "cutflow";
-  if (is_signal)
+  if (Vbf::is_signal)
     cutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(cutflow_name);
 
-  PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, h_1d, cutflow_name.Data(), 50, 0, 50);
+  // select objects
+  selectObjects();
 
-  // Select leptons
-  VBFSUSYUtilities::Leptons mt2leptons = getLeptonsFromMT2Tree(mt2tree);
-  VBFSUSYUtilities::selectGoodLeptons(mt2leptons);
-
-  PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, h_1d, cutflow_name.Data(), 50, 0, 50);
+  PlotUtil::plot1D(cutflow_name.Data(), 0, evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
 }
+
 
 //##################################################################################################
 void initMT2Tree()
 {
   // Init the Class
-  mt2tree.Init(LoopUtilities::getCurrentTTree());
+  Vbf::mt2tree.Init(LoopUtilities::getCurrentTTree());
 }
 
 //##################################################################################################
 void loadMT2TreeEvent()
 {
-  mt2tree.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
-  mt2tree.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
+  Vbf::mt2tree.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
+  Vbf::mt2tree.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
 }
 
 //##################################################################################################
-VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree(MT2Tree& mt2tree)
+void selectObjects()
+{
+  selectLeptons();
+  selectJets();
+}
+
+//##################################################################################################
+void selectLeptons()
+{
+  // Select leptons
+  Vbf::mt2leptons = getLeptonsFromMT2Tree();
+  VBFSUSYUtilities::selectGoodLeptons(Vbf::mt2leptons);
+
+}
+
+//##################################################################################################
+void selectJets()
+{
+  // Select jets
+  Vbf::mt2jets = getJetsFromMT2Tree();
+  VBFSUSYUtilities::selectGoodJets(Vbf::mt2jets);
+}
+
+
+//##################################################################################################
+VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree()
 {
   VBFSUSYUtilities::Leptons leptons;
-  for (int ilep = 0; ilep < mt2tree.nlep; ++ilep)
+  for (int ilep = 0; ilep < Vbf::mt2tree.nlep; ++ilep)
   {
     VBFSUSYUtilities::Lepton lepton;
-    lepton.lep_pt           = mt2tree.lep_pt[ilep];
-    lepton.lep_eta          = mt2tree.lep_eta[ilep];
-    lepton.lep_phi          = mt2tree.lep_phi[ilep];
-    lepton.lep_mass         = mt2tree.lep_mass[ilep];
-    lepton.lep_charge       = mt2tree.lep_charge[ilep];
-    lepton.lep_pdgId        = mt2tree.lep_pdgId[ilep];
-    lepton.lep_dxy          = mt2tree.lep_dxy[ilep];
-    lepton.lep_dz           = mt2tree.lep_dz[ilep];
-    lepton.lep_tightId      = mt2tree.lep_tightId[ilep];
-    lepton.lep_heepId       = mt2tree.lep_heepId[ilep];
-    lepton.lep_relIso03     = mt2tree.lep_relIso03[ilep];
-    lepton.lep_relIso04     = mt2tree.lep_relIso04[ilep];
-    lepton.lep_miniRelIso   = mt2tree.lep_miniRelIso[ilep];
-    lepton.lep_relIsoAn04   = mt2tree.lep_relIsoAn04[ilep];
-    lepton.lep_mcMatchId    = mt2tree.lep_mcMatchId[ilep];
-    lepton.lep_lostHits     = mt2tree.lep_lostHits[ilep];
-    lepton.lep_convVeto     = mt2tree.lep_convVeto[ilep];
-    lepton.lep_tightCharge  = mt2tree.lep_tightCharge[ilep];
-    lepton.lep_mva          = mt2tree.lep_mva[ilep];
-    lepton.lep_ptRatio      = mt2tree.lep_ptRatio[ilep];
-    lepton.lep_ptRel        = mt2tree.lep_ptRel[ilep];
-    lepton.lep_tightIdNoIso = mt2tree.lep_tightIdNoIso[ilep];
-    lepton.lep_sip3d        = mt2tree.lep_sip3d[ilep];
+    lepton.lep_pt           = Vbf::mt2tree.lep_pt[ilep];
+    lepton.lep_eta          = Vbf::mt2tree.lep_eta[ilep];
+    lepton.lep_phi          = Vbf::mt2tree.lep_phi[ilep];
+    lepton.lep_mass         = Vbf::mt2tree.lep_mass[ilep];
+    lepton.lep_charge       = Vbf::mt2tree.lep_charge[ilep];
+    lepton.lep_pdgId        = Vbf::mt2tree.lep_pdgId[ilep];
+    lepton.lep_dxy          = Vbf::mt2tree.lep_dxy[ilep];
+    lepton.lep_dz           = Vbf::mt2tree.lep_dz[ilep];
+    lepton.lep_tightId      = Vbf::mt2tree.lep_tightId[ilep];
+    lepton.lep_heepId       = Vbf::mt2tree.lep_heepId[ilep];
+    lepton.lep_relIso03     = Vbf::mt2tree.lep_relIso03[ilep];
+    lepton.lep_relIso04     = Vbf::mt2tree.lep_relIso04[ilep];
+    lepton.lep_miniRelIso   = Vbf::mt2tree.lep_miniRelIso[ilep];
+    lepton.lep_relIsoAn04   = Vbf::mt2tree.lep_relIsoAn04[ilep];
+    lepton.lep_mcMatchId    = Vbf::mt2tree.lep_mcMatchId[ilep];
+    lepton.lep_lostHits     = Vbf::mt2tree.lep_lostHits[ilep];
+    lepton.lep_convVeto     = Vbf::mt2tree.lep_convVeto[ilep];
+    lepton.lep_tightCharge  = Vbf::mt2tree.lep_tightCharge[ilep];
+    lepton.lep_mva          = Vbf::mt2tree.lep_mva[ilep];
+    lepton.lep_ptRatio      = Vbf::mt2tree.lep_ptRatio[ilep];
+    lepton.lep_ptRel        = Vbf::mt2tree.lep_ptRel[ilep];
+    lepton.lep_tightIdNoIso = Vbf::mt2tree.lep_tightIdNoIso[ilep];
+    lepton.lep_sip3d        = Vbf::mt2tree.lep_sip3d[ilep];
     leptons.push_back(lepton);
   }
   return leptons;
 }
 
 //##################################################################################################
-VBFSUSYUtilities::Jets getJetsFromMT2Tree(MT2Tree& mt2tree)
+VBFSUSYUtilities::Jets getJetsFromMT2Tree()
 {
   VBFSUSYUtilities::Jets jets;
-  for (int ijet = 0; ijet < mt2tree.njet; ++ijet)
+  for (int ijet = 0; ijet < Vbf::mt2tree.njet; ++ijet)
   {
     VBFSUSYUtilities::Jet jet;
-    jet.jet_pt            = mt2tree.jet_pt[ijet];
-    jet.jet_eta           = mt2tree.jet_eta[ijet];
-    jet.jet_phi           = mt2tree.jet_phi[ijet];
-    jet.jet_mass          = mt2tree.jet_mass[ijet];
-    jet.jet_btagCSV       = mt2tree.jet_btagCSV[ijet];
-    jet.jet_rawPt         = mt2tree.jet_rawPt[ijet];
-    jet.jet_mcPt          = mt2tree.jet_mcPt[ijet];
-    jet.jet_mcFlavour     = mt2tree.jet_mcFlavour[ijet];
-    jet.jet_hadronFlavour = mt2tree.jet_hadronFlavour[ijet];
-    jet.jet_qgl           = mt2tree.jet_qgl[ijet];
-    jet.jet_area          = mt2tree.jet_area[ijet];
-    jet.jet_id            = mt2tree.jet_id[ijet];
-    jet.jet_puId          = mt2tree.jet_puId[ijet];
+    jet.jet_pt            = Vbf::mt2tree.jet_pt[ijet];
+    jet.jet_eta           = Vbf::mt2tree.jet_eta[ijet];
+    jet.jet_phi           = Vbf::mt2tree.jet_phi[ijet];
+    jet.jet_mass          = Vbf::mt2tree.jet_mass[ijet];
+    jet.jet_btagCSV       = Vbf::mt2tree.jet_btagCSV[ijet];
+    jet.jet_rawPt         = Vbf::mt2tree.jet_rawPt[ijet];
+    jet.jet_mcPt          = Vbf::mt2tree.jet_mcPt[ijet];
+    jet.jet_mcFlavour     = Vbf::mt2tree.jet_mcFlavour[ijet];
+    jet.jet_hadronFlavour = Vbf::mt2tree.jet_hadronFlavour[ijet];
+    jet.jet_qgl           = Vbf::mt2tree.jet_qgl[ijet];
+    jet.jet_area          = Vbf::mt2tree.jet_area[ijet];
+    jet.jet_id            = Vbf::mt2tree.jet_id[ijet];
+    jet.jet_puId          = Vbf::mt2tree.jet_puId[ijet];
     jets.push_back(jet);
   }
   return jets;
