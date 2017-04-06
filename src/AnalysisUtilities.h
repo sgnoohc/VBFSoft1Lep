@@ -53,6 +53,9 @@ namespace AnalysisUtilities
     void plot1D(
         string name, float xval, double weight, Hist1D_DB &allhistos,
         string title, int numbinsx, float xmin, float xmax);
+    void plot1D(
+        string name, float xval, double weight, Hist1D_DB &allhistos,
+        string title, int numbinsx, const float* xbins);
     void savePlots(Hist1D_DB&, const char*);
   }
 
@@ -241,6 +244,8 @@ namespace AnalysisUtilities
     bool isGoodJet(Jet jet);
     void selectGoodJets(Jets jets);
 
+    int getNBTaggedJetsWithCSVCut(float csvcut);
+
     int getNSelectedGoodJets();
     Jet getLeadingVBFJet();
     Jet getSubleadingVBFJet();
@@ -271,6 +276,7 @@ namespace AnalysisUtilities
     float getMT(Lepton lep);
     float getMTleadLep();
     float getMTsubleadLep();
+    float getMtt();
 
   }
 }

@@ -6,20 +6,25 @@
 # ..: P. Chang, philip@physics.ucsd.edu
 
 
-# The following creates some separate hadded files
 mkdir -p haddoutput
-hadd -f haddoutput/hist_dyjetsll.root    output/hist_dyjetsll_*root
-hadd -f haddoutput/hist_qcd.root         output/hist_qcd_ht*root
-hadd -f haddoutput/hist_gjet.root        output/hist_gjet_ht*root.root
-hadd -f haddoutput/hist_tt.root          output/hist_tt*.root.root
-hadd -f haddoutput/hist_zinv.root        output/hist_zinv_ht*root.root
-hadd -f haddoutput/hist_diboson.root     output/hist_ww*root.root output/hist_wz*root.root output/hist_zz*root.root
+# The following creates some separate hadded files
 
-# But the following five are what's really used in the plotting
-hadd -f haddoutput/hist_top.root         output/hist_tt*.root.root output/hist_singletop_*root.root
-hadd -f haddoutput/hist_z.root           output/hist_zinv_ht*root.root output/hist_dyjetsll_*root
-hadd -f haddoutput/hist_wjets.root       output/hist_wjets_ht*root.root
-hadd -f haddoutput/hist_others.root      output/hist_ww*root.root output/hist_wz*root.root output/hist_zz*root.root output/hist_gjet_ht*root.root output/hist_qcd_ht*root
+# top process with two leptons expected
+hadd -f haddoutput/hist_tt.root          output/hist_ttdl_mg_lo.root.root output/hist_ttg_amcatnlo.root.root output/hist_tth_bb_amcatnlo.root.root output/hist_tth_nonbb_amcatnlo.root.root output/hist_tth_nonbb_amcatnlo_1.root.root output/hist_ttw_lnu_amcatnlo.root.root output/hist_ttw_qq_amcatnlo.root.root output/hist_ttz_llnunu_amcatnlo.root.root output/hist_ttz_qq_amcatnlo.root.root
+
+# DY
+hadd -f haddoutput/hist_dy.root          output/hist_zinv_ht*root.root output/hist_dyjetsll_*root
+
+# VV
+hadd -f haddoutput/hist_vv.root          output/hist_ww*root.root output/hist_wz*root.root output/hist_zz*root.root
+
+# tW
+hadd -f haddoutput/hist_tW.root          output/hist_singletop_powheg_5f_tWchan.root.root output/hist_singletop_powheg_5f_tbarWchan.root.root
+
+# single top or ttbar with single lepton chnnael and QCD/g+jet and W+jets
+hadd -f haddoutput/hist_fakes.root       output/hist_ttsl_mg_lo_tbar.root.root output/hist_ttsl_mg_lo_tbar_1.root.root output/hist_ttsl_mg_lo_top.root.root output/hist_ttsl_mg_lo_top_1.root.root output/hist_singletop_amcatnlo_4f_schan.root.root output/hist_singletop_powheg_4f_tbartchan_l.root.root output/hist_singletop_powheg_4f_ttchan_l.root.root output/hist_gjet_ht*root.root output/hist_qcd_ht*root output/hist_wjets_ht*root.root
+
+# signal
 ln -sf ../output/hist_signal.root.root haddoutput/hist_signal.root
 
 #eof

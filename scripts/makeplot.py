@@ -353,7 +353,9 @@ class HistogramManager:
     def get_histograms(self, histogram_fullpaths):
         histlist = []
         for hist in histogram_fullpaths:
-            histlist.append(self.get_histogram(hist))
+            hist = self.get_histogram(hist)
+            if hist:
+                histlist.append(hist)
         return histlist
     def get_histogram(self, histogram_fullpath):
         print 'Retrieving Histograms', histogram_fullpath
@@ -367,6 +369,8 @@ class HistogramManager:
                 hist = self.copy_histogram(tmphist)
             else:
                 hist.Add(self.copy_histogram(tmphist))
+        if not hist:
+            return None
         hist.SetTitle("")
         self.set_histaxis_settings(hist)
         self.set_histaxis_labels(hist)

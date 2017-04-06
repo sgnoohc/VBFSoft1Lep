@@ -60,12 +60,12 @@ if [ "x$7" == "x" ]; then
   python scripts/makeplot.py \
     --plottype plot1d \
     --plotname ~/public_html/test \
-    --sighist 'haddoutput/hist_signal.root            ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_z.root         ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>Z%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_wjets.root     ::: '$1' ::: Set'${BKGCOLORING}'Color=>7003 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7003 , SetName=>W%f, Scale=>'$SCALE'' \
     --bkghist 'haddoutput/hist_top.root               ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>t#bar{t}%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_others.root    ::: '$1' ::: Set'${BKGCOLORING}'Color=>7007 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7007 , SetName=>QCD%f, Scale=>'$SCALE'' \
     $2
+    #--sighist 'haddoutput/hist_signal.root            ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
 else
   python scripts/makeplot.py \
     --plottype plot1d \

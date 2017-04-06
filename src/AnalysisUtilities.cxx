@@ -62,6 +62,34 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // Plot 1D histogram. If a histogram doesn't exist book first and fill. (with variable binning)
+    //
+    void plot1D(string name, float xval, double weight, std::map<string, TH1*> &allhistos,
+        string title, int numbinsx, const float * xbins)
+    {
+      // If no title given, set title to name
+      if (title=="") title=name;
+
+      // Find whether a histogram with the name already exists
+      std::map<string, TH1*>::iterator iter= allhistos.find(name);
+
+      // If the histogram is not found, make a new one.
+      if(iter == allhistos.end())
+      {
+        TH1D* currentHisto= new TH1D(name.c_str(), title.c_str(), numbinsx, xbins);
+        currentHisto->Sumw2();
+        currentHisto->SetDirectory(0);
+        currentHisto->Fill(xval, weight);
+        allhistos.insert(std::pair<string, TH1D*> (name,currentHisto) );
+      }
+      else // exists already, so just fill it
+      {
+        (*iter).second->Fill(xval, weight);
+      }
+
+    }
+
+    //################################################################################################
     // Plot 1D histogram. If a histogram doesn't exist book first and fill.
     //
     void savePlots(Hist1D_DB &h_1d, const char* outfilename)
@@ -905,14 +933,15 @@ namespace AnalysisUtilities
     {
       bool fail = false;
       if ( !(lepton.lep_pt >= 5.) ) fail |= true;
-      if ( !( (abs(lepton.lep_pdgId) == 11) && (fabs(lepton.lep_eta) < 2.5) ) ) fail |= true;
-      //if ( !( (abs(lepton.lep_pdgId) == 13) && (fabs(lepton.lep_eta) < 2.4) ) ) fail |= true;
-      //if ( !( fabs(lepton.lep_sip3d) < 2.                                   ) ) fail |= true;
-      //if ( !( fabs(lepton.lep_dxy)   < 0.01                                 ) ) fail |= true;
-      //if ( !( fabs(lepton.lep_dz)    < 0.01                                 ) ) fail |= true;
-      //if ( !( fabs(lepton.lep_relIso03) < 0.5                               ) ) fail |= true;
-      // abs iso missing?
-      std::cout << " " << fail << std::endl;
+      if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_eta) < 2.5)    ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 13) && !( (fabs(lepton.lep_eta) < 2.4)    ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_tightId) > 0.) ) ) fail |= true;
+      // no id req. needed for muon
+      if ( !( fabs(lepton.lep_sip3d) < 2.                                      ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dxy)   < 0.01                                    ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dz)    < 0.01                                    ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03) < 0.5                                  ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03*lepton.lep_pt) < 5.                     ) ) fail |= true;
       return ( !fail );
     }
 
@@ -1016,6 +1045,24 @@ namespace AnalysisUtilities
     void addJet(Jet jet)
     {
       selected_good_jets.push_back(jet);
+    }
+
+    //################################################################################################
+    // Count the number of bjets
+    bool isBTaggedWithCSVCut(Jet jet, float csvcut)
+    {
+      return jet.jet_btagCSV > csvcut;
+    }
+
+    //################################################################################################
+    // Count the number of bjets
+    int getNBTaggedJetsWithCSVCut(float csvcut)
+    {
+      int nbtag = 0;
+      for (auto& jet: selected_good_jets)
+        if (isBTaggedWithCSVCut(jet, csvcut))
+          nbtag++;
+      return nbtag;
     }
 
     //################################################################################################
@@ -1137,7 +1184,7 @@ namespace AnalysisUtilities
     {
       if (getNSelectedGoodLeptons() < 2)
         PrintUtilities::error("VBFSUSYUtilities::isEEChannel() asked whether it's ee channel when there are no more than 1 leptons");
-      return (abs(getLeadingGoodLepton().lep_pdgId) == 11) && (abs(getSubleadingGoodLepton().lep_pdgId) == 11);
+      return (getLeadingGoodLepton().lep_pdgId*getSubleadingGoodLepton().lep_pdgId == -121);
     }
 
     //################################################################################################
@@ -1147,7 +1194,7 @@ namespace AnalysisUtilities
     {
       if (getNSelectedGoodLeptons() < 2)
         PrintUtilities::error("VBFSUSYUtilities::isMMChannel() asked whether it's mm channel when there are no more than 1 leptons");
-      return (abs(getLeadingGoodLepton().lep_pdgId) == 13) && (abs(getSubleadingGoodLepton().lep_pdgId) == 13);
+      return (getLeadingGoodLepton().lep_pdgId*getSubleadingGoodLepton().lep_pdgId == -169);
     }
 
     //################################################################################################
@@ -1175,7 +1222,9 @@ namespace AnalysisUtilities
     //
     float getMT(Lepton lep)
     {
-      return (met_p4 + lep.p4).Mt();
+      float mt = sqrt(2 * lep.p4.Pt() * met_p4.Pt() * ( 1 - cos(met_p4.DeltaPhi(lep.p4) ) ));
+      std::cout << mt << std::endl;
+      return mt;
     }
 
     //################################################################################################
@@ -1193,6 +1242,42 @@ namespace AnalysisUtilities
     {
       return getMT(getSubleadingGoodLepton());
     }
+
+    //################################################################################################
+    // get Mtt (collinear approximation)
+    //
+    float getMtt()
+    {
+
+      TLorentzVector lep0_tlv;
+      TLorentzVector lep1_tlv;
+      TLorentzVector tmp_met;
+      float x_1;
+      float x_2;
+      float mtt;
+      float Mll;
+
+      lep0_tlv = getLeadingGoodLepton().p4;
+      lep1_tlv = getSubleadingGoodLepton().p4;
+      tmp_met = met_p4;
+      Mll = (lep0_tlv + lep1_tlv).M();
+
+      lep0_tlv.Print();
+      lep1_tlv.Print();
+      tmp_met.Print();
+
+      // below from HWWlvlvCode.cxx https://svnweb.cern.ch/trac/atlasoff/browser/PhysicsAnalysis/HiggsPhys/HSG3/WWDileptonAnalysisCode/HWWlvlvCode/trunk/Root/HWWlvlvCode.cxx
+      x_1= (lep0_tlv.Px()*lep1_tlv.Py()-lep0_tlv.Py()*lep1_tlv.Px())/(lep1_tlv.Py()*tmp_met.Px()-lep1_tlv.Px()*tmp_met.Py()+lep0_tlv.Px()*lep1_tlv.Py()-lep0_tlv.Py()*lep1_tlv.Px());
+      x_2= (lep0_tlv.Px()*lep1_tlv.Py()-lep0_tlv.Py()*lep1_tlv.Px())/(lep0_tlv.Px()*tmp_met.Py()-lep0_tlv.Py()*tmp_met.Px()+lep0_tlv.Px()*lep1_tlv.Py()-lep0_tlv.Py()*lep1_tlv.Px());
+      if (x_1 > 0 && x_2 > 0)
+        mtt = Mll/sqrt(x_1*x_2);
+      else
+        mtt = -9999.;
+
+      return mtt;
+
+    }
+
   }
 
 }
