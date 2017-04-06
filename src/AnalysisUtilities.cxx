@@ -818,6 +818,9 @@ namespace AnalysisUtilities
     float met_phi;
     TLorentzVector met_p4;
 
+    ELECTRON_ID_type ELECTRON_ID = kELECTRON_MED;
+    MUON_ID_type MUON_ID = kMUON_TIGHT;
+
     //################################################################################################
     void setMC1(double mC1) { mC1_event = mC1; }
     void setMN2(double mN2) { mN2_event = mN2; }
@@ -933,15 +936,15 @@ namespace AnalysisUtilities
     {
       bool fail = false;
       if ( !(lepton.lep_pt >= 5.) ) fail |= true;
-      if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_eta) < 2.5)    ) ) fail |= true;
-      if ( (abs(lepton.lep_pdgId) == 13) && !( (fabs(lepton.lep_eta) < 2.4)    ) ) fail |= true;
-      if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_tightId) > 0.) ) ) fail |= true;
-      // no id req. needed for muon
-      if ( !( fabs(lepton.lep_sip3d) < 2.                                      ) ) fail |= true;
-      if ( !( fabs(lepton.lep_dxy)   < 0.01                                    ) ) fail |= true;
-      if ( !( fabs(lepton.lep_dz)    < 0.01                                    ) ) fail |= true;
-      if ( !( fabs(lepton.lep_relIso03) < 0.5                                  ) ) fail |= true;
-      if ( !( fabs(lepton.lep_relIso03*lepton.lep_pt) < 5.                     ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_eta) < 2.5)       ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 13) && !( (fabs(lepton.lep_eta) < 2.4)       ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 11) && !( (lepton.lep_tightId > ELECTRON_ID) ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 13) && !( (lepton.lep_tightId > MUON_ID)     ) ) fail |= true;
+      if ( !( fabs(lepton.lep_sip3d) < 2.                                         ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dxy)   < 0.01                                       ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dz)    < 0.01                                       ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03) < 0.5                                     ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03*lepton.lep_pt) < 5.                        ) ) fail |= true;
       return ( !fail );
     }
 
@@ -1223,7 +1226,6 @@ namespace AnalysisUtilities
     float getMT(Lepton lep)
     {
       float mt = sqrt(2 * lep.p4.Pt() * met_p4.Pt() * ( 1 - cos(met_p4.DeltaPhi(lep.p4) ) ));
-      std::cout << mt << std::endl;
       return mt;
     }
 

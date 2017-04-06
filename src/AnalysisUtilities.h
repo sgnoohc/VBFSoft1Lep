@@ -193,6 +193,24 @@ namespace AnalysisUtilities
     extern Leptons selected_vbf_leptons;
     extern Leptons selected_isr_leptons;
 
+    enum ELECTRON_ID_type {
+      kELECTRON_TIGHT = 2,
+      kELECTRON_MED   = 1,
+      kELECTRON_LOOSE = 0,
+      kELECTRON_VETO  = -1
+    };
+
+    enum MUON_ID_type {
+      kMUON_TIGHT = 0,
+      kMUON_LOOSE = -1
+    };
+
+    extern ELECTRON_ID_type ELECTRON_ID;
+    extern MUON_ID_type MUON_ID;
+
+    void setElectronID(ELECTRON_ID_type electronid);
+    void setMuonID(MUON_ID_type muonid);
+
     void resetSelectedGoodLeptons();
     void addGoodLepton(Lepton lepton);
     bool isGoodLepton(Lepton lepton);
