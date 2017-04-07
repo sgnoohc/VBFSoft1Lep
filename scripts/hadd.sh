@@ -25,6 +25,6 @@ hadd -f haddoutput/hist_tW.root          output/hist_singletop_powheg_5f_tWchan.
 hadd -f haddoutput/hist_fakes.root       output/hist_ttsl_mg_lo_tbar.root.root output/hist_ttsl_mg_lo_tbar_1.root.root output/hist_ttsl_mg_lo_top.root.root output/hist_ttsl_mg_lo_top_1.root.root output/hist_singletop_amcatnlo_4f_schan.root.root output/hist_singletop_powheg_4f_tbartchan_l.root.root output/hist_singletop_powheg_4f_ttchan_l.root.root output/hist_gjet_ht*root.root output/hist_qcd_ht*root output/hist_wjets_ht*root.root
 
 # signal
-ln -sf ../output/hist_signal.root.root haddoutput/hist_signal.root
+hadd -f haddoutput/hist_signal.root      output/hist_MSSM*.root.root output/hist_SMS*.root.root
 
 #eof

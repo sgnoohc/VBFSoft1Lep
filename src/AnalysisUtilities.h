@@ -56,6 +56,9 @@ namespace AnalysisUtilities
     void plot1D(
         string name, float xval, double weight, Hist1D_DB &allhistos,
         string title, int numbinsx, const float* xbins);
+    void plot1D(
+        string name, float xval, double weight, Hist1D_DB &allhistos,
+        string title);
     void savePlots(Hist1D_DB&, const char*);
   }
 

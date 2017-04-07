@@ -24,7 +24,7 @@ mkdir -p public_html
 
 # parse the third option to decide whether to draw a plot with only the shape comparison. (each histogram scaled to unity or something alike)
 if [ "x$3" == "x" ]; then
-  SIGSCALE=360
+  SIGSCALE="36*4.78*0.04"
   SCALE=36
   BKGCATEG="bkg"
   BKGCOLORING="Fill"
@@ -65,8 +65,9 @@ if [ "x$7" == "x" ]; then
     --${BKGCATEG}hist 'haddoutput/hist_vv.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7007 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7007 , SetName=>VV%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_dy.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>DY%f, Scale=>'$SCALE'' \
     --bkghist         'haddoutput/hist_tt.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>t#bar{t}(2l)%f, Scale=>'$SCALE'' \
+    --sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
     $2
-    #--sighist 'haddoutput/hist_signal.root            ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
+    #--sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
 else
   python scripts/makeplot.py \
     --plottype plot1d \

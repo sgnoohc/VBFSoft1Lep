@@ -47,6 +47,17 @@ void selectJets();
 void setMET();
 void loadScale1fb();
 
+// Booking histograms
+void bookISRHistograms();
+void bookISRHistogram(TString name, int nbins, float min, float max);
+void bookISRHistogram(TString name, int nbins, const float* xbins);
+
+// Filling histograms
+void fillISRHistogram(TString name, float val, float wgt);
+void fillCutflow(int cutflowbin);
+
+void reproducingISRAnalysis();
+
 // variables
 namespace Vbf {
 
@@ -62,6 +73,26 @@ namespace Vbf {
   // Objects
   extern VBFSUSYUtilities::Leptons mt2leptons;
   extern VBFSUSYUtilities::Jets mt2jets;
+
+  // histogram names
+  extern TString cutflow_name    = "cutflow";
+  extern TString rawcutflow_name = "rawcutflow";
+  extern TString mee_name        = "mee";
+  extern TString mmm_name        = "mmm";
+  extern TString mee_low_name    = "mee_low";
+  extern TString mee_med_name    = "mee_med";
+  extern TString mee_high_name   = "mee_high";
+  extern TString mmm_low_name    = "mmm_low";
+  extern TString mmm_med_name    = "mmm_med";
+  extern TString mmm_high_name   = "mmm_high";
+  extern TString mll_med_name    = "mll_med";
+  extern TString mll_high_name   = "mll_high";
+  extern TString nbjet25_name    = "nBJet25";
+  extern TString myNBjet25L_name = "MynBJet25L";
+  extern TString myNBjet25M_name = "MynBJet25M";
+
+  // bins
+  extern float mllbin[5];
 
 
 }

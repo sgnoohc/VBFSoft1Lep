@@ -13,12 +13,31 @@ namespace Vbf {
   // Analysis level variables
   bool is_signal;
   TString output_name;
-  PlotUtil::Hist1D_DB h_1d;
+  PlotUtil::Hist1D_DB h_isr_1d;
 
   // Event data
   MT2Tree mt2tree;
   float evt_scale1fb;
 
+  // Histogram names
+  TString cutflow_name    = "cutflow";
+  TString rawcutflow_name = "rawcutflow";
+  TString mee_name        = "mee";
+  TString mmm_name        = "mmm";
+  TString mee_low_name    = "mee_low";
+  TString mee_med_name    = "mee_med";
+  TString mee_high_name   = "mee_high";
+  TString mmm_low_name    = "mmm_low";
+  TString mmm_med_name    = "mmm_med";
+  TString mmm_high_name   = "mmm_high";
+  TString mll_med_name    = "mll_med";
+  TString mll_high_name   = "mll_high";
+  TString nbjet25_name    = "nBJet25";
+  TString myNBjet25L_name = "MynBJet25L";
+  TString myNBjet25M_name = "MynBJet25M";
+
+  // mll bin
+  float mllbin[5] = {5., 10., 20., 30., 50.};
 }
 
 //
@@ -51,6 +70,9 @@ void processMT2TreeEvent()
   // select objects
   selectObjects();
 
+  // bookISR histograms
+  bookISRHistograms();
+
   //===============================================================================================
   //
   //
@@ -59,107 +81,58 @@ void processMT2TreeEvent()
   //
   //===============================================================================================
 
-  // histogram names
-  TString cutflow_name = "cutflow";
-  if (Vbf::is_signal) cutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(cutflow_name);
+  // Reproduce ISR analysis
+  reproducingISRAnalysis();
 
-  TString rawcutflow_name = "rawcutflow";
-  if (Vbf::is_signal) rawcutflow_name = VBFSUSYUtilities::getNameWithMassSuffix(rawcutflow_name);
+}
 
-  TString mee_name  = "mee";  if (Vbf::is_signal) mee_name  = VBFSUSYUtilities::getNameWithMassSuffix(mee_name);
-  TString mmm_name  = "mmm";  if (Vbf::is_signal) mmm_name  = VBFSUSYUtilities::getNameWithMassSuffix(mmm_name);
-
-  TString mee_low_name  = "mee_low";  if (Vbf::is_signal) mee_low_name  = VBFSUSYUtilities::getNameWithMassSuffix(mee_low_name);
-  TString mee_med_name  = "mee_med";  if (Vbf::is_signal) mee_med_name  = VBFSUSYUtilities::getNameWithMassSuffix(mee_med_name);
-  TString mee_high_name = "mee_high"; if (Vbf::is_signal) mee_high_name = VBFSUSYUtilities::getNameWithMassSuffix(mee_high_name);
-  TString mmm_low_name  = "mmm_low";  if (Vbf::is_signal) mmm_low_name  = VBFSUSYUtilities::getNameWithMassSuffix(mmm_low_name);
-  TString mmm_med_name  = "mmm_med";  if (Vbf::is_signal) mmm_med_name  = VBFSUSYUtilities::getNameWithMassSuffix(mmm_med_name);
-  TString mmm_high_name = "mmm_high"; if (Vbf::is_signal) mmm_high_name = VBFSUSYUtilities::getNameWithMassSuffix(mmm_high_name);
-
-  TString mll_med_name  = "mll_med";  if (Vbf::is_signal) mll_med_name  = VBFSUSYUtilities::getNameWithMassSuffix(mll_med_name);
-  TString mll_high_name = "mll_high"; if (Vbf::is_signal) mll_high_name = VBFSUSYUtilities::getNameWithMassSuffix(mll_high_name);
-
-  // bins
-  float mllbin[5] = {5., 10., 20., 30., 50.};
-
-  // Book histograms
-  PlotUtil::plot1D(cutflow_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-  PlotUtil::plot1D(rawcutflow_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
-  PlotUtil::plot1D(mee_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mee_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mmm_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mmm_name.Data(), 4, mllbin);
-
-  PlotUtil::plot1D(mee_low_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mee_low_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mmm_low_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mmm_low_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mee_med_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mee_med_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mmm_med_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mmm_med_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mee_high_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mee_high_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mmm_high_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mmm_high_name.Data(), 4, mllbin);
-
-  PlotUtil::plot1D(mll_med_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mll_med_name.Data(), 4, mllbin);
-  PlotUtil::plot1D(mll_high_name.Data(), -999, Vbf::evt_scale1fb, Vbf::h_1d, mll_high_name.Data(), 4, mllbin);
-
-  PlotUtil::plot1D("nBJet25", Vbf::mt2tree.nBJet25, Vbf::evt_scale1fb, Vbf::h_1d, "nBJet25", 5, 0., 5.);
-  PlotUtil::plot1D("MynBJet25L", VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46), Vbf::evt_scale1fb, Vbf::h_1d, "MynBJet25L", 5, 0., 5.);
-  PlotUtil::plot1D("MynBJet25M", VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.8), Vbf::evt_scale1fb, Vbf::h_1d, "MynBJet25M", 5, 0., 5.);
-
+//##################################################################################################
+void reproducingISRAnalysis()
+{
   // cutflow histogram
   if ((true))
   {
-    PlotUtil::plot1D(cutflow_name.Data(), 0, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-    PlotUtil::plot1D(rawcutflow_name.Data(), 0, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+    fillISRCutflow(0);
     if ((VBFSUSYUtilities::getNSelectedGoodLeptons() == 2 && VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 30.))
     {
-      PlotUtil::plot1D(cutflow_name.Data(), 1, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-      PlotUtil::plot1D(rawcutflow_name.Data(), 1, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+      fillISRCutflow(1);
       if ((VBFSUSYUtilities::isEEChannel()))
       {
-        PlotUtil::plot1D(cutflow_name.Data(), 2, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-        PlotUtil::plot1D(rawcutflow_name.Data(), 2, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
-        //if (Vbf::mt2tree.nBJet25 == 0)
+        fillISRCutflow(2);
         if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
         {
-          PlotUtil::plot1D(cutflow_name.Data(), 3, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-          PlotUtil::plot1D(rawcutflow_name.Data(), 3, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+          fillISRCutflow(3);
           if (VBFSUSYUtilities::getMll() < 50.)
           {
-            PlotUtil::plot1D(cutflow_name.Data(), 4, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-            PlotUtil::plot1D(rawcutflow_name.Data(), 4, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+            fillISRCutflow(4);
             if (VBFSUSYUtilities::getPtll() > 3.)
             {
-              PlotUtil::plot1D(cutflow_name.Data(), 5, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-              PlotUtil::plot1D(rawcutflow_name.Data(), 5, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+              fillISRCutflow(5);
               if (Vbf::mt2tree.met_pt > 125.)
               {
-                PlotUtil::plot1D(cutflow_name.Data(), 6, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                PlotUtil::plot1D(rawcutflow_name.Data(), 6, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                fillISRCutflow(6);
                 if (((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) > 0.6) && ((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) < 1.4))
                 {
-                  PlotUtil::plot1D(cutflow_name.Data(), 7, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                  PlotUtil::plot1D(rawcutflow_name.Data(), 7, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                  fillISRCutflow(7);
                   if (Vbf::mt2tree.ht > 100.)
                   {
-                    PlotUtil::plot1D(cutflow_name.Data(), 8, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                    PlotUtil::plot1D(rawcutflow_name.Data(), 8, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                    fillISRCutflow(8);
                     if (VBFSUSYUtilities::getMll() > 4.)
                     {
-                      PlotUtil::plot1D(cutflow_name.Data(), 9, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                      PlotUtil::plot1D(rawcutflow_name.Data(), 9, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                      fillISRCutflow(9);
                       if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
                       {
-                        PlotUtil::plot1D(cutflow_name.Data(), 10, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                        PlotUtil::plot1D(rawcutflow_name.Data(), 10, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                        fillISRCutflow(10);
                         if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
                         {
-                          PlotUtil::plot1D(cutflow_name.Data(), 11, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                          PlotUtil::plot1D(rawcutflow_name.Data(), 11, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                          fillISRCutflow(11);
                           if (VBFSUSYUtilities::getMtt() < 0. || VBFSUSYUtilities::getMtt() > 160.)
                           {
-                            PlotUtil::plot1D(cutflow_name.Data(), 12, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                            PlotUtil::plot1D(rawcutflow_name.Data(), 12, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
-                            PlotUtil::plot1D(mee_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mee_name.Data(), 50., 0, 50.);
-                            if      (Vbf::mt2tree.met_pt < 200.) { PlotUtil::plot1D(mee_low_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mee_low_name.Data(), 4., mllbin); }
-                            else if (Vbf::mt2tree.met_pt < 250.) { PlotUtil::plot1D(mee_med_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mee_med_name.Data(), 4., mllbin); PlotUtil::plot1D(mll_med_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mll_med_name.Data(), 4., mllbin); }
-                            else                                 { PlotUtil::plot1D(mee_high_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mee_high_name.Data(), 4., mllbin); PlotUtil::plot1D(mll_high_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mll_high_name.Data(), 4., mllbin); }
+                            fillISRCutflow(12);
+                            fillISRHistogram(Vbf::mee_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb);
+                            if      (Vbf::mt2tree.met_pt < 200.) { fillISRHistogram(Vbf::mee_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else if (Vbf::mt2tree.met_pt < 250.) { fillISRHistogram(Vbf::mee_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else                                 { fillISRHistogram(Vbf::mee_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
                           }
                         }
                       }
@@ -173,53 +146,41 @@ void processMT2TreeEvent()
       }
       if ((VBFSUSYUtilities::isMMChannel()))
       {
-        PlotUtil::plot1D(cutflow_name.Data(), 13, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-        PlotUtil::plot1D(rawcutflow_name.Data(), 13, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
-        //if (Vbf::mt2tree.nBJet25 == 0)
+        fillISRCutflow(13);
         if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
         {
-          PlotUtil::plot1D(cutflow_name.Data(), 14, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-          PlotUtil::plot1D(rawcutflow_name.Data(), 14, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+          fillISRCutflow(14);
           if (VBFSUSYUtilities::getMll() < 50.)
           {
-            PlotUtil::plot1D(cutflow_name.Data(), 15, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-            PlotUtil::plot1D(rawcutflow_name.Data(), 15, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+            fillISRCutflow(15);
             if (VBFSUSYUtilities::getPtll() > 3.)
             {
-              PlotUtil::plot1D(cutflow_name.Data(), 16, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-              PlotUtil::plot1D(rawcutflow_name.Data(), 16, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+              fillISRCutflow(16);
               if (Vbf::mt2tree.met_pt > 125.)
               {
-                PlotUtil::plot1D(cutflow_name.Data(), 17, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                PlotUtil::plot1D(rawcutflow_name.Data(), 17, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                fillISRCutflow(17);
                 if (((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) > 0.6) && ((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) < 1.4))
                 {
-                  PlotUtil::plot1D(cutflow_name.Data(), 18, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                  PlotUtil::plot1D(rawcutflow_name.Data(), 18, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                  fillISRCutflow(18);
                   if (Vbf::mt2tree.ht > 100.)
                   {
-                    PlotUtil::plot1D(cutflow_name.Data(), 19, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                    PlotUtil::plot1D(rawcutflow_name.Data(), 19, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                    fillISRCutflow(19);
                     if (VBFSUSYUtilities::getMll() > 4.)
                     {
-                      PlotUtil::plot1D(cutflow_name.Data(), 20, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                      PlotUtil::plot1D(rawcutflow_name.Data(), 20, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                      fillISRCutflow(20);
                       if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
                       {
-                        PlotUtil::plot1D(cutflow_name.Data(), 21, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                        PlotUtil::plot1D(rawcutflow_name.Data(), 21, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                        fillISRCutflow(21);
                         if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
                         {
-                          PlotUtil::plot1D(cutflow_name.Data(), 22, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                          PlotUtil::plot1D(rawcutflow_name.Data(), 22, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
+                          fillISRCutflow(22);
                           if (VBFSUSYUtilities::getMtt() < 0. || VBFSUSYUtilities::getMtt() > 160.)
                           {
-                            PlotUtil::plot1D(cutflow_name.Data(), 23, Vbf::evt_scale1fb, Vbf::h_1d, cutflow_name.Data(), 50, 0, 50);
-                            PlotUtil::plot1D(rawcutflow_name.Data(), 23, 1, Vbf::h_1d, rawcutflow_name.Data(), 50, 0, 50);
-                            PlotUtil::plot1D(mmm_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mmm_name.Data(), 50., 0, 50.);
-                            if      (Vbf::mt2tree.met_pt < 200.) { PlotUtil::plot1D(mmm_low_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mmm_low_name.Data(), 4., mllbin); }
-                            else if (Vbf::mt2tree.met_pt < 250.) { PlotUtil::plot1D(mmm_med_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mmm_med_name.Data(), 4., mllbin); PlotUtil::plot1D(mll_med_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mll_med_name.Data(), 4., mllbin); }
-                            else                                 { PlotUtil::plot1D(mmm_high_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mmm_high_name.Data(), 4., mllbin); PlotUtil::plot1D(mll_high_name.Data(), VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb, Vbf::h_1d, mll_high_name.Data(), 4., mllbin); }
+                            fillISRCutflow(23);
+                            fillISRHistogram(Vbf::mmm_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb);
+                            if      (Vbf::mt2tree.met_pt < 200.) { fillISRHistogram(Vbf::mmm_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else if (Vbf::mt2tree.met_pt < 250.) { fillISRHistogram(Vbf::mmm_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else                                 { fillISRHistogram(Vbf::mmm_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
                           }
                         }
                       }
@@ -233,6 +194,57 @@ void processMT2TreeEvent()
       }
     }
   }
+}
+
+//##################################################################################################
+void bookISRHistogram(TString name, int nbins, float min, float max)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getNameWithMassSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_isr_1d, name.Data(), nbins, min, max);
+}
+
+//##################################################################################################
+void bookISRHistogram(TString name, int nbins, const float* xbins)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getNameWithMassSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_isr_1d, name.Data(), nbins, xbins);
+}
+
+//##################################################################################################
+void fillISRHistogram(TString name, float val, float wgt)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getNameWithMassSuffix(name);
+  PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_isr_1d);
+}
+
+//##################################################################################################
+void fillISRCutflow(int cutflowbin);
+{
+  fillISRHistogram(Vbf::cutflow_name.Data()   , cutflowbin, Vbf::evt_scale1fb);
+  fillISRHistogram(Vbf::rawcutflow_name.Data(), cutflowbin,                1.);
+}
+
+//##################################################################################################
+void bookISRHistograms()
+{
+
+  // Book histograms
+  bookISRHistogram(Vbf::cutflow_name    , 50, 0., 50.);
+  bookISRHistogram(Vbf::rawcutflow_name , 50, 0., 50.);
+  bookISRHistogram(Vbf::mee_name        , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_name        , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_low_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_med_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_high_name   , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_low_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_med_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_high_name   , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mll_med_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mll_high_name   , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::nbjet25_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::myNBjet25L_name ,  5, 0., 5.);
+  bookISRHistogram(Vbf::myNBjet25M_name ,  5, 0., 5.);
+
 }
 
 //##################################################################################################
@@ -298,6 +310,10 @@ void setMET()
 void loadScale1fb()
 {
   Vbf::evt_scale1fb = Vbf::mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
+  if (Vbf::is_signal)
+  {
+    Vbf::evt_scale1fb = 1000./25868.;
+  }
 }
 
 //##################################################################################################
@@ -411,7 +427,7 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
 
   // Set whether the sample being processed is signal or not
   // by checking the output file name
-  Vbf::is_signal = output_name.Contains("sig");
+  Vbf::is_signal = output_name.Contains("sig") || output_name.Contains("higgsino");
 
   // Set output name
   Vbf::output_name = output_name;
@@ -423,7 +439,7 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
 void afterLoop()
 {
   // Save plots
-  PlotUtil::savePlots(Vbf::h_1d, Vbf::output_name+".root");
+  PlotUtil::savePlots(Vbf::h_isr_1d, Vbf::output_name+".root");
 
   // Fun exit
   PrintUtilities::exit();
