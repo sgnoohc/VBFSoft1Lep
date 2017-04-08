@@ -1131,7 +1131,7 @@ namespace AnalysisUtilities
     {
       bool fail = false;
       if ( !(jet.jet_pt > 25.       ) ) fail |= true;
-      if ( !(fabs(jet.jet_eta) < 2.4) ) fail |= true;
+      //if ( !(fabs(jet.jet_eta) < 2.4) ) fail |= true;
       return ( !fail );
     }
 
@@ -1189,6 +1189,7 @@ namespace AnalysisUtilities
     void setMET   (float met_pt_ ) { met_pt  = met_pt_;  setMETp4(); }
     void setMETphi(float met_phi_) { met_phi = met_phi_; setMETp4(); }
     void setMETp4 () { met_p4.SetPtEtaPhiM(met_pt, 0, met_phi, 0); }
+    TLorentzVector getMETp4() { return met_p4; }
 
     //################################################################################################
     // Is this jet a central jet
@@ -1234,6 +1235,21 @@ namespace AnalysisUtilities
       if (!hasVBFJets())
         PrintUtilities::error("VBFSUSYUtilities::getVBFMjj() asked to compute Mjj but does not have VBF jets");
       return (getLeadingVBFJet().p4 + getSubleadingVBFJet().p4).M();
+    }
+
+    //################################################################################################
+    // compute VBF Delta Eta variable
+    //
+    float getLeadCenJetPt()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getVBFMjj() asked to compute Mjj but does not have VBF jets");
+      if (getNSelectedGoodJets() == 2)
+        return -20;
+      for (unsigned int ijet = 2; ijet < selected_good_jets.size(); ++ijet)
+        if (isCenJet(selected_good_jets.at(ijet)))
+          return selected_good_jets.at(ijet).p4.Pt();
+      return -10;
     }
 
     //################################################################################################

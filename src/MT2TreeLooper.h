@@ -62,6 +62,7 @@ void bookVBFHistogram(TString name, int nbins, float min, float max);
 void bookVBFHistogram(TString name, int nbins, const float* xbins);
 
 // Filling histograms
+void fillVBFHistograms();
 void fillVBFHistogram(TString name, float val, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
@@ -108,6 +109,11 @@ namespace Vbf {
   extern TString histname_vbf_rawcutflow;
   extern TString histname_vbf_nsoftleps;
   extern TString histname_vbf_njets;
+  extern TString histname_vbf_mjj;
+  extern TString histname_vbf_detajj;
+  extern TString histname_vbf_cenjetpt;
+  extern TString histname_vbf_leadleppt;
+  extern TString histname_vbf_met;
 
   // bins
   extern float mllbin[5];

@@ -43,6 +43,11 @@ namespace Vbf {
   TString histname_vbf_rawcutflow = "vbf_rawcutflow";
   TString histname_vbf_nsoftleps  = "vbf_nsoftleps";
   TString histname_vbf_njets      = "vbf_njets";
+  TString histname_vbf_mjj        = "vbf_mjj";
+  TString histname_vbf_detajj     = "vbf_detajj";
+  TString histname_vbf_cenjetpt   = "vbf_cenjetpt";
+  TString histname_vbf_leadleppt  = "vbf_leadleppt";
+  TString histname_vbf_met        = "vbf_met";
 
   // mll bin
   float mllbin[5] = {5., 10., 20., 30., 50.};
@@ -77,11 +82,33 @@ void bookVBFHistograms()
 {
 
   // Book histograms
-  bookVBFHistogram(Vbf::histname_vbf_cutflow    , 50,  0., 50.);
-  bookVBFHistogram(Vbf::histname_vbf_rawcutflow , 50,  0., 50.);
-  bookVBFHistogram(Vbf::histname_vbf_nsoftleps  ,  5, -1.,  4.);
-  bookVBFHistogram(Vbf::histname_vbf_njets      ,  5,  0.,  5.);
+  bookVBFHistogram(Vbf::histname_vbf_cutflow    ,  50,    0.,   50.);
+  bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  50,    0.,   50.);
+  bookVBFHistogram(Vbf::histname_vbf_nsoftleps  ,   5,   -1.,    4.);
+  bookVBFHistogram(Vbf::histname_vbf_njets      ,   5,    0.,    5.);
+  bookVBFHistogram(Vbf::histname_vbf_mjj        , 180,    0., 2500.);
+  bookVBFHistogram(Vbf::histname_vbf_detajj     , 180,    0.,    9.);
+  bookVBFHistogram(Vbf::histname_vbf_cenjetpt   , 180,  -30.,  150.);
+  bookVBFHistogram(Vbf::histname_vbf_leadleppt  , 180,    0.,   35.);
+  bookVBFHistogram(Vbf::histname_vbf_met        , 180,    0.,  350.);
 
+}
+
+//##################################################################################################
+void fillVBFHistograms()
+{
+  fillVBFHistogram(Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons()  );
+  fillVBFHistogram(Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()         );
+  if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+  {
+    fillVBFHistogram(Vbf::histname_vbf_mjj,       VBFSUSYUtilities::getVBFMjj()                    );
+    fillVBFHistogram(Vbf::histname_vbf_detajj,    VBFSUSYUtilities::getVBFDeltaEta()               );
+    fillVBFHistogram(Vbf::histname_vbf_met      , VBFSUSYUtilities::getMETp4().Pt()                );
+    if (VBFSUSYUtilities::getNSelectedGoodJets() > 2)
+      fillVBFHistogram(Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()              );
+    if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
+      fillVBFHistogram(Vbf::histname_vbf_leadleppt, VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() );
+  }
 }
 
 //##################################################################################################
@@ -94,10 +121,53 @@ void doVBFAnalysis()
   if (true)
   {
     fillVBFCutflow(0);
-    fillVBFHistogram(Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons());
-    fillVBFHistogram(Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()       );
+    if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+    {
+      fillVBFCutflow(1);
+      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+      {
+        fillVBFCutflow(2);
+        if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+        {
+          fillVBFCutflow(3);
+          if (VBFSUSYUtilities::getVBFDeltaEta() > 3.5)
+          {
+            fillVBFCutflow(4);
+            fillVBFHistograms();
+          }
+        }
+      }
+      //if (VBFSUSYUtilities::getLeadCenJetPt() < 25.)
+      //{
+      //  fillVBFCutflow(2);
+      //  if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+      //  {
+      //    fillVBFCutflow(3);
+      //    if (VBFSUSYUtilities::getVBFDeltaEta() >= 3.5)
+      //    {
+      //      fillVBFCutflow(4);
+      //      if (VBFSUSYUtilities::getVBFDeltaEta() >= 3.5)
+      //      {
+      //        fillVBFHistograms();
+      //      }
+      //    }
+      //  }
+      //}
+    }
   }
 }
+
+// 1. first optimize detajj/mjj/leadcenjetpt (Just the two jet topology)
+
+// leading third central jet
+// missing energy
+// ht
+// detajj
+// mjj
+// leadjet pt
+// subleadjet pt
+// leading lepton pt
+
 
 
 
@@ -304,7 +374,7 @@ void loadScale1fb()
   Vbf::evt_scale1fb = Vbf::mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
   if (Vbf::is_signal)
   {
-    Vbf::evt_scale1fb = 1000./25868.;
+    Vbf::evt_scale1fb = 1.;
   }
 }
 
@@ -419,7 +489,7 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
 
   // Set whether the sample being processed is signal or not
   // by checking the output file name
-  Vbf::is_signal = output_name.Contains("sig") || output_name.Contains("higgsino");
+  Vbf::is_signal = output_name.Contains("sig") || output_name.Contains("higgsino") || output_name.Contains("VBF");
 
   // Set output name
   Vbf::output_name = output_name;
@@ -439,11 +509,19 @@ void afterLoop()
 {
   // Save plots
   PlotUtil::savePlots(Vbf::h_isr_1d, Vbf::output_name+".root");
-  PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+".root");
+  PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+"_vbf.root");
 
   // Fun exit
   PrintUtilities::exit();
 }
+
+
+
+
+
+
+
+
 
 
 //##################################################################################################

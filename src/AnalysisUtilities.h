@@ -277,6 +277,7 @@ namespace AnalysisUtilities
     void setMET(float met);
     void setMETphi(float met_phi);
     void setMETp4();
+    TLorentzVector getMETp4();
 
     //
     // VBF Topology variables
@@ -286,6 +287,7 @@ namespace AnalysisUtilities
     bool doesCenJetsExist();
     float getVBFDeltaEta();
     float getVBFMjj();
+    float getLeadCenJetPt();
 
     //
     // Lepton variables

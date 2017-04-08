@@ -109,7 +109,7 @@ parser.add_argument('--reverseautostack', dest='reverseautostack', action='store
 parser.add_argument('--legend_line_color', dest='legend_line_color', default=0, help=argparse.SUPPRESS)
 parser.add_argument('--legendXlow', dest='legendXlow', help='legend x-low value', default=0.71, type=float)
 parser.add_argument('--legendXhigh', dest='legendXhigh', help='legend x-high value', default=0.95, type=float)
-parser.add_argument('--legendYlow', dest='legendYlow', help='legend y-low value', default=0.7, type=float)
+parser.add_argument('--legendYlow', dest='legendYlow', help='legend y-low value', default=0.2, type=float)
 parser.add_argument('--legendYhigh', dest='legendYhigh', help='legend y-high value', default=0.9, type=float)
 parser.add_argument('--legendNCols', dest='legendNCols', help='legend ncolumns', default=1, type=int)
 parser.add_argument('--delimiter_legendentry', dest='delimiter_legendentry', default='%', help=argparse.SUPPRESS)
@@ -410,9 +410,19 @@ class HistogramManager:
                     if opt.find('%') != -1:
                         filename = opt.split('%')[0]
                         histname = opt.split('%')[1]
-                        exec "scale = float(" + opt.split('%')[2] + ")"
-                        histref = self.get_file(filename).Get(histname)
-                        norm = histref.Integral() * scale
+                        scaleoption = opt.split('%')[2]
+                        if scaleoption.find('bin') != -1:
+                            exec "scale = float(" + opt.split('%')[3] + ")"
+                            binindex = int(scaleoption.split('bin')[1])
+                            histref = self.get_file(filename).Get(histname)
+                            denomsum = histref.GetBinContent(binindex)
+                            print denomsum, scale
+                            norm = 1./denomsum * scale * hist.Integral()
+                            print norm
+                        else:
+                            exec "scale = float(" + opt.split('%')[2] + ")"
+                            histref = self.get_file(filename).Get(histname)
+                            norm = histref.Integral() * scale
                     elif opt.find('bin') != -1:
                         binnumber = int(opt.rsplit('bin')[1])
                         bincontent = hist.GetBinContent(binnumber)

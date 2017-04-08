@@ -55,16 +55,28 @@ else
   usage
 fi
 
+# parse whether it is for vbf analysis or not
+BKG1="fakes"
+BKG2="tW"
+BKG3="vv"
+BKG4="dy"
+BKG5="tt"
+BKGLEGEND1="Fakes"
+BKGLEGEND2="tW"
+BKGLEGEND3="VV"
+BKGLEGEND4="DY"
+BKGLEGEND5="t#bar{t}(2l)"
+
 # parse 7th argument to decide whether to draw signal only or bkg as well.
 if [ "x$7" == "x" ]; then
   python scripts/makeplot.py \
     --plottype plot1d \
     --plotname ~/public_html/test \
-    --${BKGCATEG}hist 'haddoutput/hist_fakes.root     ::: '$1' ::: Set'${BKGCOLORING}'Color=>7003 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7003 , SetName=>Fakes%f, Scale=>'$SCALE'' \
-    --${BKGCATEG}hist 'haddoutput/hist_tW.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7006 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7006 , SetName=>tW%f, Scale=>'$SCALE'' \
-    --${BKGCATEG}hist 'haddoutput/hist_vv.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7007 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7007 , SetName=>VV%f, Scale=>'$SCALE'' \
-    --${BKGCATEG}hist 'haddoutput/hist_dy.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>DY%f, Scale=>'$SCALE'' \
-    --bkghist         'haddoutput/hist_tt.root        ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>t#bar{t}(2l)%f, Scale=>'$SCALE'' \
+    --${BKGCATEG}hist 'haddoutput/hist_'${BKG1}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7003 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7003 , SetName=>'${BKGLEGEND1}'%f, Scale=>'$SCALE'' \
+    --${BKGCATEG}hist 'haddoutput/hist_'${BKG2}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7006 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7006 , SetName=>'${BKGLEGEND2}'%f, Scale=>'$SCALE'' \
+    --${BKGCATEG}hist 'haddoutput/hist_'${BKG3}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7007 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7007 , SetName=>'${BKGLEGEND3}'%f, Scale=>'$SCALE'' \
+    --${BKGCATEG}hist 'haddoutput/hist_'${BKG4}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>'${BKGLEGEND4}'%f, Scale=>'$SCALE'' \
+    --bkghist         'haddoutput/hist_'${BKG5}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>'${BKGLEGEND5}'%f, Scale=>'$SCALE'' \
     --sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
     $2
     #--sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
@@ -74,10 +86,6 @@ else
     --plotname ~/public_html/test \
     --sighist 'haddoutput/hist_signal.root            ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
     --bkghist 'haddoutput/hist_signal.root            ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
-    #--${BKGCATEG}hist 'haddoutput/hist_z.root         ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>Z%f, Scale=>'$SCALE'' \
-    #--${BKGCATEG}hist 'haddoutput/hist_wjets.root     ::: '$1' ::: Set'${BKGCOLORING}'Color=>7003 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7003 , SetName=>W%f, Scale=>'$SCALE'' \
-    #--bkghist 'haddoutput/hist_top.root               ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>t#bar{t}%f, Scale=>'$SCALE'' \
-    #--${BKGCATEG}hist 'haddoutput/hist_others.root    ::: '$1' ::: Set'${BKGCOLORING}'Color=>7007 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7007 , SetName=>QCD%f, Scale=>'$SCALE'' \
     $2
 fi
 
