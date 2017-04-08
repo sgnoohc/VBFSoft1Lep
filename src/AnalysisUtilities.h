@@ -57,8 +57,7 @@ namespace AnalysisUtilities
         string name, float xval, double weight, Hist1D_DB &allhistos,
         string title, int numbinsx, const float* xbins);
     void plot1D(
-        string name, float xval, double weight, Hist1D_DB &allhistos,
-        string title);
+        string name, float xval, double weight, Hist1D_DB &allhistos);
     void savePlots(Hist1D_DB&, const char*);
   }
 
@@ -219,6 +218,7 @@ namespace AnalysisUtilities
     bool isGoodLepton(Lepton lepton);
     void selectGoodLeptons(Leptons leptons);
     int getNSelectedGoodLeptons();
+    int getNSelectedSoftGoodLeptons();
 
     Lepton getLeadingGoodLepton();
     Lepton getSubleadingGoodLepton();

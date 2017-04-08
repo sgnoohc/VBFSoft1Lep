@@ -871,9 +871,10 @@ namespace AnalysisUtilities
       // If signal sample by checking whether the output name contains "sig"
       for (int igen = 0; igen < ngen; ++igen)
       {
-        if (abs(gen_pdgId[igen]) == 1000024 && gen_status[igen] == 22) setMC1(gen_mass[igen]);
-        if (abs(gen_pdgId[igen]) == 1000023 && gen_status[igen] == 22) setMN2(gen_mass[igen]);
-        if (abs(gen_pdgId[igen]) == 1000022 && gen_status[igen] == 23) setMN1(gen_mass[igen]);
+        if (abs(gen_pdgId[igen]) == 1000024 &&  gen_status[igen] == 22) setMC1(gen_mass[igen]);
+        if (abs(gen_pdgId[igen]) == 1000023 &&  gen_status[igen] == 22) setMN2(gen_mass[igen]);
+        if (abs(gen_pdgId[igen]) == 1000022 && (gen_status[igen] == 23
+                                              ||gen_status[igen] == 1)) setMN1(gen_mass[igen]);
       }
 
       return;
@@ -985,6 +986,25 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // return number of soft vbf leptons
+    //
+    int getNSelectedSoftGoodLeptons()
+    {
+      int nlep = getNSelectedGoodLeptons();
+      if (nlep == 0)
+      {
+        return 0;
+      }
+      else
+      {
+        if (getLeadingGoodLepton().p4.Pt() > 30.)
+          return -1;
+        else
+          return getNSelectedVBFLeptons();
+      }
+    }
+
+    //################################################################################################
     // get leading good lepton
     //
     Lepton getLeadingGoodLepton()
@@ -1039,7 +1059,15 @@ namespace AnalysisUtilities
     {
       bool fail = false;
       if ( !(lepton.lep_pt >= 5.) ) fail |= true;
-      if ( !(lepton.lep_pt < 20.) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_eta) < 2.5)       ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 13) && !( (fabs(lepton.lep_eta) < 2.4)       ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 11) && !( (lepton.lep_tightId > ELECTRON_ID) ) ) fail |= true;
+      if ( (abs(lepton.lep_pdgId) == 13) && !( (lepton.lep_tightId > MUON_ID)     ) ) fail |= true;
+      if ( !( fabs(lepton.lep_sip3d) < 2.                                         ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dxy)   < 0.01                                       ) ) fail |= true;
+      if ( !( fabs(lepton.lep_dz)    < 0.01                                       ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03) < 0.5                                     ) ) fail |= true;
+      if ( !( fabs(lepton.lep_relIso03*lepton.lep_pt) < 5.                        ) ) fail |= true;
       return ( !fail );
     }
 
@@ -1292,9 +1320,9 @@ namespace AnalysisUtilities
       tmp_met = met_p4;
       Mll = (lep0_tlv + lep1_tlv).M();
 
-      lep0_tlv.Print();
-      lep1_tlv.Print();
-      tmp_met.Print();
+      //lep0_tlv.Print();
+      //lep1_tlv.Print();
+      //tmp_met.Print();
 
       // below from HWWlvlvCode.cxx https://svnweb.cern.ch/trac/atlasoff/browser/PhysicsAnalysis/HiggsPhys/HSG3/WWDileptonAnalysisCode/HWWlvlvCode/trunk/Root/HWWlvlvCode.cxx
       x_1= (lep0_tlv.Px()*lep1_tlv.Py()-lep0_tlv.Py()*lep1_tlv.Px())/(lep1_tlv.Py()*tmp_met.Px()-lep1_tlv.Px()*tmp_met.Py()+lep0_tlv.Px()*lep1_tlv.Py()-lep0_tlv.Py()*lep1_tlv.Px());

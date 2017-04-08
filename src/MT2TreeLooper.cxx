@@ -14,6 +14,7 @@ namespace Vbf {
   bool is_signal;
   TString output_name;
   PlotUtil::Hist1D_DB h_isr_1d;
+  PlotUtil::Hist1D_DB h_vbf_1d;
 
   // Event data
   MT2Tree mt2tree;
@@ -36,6 +37,13 @@ namespace Vbf {
   TString myNBjet25L_name = "MynBJet25L";
   TString myNBjet25M_name = "MynBJet25M";
 
+  // VBF histogram names
+  // multiplicity
+  TString histname_vbf_cutflow    = "vbf_cutflow";
+  TString histname_vbf_rawcutflow = "vbf_rawcutflow";
+  TString histname_vbf_nsoftleps  = "vbf_nsoftleps";
+  TString histname_vbf_njets      = "vbf_njets";
+
   // mll bin
   float mllbin[5] = {5., 10., 20., 30., 50.};
 }
@@ -56,6 +64,61 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 //--------------------====================--------------------====================------------------------====================--------------------====================--------------------
 //--------------------====================--------------------====================------------------------====================--------------------====================--------------------
 //--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+
+
+//##################################################################################################
+void bookVBFHistograms()
+{
+
+  // Book histograms
+  bookVBFHistogram(Vbf::histname_vbf_cutflow    , 50,  0., 50.);
+  bookVBFHistogram(Vbf::histname_vbf_rawcutflow , 50,  0., 50.);
+  bookVBFHistogram(Vbf::histname_vbf_nsoftleps  ,  5, -1.,  4.);
+  bookVBFHistogram(Vbf::histname_vbf_njets      ,  5,  0.,  5.);
+
+}
+
+//##################################################################################################
+void doVBFAnalysis()
+{
+
+  if (Vbf::is_signal)
+    bookVBFHistograms();
+
+  if (true)
+  {
+    fillVBFCutflow(0);
+    fillVBFHistogram(Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons());
+    fillVBFHistogram(Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()       );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
+
+
 
 
 //##################################################################################################
@@ -70,131 +133,60 @@ void processMT2TreeEvent()
   // select objects
   selectObjects();
 
-  // bookISR histograms
-  bookISRHistograms();
-
   //===============================================================================================
   //
   //
-  // reproducing ISR analysis
+  // reproduce ISR analysis
   //
   //
   //===============================================================================================
 
   // Reproduce ISR analysis
-  reproducingISRAnalysis();
+  reproduceISRAnalysis();
 
+  //===============================================================================================
+  //
+  //
+  // develop VBF analysis
+  //
+  //
+  //===============================================================================================
+  doVBFAnalysis();
+
+}
+
+
+//##################################################################################################
+void bookVBFHistogram(TString name, int nbins, float min, float max)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getNameWithMassSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, min, max);
 }
 
 //##################################################################################################
-void reproducingISRAnalysis()
+void bookVBFHistogram(TString name, int nbins, const float* xbins)
 {
-  // cutflow histogram
-  if ((true))
-  {
-    fillISRCutflow(0);
-    if ((VBFSUSYUtilities::getNSelectedGoodLeptons() == 2 && VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 30.))
-    {
-      fillISRCutflow(1);
-      if ((VBFSUSYUtilities::isEEChannel()))
-      {
-        fillISRCutflow(2);
-        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
-        {
-          fillISRCutflow(3);
-          if (VBFSUSYUtilities::getMll() < 50.)
-          {
-            fillISRCutflow(4);
-            if (VBFSUSYUtilities::getPtll() > 3.)
-            {
-              fillISRCutflow(5);
-              if (Vbf::mt2tree.met_pt > 125.)
-              {
-                fillISRCutflow(6);
-                if (((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) > 0.6) && ((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) < 1.4))
-                {
-                  fillISRCutflow(7);
-                  if (Vbf::mt2tree.ht > 100.)
-                  {
-                    fillISRCutflow(8);
-                    if (VBFSUSYUtilities::getMll() > 4.)
-                    {
-                      fillISRCutflow(9);
-                      if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
-                      {
-                        fillISRCutflow(10);
-                        if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
-                        {
-                          fillISRCutflow(11);
-                          if (VBFSUSYUtilities::getMtt() < 0. || VBFSUSYUtilities::getMtt() > 160.)
-                          {
-                            fillISRCutflow(12);
-                            fillISRHistogram(Vbf::mee_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb);
-                            if      (Vbf::mt2tree.met_pt < 200.) { fillISRHistogram(Vbf::mee_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
-                            else if (Vbf::mt2tree.met_pt < 250.) { fillISRHistogram(Vbf::mee_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
-                            else                                 { fillISRHistogram(Vbf::mee_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      if ((VBFSUSYUtilities::isMMChannel()))
-      {
-        fillISRCutflow(13);
-        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
-        {
-          fillISRCutflow(14);
-          if (VBFSUSYUtilities::getMll() < 50.)
-          {
-            fillISRCutflow(15);
-            if (VBFSUSYUtilities::getPtll() > 3.)
-            {
-              fillISRCutflow(16);
-              if (Vbf::mt2tree.met_pt > 125.)
-              {
-                fillISRCutflow(17);
-                if (((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) > 0.6) && ((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) < 1.4))
-                {
-                  fillISRCutflow(18);
-                  if (Vbf::mt2tree.ht > 100.)
-                  {
-                    fillISRCutflow(19);
-                    if (VBFSUSYUtilities::getMll() > 4.)
-                    {
-                      fillISRCutflow(20);
-                      if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
-                      {
-                        fillISRCutflow(21);
-                        if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
-                        {
-                          fillISRCutflow(22);
-                          if (VBFSUSYUtilities::getMtt() < 0. || VBFSUSYUtilities::getMtt() > 160.)
-                          {
-                            fillISRCutflow(23);
-                            fillISRHistogram(Vbf::mmm_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb);
-                            if      (Vbf::mt2tree.met_pt < 200.) { fillISRHistogram(Vbf::mmm_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
-                            else if (Vbf::mt2tree.met_pt < 250.) { fillISRHistogram(Vbf::mmm_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
-                            else                                 { fillISRHistogram(Vbf::mmm_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getNameWithMassSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, xbins);
 }
+
+//##################################################################################################
+void fillVBFHistogram(TString name, float val, float wgt)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getNameWithMassSuffix(name);
+  if (wgt == -999)
+    PlotUtil::plot1D(name.Data(), val, Vbf::evt_scale1fb, Vbf::h_vbf_1d);
+  else
+    PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_vbf_1d);
+}
+
+//##################################################################################################
+void fillVBFCutflow(int cutflowbin)
+{
+  fillVBFHistogram(Vbf::histname_vbf_cutflow.Data()   , cutflowbin, Vbf::evt_scale1fb);
+  fillVBFHistogram(Vbf::histname_vbf_rawcutflow.Data(), cutflowbin,                1.);
+}
+
 
 //##################################################################################################
 void bookISRHistogram(TString name, int nbins, float min, float max)
@@ -218,7 +210,7 @@ void fillISRHistogram(TString name, float val, float wgt)
 }
 
 //##################################################################################################
-void fillISRCutflow(int cutflowbin);
+void fillISRCutflow(int cutflowbin)
 {
   fillISRHistogram(Vbf::cutflow_name.Data()   , cutflowbin, Vbf::evt_scale1fb);
   fillISRHistogram(Vbf::rawcutflow_name.Data(), cutflowbin,                1.);
@@ -231,17 +223,17 @@ void bookISRHistograms()
   // Book histograms
   bookISRHistogram(Vbf::cutflow_name    , 50, 0., 50.);
   bookISRHistogram(Vbf::rawcutflow_name , 50, 0., 50.);
-  bookISRHistogram(Vbf::mee_name        , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_name        , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mee_low_name    , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mee_med_name    , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mee_high_name   , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_low_name    , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_med_name    , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_high_name   , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mll_med_name    , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::mll_high_name   , 50, Vbf::mllbin);
-  bookISRHistogram(Vbf::nbjet25_name    , 50, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_name        ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_name        ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_low_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_med_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_high_name   ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_low_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_med_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_high_name   ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mll_med_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mll_high_name   ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::nbjet25_name    ,  4, Vbf::mllbin);
   bookISRHistogram(Vbf::myNBjet25L_name ,  5, 0., 5.);
   bookISRHistogram(Vbf::myNBjet25M_name ,  5, 0., 5.);
 
@@ -431,6 +423,13 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
 
   // Set output name
   Vbf::output_name = output_name;
+
+  // bookISR histograms
+  bookISRHistograms();
+
+  // bookVBF histograms
+  bookVBFHistograms();
+
 }
 
 
@@ -440,11 +439,127 @@ void afterLoop()
 {
   // Save plots
   PlotUtil::savePlots(Vbf::h_isr_1d, Vbf::output_name+".root");
+  PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+".root");
 
   // Fun exit
   PrintUtilities::exit();
 }
 
+
+//##################################################################################################
+void reproduceISRAnalysis()
+{
+
+  // if signal need to fill different histograms
+  if (Vbf::is_signal)
+    bookISRHistograms();
+
+  // cutflow histogram
+  if ((true))
+  {
+    fillISRCutflow(0);
+    if ((VBFSUSYUtilities::getNSelectedGoodLeptons() == 2 && VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 30.))
+    {
+      fillISRCutflow(1);
+      if ((VBFSUSYUtilities::isEEChannel()))
+      {
+        fillISRCutflow(2);
+        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+        {
+          fillISRCutflow(3);
+          if (VBFSUSYUtilities::getMll() < 50.)
+          {
+            fillISRCutflow(4);
+            if (VBFSUSYUtilities::getPtll() > 3.)
+            {
+              fillISRCutflow(5);
+              if (Vbf::mt2tree.met_pt > 125.)
+              {
+                fillISRCutflow(6);
+                if (((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) > 0.6) && ((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) < 1.4))
+                {
+                  fillISRCutflow(7);
+                  if (Vbf::mt2tree.ht > 100.)
+                  {
+                    fillISRCutflow(8);
+                    if (VBFSUSYUtilities::getMll() > 4.)
+                    {
+                      fillISRCutflow(9);
+                      if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
+                      {
+                        fillISRCutflow(10);
+                        if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
+                        {
+                          fillISRCutflow(11);
+                          if (VBFSUSYUtilities::getMtt() < 0. || VBFSUSYUtilities::getMtt() > 160.)
+                          {
+                            fillISRCutflow(12);
+                            fillISRHistogram(Vbf::mee_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb);
+                            if      (Vbf::mt2tree.met_pt < 200.) { fillISRHistogram(Vbf::mee_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else if (Vbf::mt2tree.met_pt < 250.) { fillISRHistogram(Vbf::mee_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else                                 { fillISRHistogram(Vbf::mee_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      if ((VBFSUSYUtilities::isMMChannel()))
+      {
+        fillISRCutflow(13);
+        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+        {
+          fillISRCutflow(14);
+          if (VBFSUSYUtilities::getMll() < 50.)
+          {
+            fillISRCutflow(15);
+            if (VBFSUSYUtilities::getPtll() > 3.)
+            {
+              fillISRCutflow(16);
+              if (Vbf::mt2tree.met_pt > 125.)
+              {
+                fillISRCutflow(17);
+                if (((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) > 0.6) && ((Vbf::mt2tree.met_pt / Vbf::mt2tree.ht) < 1.4))
+                {
+                  fillISRCutflow(18);
+                  if (Vbf::mt2tree.ht > 100.)
+                  {
+                    fillISRCutflow(19);
+                    if (VBFSUSYUtilities::getMll() > 4.)
+                    {
+                      fillISRCutflow(20);
+                      if (fabs(VBFSUSYUtilities::getMll() - 9.75) > 0.75)
+                      {
+                        fillISRCutflow(21);
+                        if (VBFSUSYUtilities::getMTleadLep() < 70. && VBFSUSYUtilities::getMTleadLep() < 70.)
+                        {
+                          fillISRCutflow(22);
+                          if (VBFSUSYUtilities::getMtt() < 0. || VBFSUSYUtilities::getMtt() > 160.)
+                          {
+                            fillISRCutflow(23);
+                            fillISRHistogram(Vbf::mmm_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb);
+                            if      (Vbf::mt2tree.met_pt < 200.) { fillISRHistogram(Vbf::mmm_low_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else if (Vbf::mt2tree.met_pt < 250.) { fillISRHistogram(Vbf::mmm_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_med_name , VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                            else                                 { fillISRHistogram(Vbf::mmm_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); fillISRHistogram(Vbf::mll_high_name, VBFSUSYUtilities::getMll(), Vbf::evt_scale1fb); }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 
 //eof

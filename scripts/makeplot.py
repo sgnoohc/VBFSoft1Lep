@@ -69,7 +69,7 @@ parser.add_argument('--delimiter_canvas_def', dest='delimiter_canvas_def', defau
 parser.add_argument('--delimiter_canvas_def_splitindex', dest='delimiter_canvas_def_splitindex', default=0, help=argparse.SUPPRESS)
 
 # Options for saving plot
-parser.add_argument('--plotfiletype', dest='plotfiletypes', action='append', help='plot types (e.g. pdf, eps, png, etc.)', default=['pdf'])
+parser.add_argument('--plotfiletype', dest='plotfiletypes', action='append', help='plot types (e.g. pdf, eps, png, etc.)', default=['png'])
 parser.add_argument('--plotname', dest='plotname', help='plot name', default='myplot')
 parser.add_argument('--plotlabel', dest='plotlabel', help='plot label on top')
 parser.add_argument('--plotlabelXcoord', dest='plotlabelXcoord', default=.92, type=float, help='plot label X-coord on top')

@@ -53,10 +53,20 @@ void bookISRHistogram(TString name, int nbins, float min, float max);
 void bookISRHistogram(TString name, int nbins, const float* xbins);
 
 // Filling histograms
-void fillISRHistogram(TString name, float val, float wgt);
-void fillCutflow(int cutflowbin);
+void fillISRHistogram(TString name, float val, float wgt=-999);
+void fillISRCutflow(int cutflowbin);
 
-void reproducingISRAnalysis();
+// Booking histograms
+void bookVBFHistograms();
+void bookVBFHistogram(TString name, int nbins, float min, float max);
+void bookVBFHistogram(TString name, int nbins, const float* xbins);
+
+// Filling histograms
+void fillVBFHistogram(TString name, float val, float wgt=-999);
+void fillVBFCutflow(int cutflowbin);
+
+void reproduceISRAnalysis();
+void doVBFAnalysis();
 
 // variables
 namespace Vbf {
@@ -64,7 +74,8 @@ namespace Vbf {
   // Analysis level variables
   extern bool is_signal;
   extern TString output_name;
-  extern PlotUtil::Hist1D_DB h_1d;
+  extern PlotUtil::Hist1D_DB h_isr_1d;
+  extern PlotUtil::Hist1D_DB h_vbf_1d;
 
   // Event data
   extern MT2Tree mt2tree;
@@ -75,21 +86,28 @@ namespace Vbf {
   extern VBFSUSYUtilities::Jets mt2jets;
 
   // histogram names
-  extern TString cutflow_name    = "cutflow";
-  extern TString rawcutflow_name = "rawcutflow";
-  extern TString mee_name        = "mee";
-  extern TString mmm_name        = "mmm";
-  extern TString mee_low_name    = "mee_low";
-  extern TString mee_med_name    = "mee_med";
-  extern TString mee_high_name   = "mee_high";
-  extern TString mmm_low_name    = "mmm_low";
-  extern TString mmm_med_name    = "mmm_med";
-  extern TString mmm_high_name   = "mmm_high";
-  extern TString mll_med_name    = "mll_med";
-  extern TString mll_high_name   = "mll_high";
-  extern TString nbjet25_name    = "nBJet25";
-  extern TString myNBjet25L_name = "MynBJet25L";
-  extern TString myNBjet25M_name = "MynBJet25M";
+  extern TString cutflow_name;
+  extern TString rawcutflow_name;
+  extern TString mee_name;
+  extern TString mmm_name;
+  extern TString mee_low_name;
+  extern TString mee_med_name;
+  extern TString mee_high_name;
+  extern TString mmm_low_name;
+  extern TString mmm_med_name;
+  extern TString mmm_high_name;
+  extern TString mll_med_name;
+  extern TString mll_high_name;
+  extern TString nbjet25_name;
+  extern TString myNBjet25L_name;
+  extern TString myNBjet25M_name;
+
+  // VBF histogram names
+  // multiplicity
+  extern TString histname_vbf_cutflow;
+  extern TString histname_vbf_rawcutflow;
+  extern TString histname_vbf_nsoftleps;
+  extern TString histname_vbf_njets;
 
   // bins
   extern float mllbin[5];
