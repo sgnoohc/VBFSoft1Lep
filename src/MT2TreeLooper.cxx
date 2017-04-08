@@ -127,13 +127,17 @@ void doVBFAnalysis()
       if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
       {
         fillVBFCutflow(2);
-        if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+        if (VBFSUSYUtilities::getMETp4().Pt() > 125.)
         {
           fillVBFCutflow(3);
           if (VBFSUSYUtilities::getVBFDeltaEta() > 3.5)
           {
             fillVBFCutflow(4);
-            fillVBFHistograms();
+            if (VBFSUSYUtilities::getLeadCenJetPt() < 25.)
+            {
+              fillVBFCutflow(5);
+              fillVBFHistograms();
+            }
           }
         }
       }
