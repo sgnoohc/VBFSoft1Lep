@@ -7,6 +7,9 @@
 
 #include "MT2TreeLooper.h"
 
+//======================================================================================
+// Namespace for "global" variable of the program (I just named it "Vbf". It's a misnomer.)
+//======================================================================================
 // variables
 namespace Vbf {
 
@@ -68,191 +71,115 @@ namespace Vbf {
   float mllbin[5] = {5., 10., 20., 30., 50.};
 }
 
+
+
+
+
+
+
+
+
+
+//======================================================================================
 //
-// Main
 //
+//
+//
+// Main (The "Event Loop")
+//
+//
+//
+//
+//======================================================================================
+
+//__________________________________________________________________________________________________
 int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 {
+
+  // Before the loop set up some configuration, histograms and etc.
   beforeLoop(chain, output_name, nevents);
+
+  // During the event loop process each event one by one
   loop();
+
+  // After the loop is done, save histograms and etc.
   afterLoop();
+
   return 0;
 }
 
-
-
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-
-
-//##################################################################################################
-void bookVBFHistograms()
+//__________________________________________________________________________________________________
+void beforeLoop(TChain* chain, TString output_name, int nevents)
 {
 
-  bookVBFHistogram(Vbf::histname_vbf_cutflow    ,  50,    0.,   50.);
-  bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  50,    0.,   50.);
+  // Fun start ASCII art
+  PrintUtilities::start();
 
-  // Book histograms
-  bookVBFHistogramsWithPrefix("NoCut");
-  bookVBFHistogramsWithPrefix("NJetCut");
-  bookVBFHistogramsWithPrefix("NSoftLepCut");
-  bookVBFHistogramsWithPrefix("NSubleadJetPtCut");
-  bookVBFHistogramsWithPrefix("METCut");
-  bookVBFHistogramsWithPrefix("MTCut");
-  bookVBFHistogramsWithPrefix("DEtajjCut");
-  bookVBFHistogramsWithPrefix("CJVCut");
-  bookVBFHistogramsWithPrefix("MjjCut");
-  bookVBFHistogramsWithPrefix("MET200Cut");
+  // Initialize configurations for event looping
+  LoopUtilities::resetLoopCondition(chain, nevents);
+
+  // Set whether the sample being processed is signal or not
+  // by checking the output file name
+  Vbf::is_signal = output_name.Contains("sig")
+                || output_name.Contains("higgsino")
+                || output_name.Contains("VBF");
+
+  // Set output name (outputs are "output_name"_blah.root)
+  Vbf::output_name = output_name;
+
+  // bookISR histograms
+  bookISRHistograms();
+
+  // bookVBF histograms
+  bookVBFHistograms();
+
+  // bookArxiv histograms
+  bookArxivHistograms();
 
 }
 
-//##################################################################################################
-void bookVBFHistogramsWithPrefix(TString prefix)
-{
-  // Book histograms
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_nsoftleps  ,   5,   -1.,     4.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_njets      ,   5,    0.,     5.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mjj        , 180,    0.,  2500.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_detajj     , 180,    0.,     9.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphijj     , 180,    0.,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetpt   , 180,  -30.,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadleppt  , 180,    0.,    35.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met        , 180,    0.,   350.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjetpt  , 180,    0.,   350.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt  , 180,    0.,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent    , 180,    0.,     3.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mt         , 180,    0.,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj0       , 180,    0.,   250.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj1       , 180,    0.,   250.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_summlj     , 180,    0.,   750.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ht         , 180,    0.,   350.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_methtratio , 180,    0.,     4.    );
-}
 
-
-//##################################################################################################
-void fillVBFHistograms(TString cutprefix)
+//______________________________________________________________________________________
+void loop()
 {
 
-  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons()      );
-  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()             );
-
-  if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+  // Loop over file:ttree -> and loop over events in ttree
+  // (usually I only have one file each.. so kinda redundant)
+  while (LoopUtilities::nextFileAndLoadTTreeWithName("mt2"))
   {
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mjj,       VBFSUSYUtilities::getVBFMjj()                      );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_detajj,    VBFSUSYUtilities::getVBFDEtajj()                   );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphijj,    VBFSUSYUtilities::getVBFDPhijj()                   );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_met      , VBFSUSYUtilities::getMETp4().Pt()                  );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjetpt, VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljetpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
 
-    if (VBFSUSYUtilities::getNSelectedGoodJets() > 2)
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()                );
+    initMT2Tree();
 
-    if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
+    // Loop over the TTree
+    while (LoopUtilities::nextEvent())
     {
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadleppt  , VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt()  );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepcent    , VBFSUSYUtilities::getLeptonCentrality()           );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mt         , VBFSUSYUtilities::getMTleadLep()                  );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj0       , VBFSUSYUtilities::getLeadMlj()                    );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj1       , VBFSUSYUtilities::getSubleadMlj()                 );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj     , VBFSUSYUtilities::getSumMlj()                     );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht         , Vbf::mt2tree.ht                                   );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio , Vbf::mt2tree.met_pt / Vbf::mt2tree.ht             );
-    }
 
-  }
+      if (LoopUtilities::isAllEventsProcessed()) break;
+
+      loadMT2TreeEvent();
+
+      //=================================================================
+      // <3 of the code
+      // Do whatever you want to in the following function for each event
+      //=================================================================
+      processMT2TreeEvent();
+
+    } // End TTree loop
+
+  } // End Loop over files
 }
 
-//##################################################################################################
-void doVBFAnalysis()
+
+//______________________________________________________________________________________
+void afterLoop()
 {
+  // Save plots
+  PlotUtil::savePlots(Vbf::h_isr_1d, Vbf::output_name+".root");
+  PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+"_vbf.root");
+  PlotUtil::savePlots(Vbf::h_arxiv_1d, Vbf::output_name+"_arxiv.root");
 
-  if (Vbf::is_signal)
-    bookVBFHistograms();
-
-  if (true)
-  {
-    fillVBFCutflow(0);
-    fillVBFHistograms("NoCut");
-    if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
-    {
-      fillVBFCutflow(1);
-      fillVBFHistograms("NJetCut");
-      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
-      {
-        fillVBFCutflow(2);
-        fillVBFHistograms("NSoftLepCut");
-        if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
-        {
-          fillVBFCutflow(3);
-          fillVBFHistograms("METCut");
-          if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
-          {
-            fillVBFCutflow(4);
-            fillVBFHistograms("DEtajjCut");
-            if (VBFSUSYUtilities::getMTleadLep() < 50.)
-            {
-              fillVBFCutflow(5);
-              fillVBFHistograms("MTCut");
-              if (VBFSUSYUtilities::getVBFMjj() > 1400.)
-              {
-                fillVBFCutflow(6);
-                fillVBFHistograms("MjjCut");
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-          //if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
-          //{
-          //  fillVBFCutflow(4);
-          //  fillVBFHistograms("NSubleadJetPtCut");
-          //  if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
-          //  {
-          //    fillVBFCutflow(5);
-          //    fillVBFHistograms("MTCut");
-          //    if (VBFSUSYUtilities::getMTleadLep() < 50.)
-          //    {
-          //      fillVBFCutflow(6);
-          //      fillVBFHistograms("DEtajjCut");
-          //      if (VBFSUSYUtilities::getLeadCenJetPt() < 25.)
-          //      {
-          //        fillVBFCutflow(7);
-          //        fillVBFHistograms("CJVCut");
-          //        if (VBFSUSYUtilities::getVBFMjj() > 1000.)
-          //        {
-          //          fillVBFCutflow(8);
-          //          fillVBFHistograms("MjjCut");
-          //          if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
-          //          {
-          //            fillVBFCutflow(9);
-          //            fillVBFHistograms("MET200Cut");
-          //          }
-          //        }
-          //      }
-          //    }
-          //  }
-          //}
-
-
-
-
-//##################################################################################################
-void computeAcceptanceWrtArxiv1502_05044()
-{
-
+  // Fun exit
+  PrintUtilities::exit();
 }
 
 
@@ -261,20 +188,30 @@ void computeAcceptanceWrtArxiv1502_05044()
 
 
 
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
-//--------------------====================--------------------====================------------------------====================--------------------====================--------------------
 
 
 
 
-//##################################################################################################
+
+
+
+
+
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// Per event actions
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+
+//______________________________________________________________________________________
 void processMT2TreeEvent()
 {
   // compute scale 1fb
@@ -309,165 +246,46 @@ void processMT2TreeEvent()
 }
 
 
-//##################################################################################################
-void bookVBFHistogram(TString name, int nbins, float min, float max)
-{
-  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, min, max);
-}
-
-//##################################################################################################
-void bookVBFHistogram(TString name, int nbins, const float* xbins)
-{
-  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, xbins);
-}
-
-//##################################################################################################
-void fillVBFHistogram(TString name, float val, float wgt)
-{
-  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  if (wgt == -999)
-    PlotUtil::plot1D(name.Data(), val, Vbf::evt_scale1fb, Vbf::h_vbf_1d);
-  else
-    PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_vbf_1d);
-}
-
-//##################################################################################################
-void fillVBFCutflow(int cutflowbin)
-{
-  fillVBFHistogram(Vbf::histname_vbf_cutflow.Data()   , cutflowbin, Vbf::evt_scale1fb);
-  fillVBFHistogram(Vbf::histname_vbf_rawcutflow.Data(), cutflowbin,                1.);
-}
 
 
-//##################################################################################################
-void bookISRHistogram(TString name, int nbins, float min, float max)
-{
-  if (Vbf::is_signal) name += VBFSUSYUtilities::getMassSuffixTString();
-  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_isr_1d, name.Data(), nbins, min, max);
-}
 
-//##################################################################################################
-void bookISRHistogram(TString name, int nbins, const float* xbins)
-{
-  if (Vbf::is_signal) name += VBFSUSYUtilities::getMassSuffixTString();
-  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_isr_1d, name.Data(), nbins, xbins);
-}
 
-//##################################################################################################
-void fillISRHistogram(TString name, float val, float wgt)
-{
-  if (Vbf::is_signal)
-    name += VBFSUSYUtilities::getMassSuffixTString();
-  PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_isr_1d);
-}
 
-//##################################################################################################
-void fillISRCutflow(int cutflowbin)
-{
-  fillISRHistogram(Vbf::cutflow_name.Data()   , cutflowbin, Vbf::evt_scale1fb);
-  fillISRHistogram(Vbf::rawcutflow_name.Data(), cutflowbin,                1.);
-}
 
-//##################################################################################################
-void bookISRHistograms()
-{
 
-  // Book histograms
-  bookISRHistogram(Vbf::cutflow_name    , 50, 0., 50.);
-  bookISRHistogram(Vbf::rawcutflow_name , 50, 0., 50.);
-  bookISRHistogram(Vbf::mee_name        ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_name        ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mee_low_name    ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mee_med_name    ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mee_high_name   ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_low_name    ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_med_name    ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mmm_high_name   ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mll_med_name    ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::mll_high_name   ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::nbjet25_name    ,  4, Vbf::mllbin);
-  bookISRHistogram(Vbf::myNBjet25L_name ,  5, 0., 5.);
-  bookISRHistogram(Vbf::myNBjet25M_name ,  5, 0., 5.);
 
-}
 
-//##################################################################################################
-void parseEwkinoMasses()
-{
-  // Parse the ewkino mass
-  if (Vbf::is_signal)
-  {
-    VBFSUSYUtilities::parseEwkinoMasses(Vbf::mt2tree.ngenStat23,
-                                        Vbf::mt2tree.genStat23_pdgId,
-                                        Vbf::mt2tree.genStat23_status,
-                                        Vbf::mt2tree.genStat23_mass);
-    VBFSUSYUtilities::parseProductionMode(Vbf::mt2tree.ngenStat23,
-                                          Vbf::mt2tree.genStat23_pdgId,
-                                          Vbf::mt2tree.genStat23_status);
-  }
-}
 
-//##################################################################################################
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// Any functions related to specific to MT2Tree interface
+//
+//   e.g.  Object selections / Event weighting / Parsing information related functions
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+//______________________________________________________________________________________
 void initMT2Tree()
 {
   // Init the Class
   Vbf::mt2tree.Init(LoopUtilities::getCurrentTTree());
 }
 
-//##################################################################################################
+//______________________________________________________________________________________
 void loadMT2TreeEvent()
 {
   Vbf::mt2tree.LoadTree(LoopUtilities::getCurrentTTreeEventIndex());
   Vbf::mt2tree.GetEntry(LoopUtilities::getCurrentTTreeEventIndex());
 }
 
-//##################################################################################################
-void selectObjects()
-{
-  selectLeptons();
-  selectJets();
-  setMET();
-}
-
-//##################################################################################################
-void selectLeptons()
-{
-  // Select leptons
-  VBFSUSYUtilities::Leptons mt2tree_leptons = getLeptonsFromMT2Tree();
-  VBFSUSYUtilities::selectVBFLeptons(mt2tree_leptons);
-  VBFSUSYUtilities::selectISRLeptons(mt2tree_leptons);
-  VBFSUSYUtilities::selectGoodLeptons(mt2tree_leptons);
-
-}
-
-//##################################################################################################
-void selectJets()
-{
-  // Select jets
-  VBFSUSYUtilities::Jets mt2tree_jets = getJetsFromMT2Tree();
-  VBFSUSYUtilities::selectGoodJets(mt2tree_jets);
-}
-
-//##################################################################################################
-void setMET()
-{
-  VBFSUSYUtilities::setMET(Vbf::mt2tree.met_pt);
-  VBFSUSYUtilities::setMETphi(Vbf::mt2tree.met_phi);
-}
-
-//##################################################################################################
-void loadScale1fb()
-{
-  Vbf::evt_scale1fb = Vbf::mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
-  if (Vbf::is_signal)
-  {
-    Vbf::evt_scale1fb = 1.;
-  }
-}
-
-//##################################################################################################
+//______________________________________________________________________________________
 VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree()
 {
   VBFSUSYUtilities::Leptons leptons;
@@ -503,7 +321,7 @@ VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree()
   return leptons;
 }
 
-//##################################################################################################
+//______________________________________________________________________________________
 VBFSUSYUtilities::Jets getJetsFromMT2Tree()
 {
   VBFSUSYUtilities::Jets jets;
@@ -529,79 +347,64 @@ VBFSUSYUtilities::Jets getJetsFromMT2Tree()
   return jets;
 }
 
-//##################################################################################################
-void loop()
+//______________________________________________________________________________________
+void parseEwkinoMasses()
 {
-
-  // Loop over file:ttree -> and loop over events in ttree
-  // (usually I only have one file each.. so kinda redundant)
-  while (LoopUtilities::nextFileAndLoadTTreeWithName("mt2"))
+  // Parse the ewkino mass
+  if (Vbf::is_signal)
   {
-
-    initMT2Tree();
-
-    // Loop over the TTree
-    while (LoopUtilities::nextEvent())
-    {
-
-      if (LoopUtilities::isAllEventsProcessed()) break;
-
-      loadMT2TreeEvent();
-
-      //=================================================================
-      //
-      // <3 of the code
-      // Do whatever you want to in the following function for each event
-      //
-      //
-      //=================================================================
-      // pass a bool whether output name has "sig" or not
-      processMT2TreeEvent();
-
-    } // End TTree loop
-
-  } // End Loop over files
+    VBFSUSYUtilities::parseEwkinoMasses(Vbf::mt2tree.ngenStat23,
+                                        Vbf::mt2tree.genStat23_pdgId,
+                                        Vbf::mt2tree.genStat23_status,
+                                        Vbf::mt2tree.genStat23_mass);
+    VBFSUSYUtilities::parseProductionMode(Vbf::mt2tree.ngenStat23,
+                                          Vbf::mt2tree.genStat23_pdgId,
+                                          Vbf::mt2tree.genStat23_status);
+  }
 }
 
-
-
-
-//##################################################################################################
-void beforeLoop(TChain* chain, TString output_name, int nevents)
+//______________________________________________________________________________________
+void selectObjects()
 {
-
-  // Fun start ASCII art
-  PrintUtilities::start();
-
-  // Initialize configurations for event looping
-  LoopUtilities::resetLoopCondition(chain, nevents);
-
-  // Set whether the sample being processed is signal or not
-  // by checking the output file name
-  Vbf::is_signal = output_name.Contains("sig") || output_name.Contains("higgsino") || output_name.Contains("VBF");
-
-  // Set output name
-  Vbf::output_name = output_name;
-
-  // bookISR histograms
-  bookISRHistograms();
-
-  // bookVBF histograms
-  bookVBFHistograms();
-
+  selectLeptons();
+  selectJets();
+  setMET();
 }
 
-
-
-//##################################################################################################
-void afterLoop()
+//______________________________________________________________________________________
+void selectLeptons()
 {
-  // Save plots
-  PlotUtil::savePlots(Vbf::h_isr_1d, Vbf::output_name+".root");
-  PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+"_vbf.root");
+  // Select leptons
+  VBFSUSYUtilities::Leptons mt2tree_leptons = getLeptonsFromMT2Tree();
+  VBFSUSYUtilities::selectVBFLeptons(mt2tree_leptons);
+  VBFSUSYUtilities::selectISRLeptons(mt2tree_leptons);
+  VBFSUSYUtilities::selectGoodLeptons(mt2tree_leptons);
 
-  // Fun exit
-  PrintUtilities::exit();
+}
+
+//______________________________________________________________________________________
+void selectJets()
+{
+  // Select jets
+  VBFSUSYUtilities::Jets mt2tree_jets = getJetsFromMT2Tree();
+  VBFSUSYUtilities::selectGoodJets(mt2tree_jets);
+}
+
+//______________________________________________________________________________________
+void setMET()
+{
+  VBFSUSYUtilities::setMET(Vbf::mt2tree.met_pt);
+  VBFSUSYUtilities::setMETphi(Vbf::mt2tree.met_phi);
+}
+
+//______________________________________________________________________________________
+void loadScale1fb()
+{
+  Vbf::evt_scale1fb = Vbf::mt2tree.evt_scale1fb / LoopUtilities::getFractionOfBookedNEvents();
+  if (Vbf::is_signal)
+  {
+    Vbf::evt_scale1fb = 1.;
+  }
 }
 
 
@@ -613,14 +416,29 @@ void afterLoop()
 
 
 
-//##################################################################################################
+
+
+
+
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// ISR analysis
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+//______________________________________________________________________________________
 void reproduceISRAnalysis()
 {
-
   // if signal need to fill different histograms
   if (Vbf::is_signal)
     bookISRHistograms();
-
   // cutflow histogram
   if ((true))
   {
@@ -725,6 +543,303 @@ void reproduceISRAnalysis()
     }
   }
 }
+
+//______________________________________________________________________________________
+void bookISRHistograms()
+{
+  // Book histograms
+  bookISRHistogram(Vbf::cutflow_name    , 50, 0., 50.);
+  bookISRHistogram(Vbf::rawcutflow_name , 50, 0., 50.);
+  bookISRHistogram(Vbf::mee_name        ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_name        ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_low_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_med_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mee_high_name   ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_low_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_med_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mmm_high_name   ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mll_med_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::mll_high_name   ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::nbjet25_name    ,  4, Vbf::mllbin);
+  bookISRHistogram(Vbf::myNBjet25L_name ,  5, 0., 5.);
+  bookISRHistogram(Vbf::myNBjet25M_name ,  5, 0., 5.);
+}
+
+//______________________________________________________________________________________
+void bookISRHistogram(TString name, int nbins, float min, float max)
+{
+  if (Vbf::is_signal) name += VBFSUSYUtilities::getMassSuffixTString();
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_isr_1d, name.Data(), nbins, min, max);
+}
+
+//______________________________________________________________________________________
+void bookISRHistogram(TString name, int nbins, const float* xbins)
+{
+  if (Vbf::is_signal) name += VBFSUSYUtilities::getMassSuffixTString();
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_isr_1d, name.Data(), nbins, xbins);
+}
+
+//______________________________________________________________________________________
+void fillISRHistogram(TString name, float val, float wgt)
+{
+  if (Vbf::is_signal)
+    name += VBFSUSYUtilities::getMassSuffixTString();
+  PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_isr_1d);
+}
+
+//______________________________________________________________________________________
+void fillISRCutflow(int cutflowbin)
+{
+  fillISRHistogram(Vbf::cutflow_name.Data()   , cutflowbin, Vbf::evt_scale1fb);
+  fillISRHistogram(Vbf::rawcutflow_name.Data(), cutflowbin,                1.);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// VBF analysis
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+
+//______________________________________________________________________________________
+void doVBFAnalysis()
+{
+
+  if (Vbf::is_signal)
+    bookVBFHistograms();
+
+  if (true)
+  {
+    fillVBFCutflow(0);
+    fillVBFHistograms("NoCut");
+    if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+    {
+      fillVBFCutflow(1);
+      fillVBFHistograms("NJetCut");
+      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+      {
+        fillVBFCutflow(2);
+        fillVBFHistograms("NSoftLepCut");
+        if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+        {
+          fillVBFCutflow(3);
+          fillVBFHistograms("METCut");
+          if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
+          {
+            fillVBFCutflow(4);
+            fillVBFHistograms("DEtajjCut");
+            if (VBFSUSYUtilities::getMTleadLep() < 50.)
+            {
+              fillVBFCutflow(5);
+              fillVBFHistograms("MTCut");
+              if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+              {
+                fillVBFCutflow(6);
+                fillVBFHistograms("MjjCut");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+//______________________________________________________________________________________
+void bookVBFHistograms()
+{
+  // Book histogram that does not require "prefix" of the cut
+  bookVBFHistogram(Vbf::histname_vbf_cutflow    ,  50,    0.,   50.);
+  bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  50,    0.,   50.);
+  // Book histograms
+  bookVBFHistogramsWithPrefix("NoCut");
+  bookVBFHistogramsWithPrefix("NJetCut");
+  bookVBFHistogramsWithPrefix("NSoftLepCut");
+  bookVBFHistogramsWithPrefix("NSubleadJetPtCut");
+  bookVBFHistogramsWithPrefix("METCut");
+  bookVBFHistogramsWithPrefix("MTCut");
+  bookVBFHistogramsWithPrefix("DEtajjCut");
+  bookVBFHistogramsWithPrefix("CJVCut");
+  bookVBFHistogramsWithPrefix("MjjCut");
+  bookVBFHistogramsWithPrefix("MET200Cut");
+}
+
+//______________________________________________________________________________________
+void bookVBFHistogramsWithPrefix(TString prefix)
+{
+  // Book histograms
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_nsoftleps  ,   5,   -1.,     4.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_njets      ,   5,    0.,     5.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mjj        , 180,    0.,  2500.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_detajj     , 180,    0.,     9.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphijj     , 180,    0.,     3.1416);
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetpt   , 180,  -30.,   150.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadleppt  , 180,    0.,    35.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met        , 180,    0.,   350.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjetpt  , 180,    0.,   350.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt  , 180,    0.,   150.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent    , 180,    0.,     3.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mt         , 180,    0.,   150.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj0       , 180,    0.,   250.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj1       , 180,    0.,   250.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_summlj     , 180,    0.,   750.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ht         , 180,    0.,   350.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_methtratio , 180,    0.,     4.    );
+}
+
+//______________________________________________________________________________________
+void fillVBFHistograms(TString cutprefix)
+{
+
+  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons()      );
+  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()             );
+
+  if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+  {
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mjj,       VBFSUSYUtilities::getVBFMjj()                      );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_detajj,    VBFSUSYUtilities::getVBFDEtajj()                   );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphijj,    VBFSUSYUtilities::getVBFDPhijj()                   );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_met      , VBFSUSYUtilities::getMETp4().Pt()                  );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjetpt, VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljetpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
+
+    if (VBFSUSYUtilities::getNSelectedGoodJets() > 2)
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()                );
+
+    if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
+    {
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadleppt  , VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt()  );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepcent    , VBFSUSYUtilities::getLeptonCentrality()           );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mt         , VBFSUSYUtilities::getMTleadLep()                  );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj0       , VBFSUSYUtilities::getLeadMlj()                    );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj1       , VBFSUSYUtilities::getSubleadMlj()                 );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj     , VBFSUSYUtilities::getSumMlj()                     );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht         , Vbf::mt2tree.ht                                   );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio , Vbf::mt2tree.met_pt / Vbf::mt2tree.ht             );
+    }
+  }
+
+}
+
+//______________________________________________________________________________________
+void bookVBFHistogram(TString name, int nbins, float min, float max)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, min, max);
+}
+
+//______________________________________________________________________________________
+void bookVBFHistogram(TString name, int nbins, const float* xbins)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, xbins);
+}
+
+//______________________________________________________________________________________
+void fillVBFHistogram(TString name, float val, float wgt)
+{
+  if (Vbf::is_signal)
+    name = VBFSUSYUtilities::getSignalSuffix(name);
+  if (wgt == -999)
+    PlotUtil::plot1D(name.Data(), val, Vbf::evt_scale1fb, Vbf::h_vbf_1d);
+  else
+    PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_vbf_1d);
+}
+
+//______________________________________________________________________________________
+void fillVBFCutflow(int cutflowbin)
+{
+  fillVBFHistogram(Vbf::histname_vbf_cutflow.Data()   , cutflowbin, Vbf::evt_scale1fb);
+  fillVBFHistogram(Vbf::histname_vbf_rawcutflow.Data(), cutflowbin,                1.);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// Calculating acceptance to be able to use cross section from 1502_05044
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+//______________________________________________________________________________________
+void computeAcceptanceWrtArxiv1502_05044()
+{
+}
+
+//______________________________________________________________________________________
+void bookArxivHistograms()
+{
+}
+
+//______________________________________________________________________________________
+void bookArxivHistogram(TString name, int nbins, float min, float max)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_arxiv_1d, name.Data(), nbins, min, max);
+}
+
+//______________________________________________________________________________________
+void bookArxivHistogram(TString name, int nbins, const float* xbins)
+{
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
+  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_arxiv_1d, name.Data(), nbins, xbins);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 //eof

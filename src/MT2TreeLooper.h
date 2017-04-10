@@ -32,20 +32,38 @@ void loop();
 void beforeLoop(TChain* chain, TString output_name, int nevents);
 void afterLoop();
 
-// Reading MT2Tree
-VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree();
-VBFSUSYUtilities::Jets getJetsFromMT2Tree();
+//=============================================================================
+// Entry point function for what occurs in each event in the loop
+//=============================================================================
+// Processing MT2Tree events
+void processMT2TreeEvent();
+
+//=============================================================================
+// Any functions related to specific to MT2Tree interface
+//=============================================================================
+
+// Load MT2Tree
 void initMT2Tree();
 void loadMT2TreeEvent();
 
-// Processing MT2Tree events
-void processMT2TreeEvent();
+// Read MT2Tree
+VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree();
+VBFSUSYUtilities::Jets getJetsFromMT2Tree();
 void parseEwkinoMasses();
+
+// Prep MT2Tree for analysis
 void selectObjects();
 void selectLeptons();
 void selectJets();
 void setMET();
 void loadScale1fb();
+
+//=============================================================================
+// ISR analysis
+//=============================================================================
+
+// The per event analysis module
+void reproduceISRAnalysis();
 
 // Booking histograms
 void bookISRHistograms();
@@ -55,6 +73,13 @@ void bookISRHistogram(TString name, int nbins, const float* xbins);
 // Filling histograms
 void fillISRHistogram(TString name, float val, float wgt=-999);
 void fillISRCutflow(int cutflowbin);
+
+//=============================================================================
+// VBF analysis
+//=============================================================================
+
+// The per event analysis module
+void doVBFAnalysis();
 
 // Booking histograms
 void bookVBFHistograms();
@@ -67,9 +92,23 @@ void fillVBFHistograms(TString cutprefix = "");
 void fillVBFHistogram(TString name, float val, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
-void reproduceISRAnalysis();
-void doVBFAnalysis();
+//=============================================================================
+// arXiv analysis
+//=============================================================================
+
+// The per event analysis module
 void computeAcceptanceWrtArxiv1502_05044();
+
+// Booking histograms
+void bookArxivHistograms();
+
+
+
+
+
+//=============================================================================
+// Namespace for global variables
+//=============================================================================
 
 // variables
 namespace Vbf {
@@ -106,6 +145,9 @@ namespace Vbf {
   extern TString myNBjet25L_name;
   extern TString myNBjet25M_name;
 
+  // Mll bins for ISR analysis
+  extern float mllbin[5];
+
   // VBF histogram names
   // multiplicity
   extern TString histname_vbf_cutflow;
@@ -131,10 +173,6 @@ namespace Vbf {
   // VBF arxiv acceptance calculation histogram names
   extern TString histname_arxiv_cutflow;
   extern TString histname_arxiv_rawcutflow;
-
-  // bins
-  extern float mllbin[5];
-
 
 }
 
