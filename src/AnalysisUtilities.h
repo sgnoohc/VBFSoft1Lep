@@ -156,8 +156,10 @@ namespace AnalysisUtilities
     double getMN2();
     double getMN1();
     void parseEwkinoMasses(int ngen, int* gen_pdgId, int* gen_status, float* gen_mass);
+    int getProductionMode(int ngen, int* gen_pdgId, int* gen_status);
     TString getMassSuffixTString();
-    TString getNameWithMassSuffix(TString name);
+    TString getProdSuffixTString();
+    TString getSignalSuffix(TString name);
 
     //
     // Lepton objects
@@ -206,6 +208,17 @@ namespace AnalysisUtilities
       kMUON_TIGHT = 0,
       kMUON_LOOSE = -1
     };
+
+    enum PROD_type {
+      kPRODSTRONG = 0,
+      kPRODVBF    = 1,
+      kPRODVSTAR  = 2
+    };
+    extern PROD_type prodmode;
+
+    void parseProductionMode(int ngen, int* gen_pdgId, int* gen_status);
+    void setProductionMode(PROD_type);
+    PROD_type getProductionMode();
 
     extern ELECTRON_ID_type ELECTRON_ID;
     extern MUON_ID_type MUON_ID;
@@ -285,9 +298,10 @@ namespace AnalysisUtilities
     bool hasVBFJets();
     bool isCenJet(Jet jet);
     bool doesCenJetsExist();
-    float getVBFDeltaEta();
+    float getVBFDEtajj();
     float getVBFMjj();
     float getLeadCenJetPt();
+    float getVBFDPhijj();
 
     //
     // Lepton variables
@@ -300,6 +314,13 @@ namespace AnalysisUtilities
     float getMTleadLep();
     float getMTsubleadLep();
     float getMtt();
+
+    // lep jet variables
+    float getLeptonCentrality();
+    float getMlj(Jet jet, Lepton lep);
+    float getLeadMlj();
+    float getSubleadMlj();
+    float getSumMlj();
 
   }
 }

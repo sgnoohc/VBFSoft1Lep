@@ -24,7 +24,7 @@ mkdir -p public_html
 
 # parse the third option to decide whether to draw a plot with only the shape comparison. (each histogram scaled to unity or something alike)
 if [ "x$3" == "x" ]; then
-  SIGSCALE="36*4.78*0.04"
+  SIGSCALE="36*4.78*0.04*1000"
   SCALE=36
   BKGCATEG="bkg"
   BKGCOLORING="Fill"
@@ -77,7 +77,7 @@ if [ "x$7" == "x" ]; then
     --${BKGCATEG}hist 'haddoutput/hist_'${BKG3}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7007 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7007 , SetName=>'${BKGLEGEND3}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_'${BKG4}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>'${BKGLEGEND4}'%f, Scale=>'$SCALE'' \
     --bkghist         'haddoutput/hist_'${BKG5}'.root ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>'${BKGLEGEND5}'%f, Scale=>'$SCALE'' \
-    --sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
+    --sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_signal.root%rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     $2
     #--sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \
 else

@@ -58,16 +58,18 @@ void fillISRCutflow(int cutflowbin);
 
 // Booking histograms
 void bookVBFHistograms();
+void bookVBFHistogramsWithPrefix(TString cutprefix = "");
 void bookVBFHistogram(TString name, int nbins, float min, float max);
 void bookVBFHistogram(TString name, int nbins, const float* xbins);
 
 // Filling histograms
-void fillVBFHistograms();
+void fillVBFHistograms(TString cutprefix = "");
 void fillVBFHistogram(TString name, float val, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
 void reproduceISRAnalysis();
 void doVBFAnalysis();
+void computeAcceptanceWrtArxiv1502_05044();
 
 // variables
 namespace Vbf {
@@ -77,6 +79,7 @@ namespace Vbf {
   extern TString output_name;
   extern PlotUtil::Hist1D_DB h_isr_1d;
   extern PlotUtil::Hist1D_DB h_vbf_1d;
+  extern PlotUtil::Hist1D_DB h_arxiv_1d;
 
   // Event data
   extern MT2Tree mt2tree;
@@ -111,9 +114,23 @@ namespace Vbf {
   extern TString histname_vbf_njets;
   extern TString histname_vbf_mjj;
   extern TString histname_vbf_detajj;
+  extern TString histname_vbf_dphijj;
   extern TString histname_vbf_cenjetpt;
   extern TString histname_vbf_leadleppt;
   extern TString histname_vbf_met;
+  extern TString histname_vbf_leadjetpt;
+  extern TString histname_vbf_subljetpt;
+  extern TString histname_vbf_lepcent;
+  extern TString histname_vbf_mt;
+  extern TString histname_vbf_mlj0;
+  extern TString histname_vbf_mlj1;
+  extern TString histname_vbf_summlj;
+  extern TString histname_vbf_ht;
+  extern TString histname_vbf_methtratio;
+
+  // VBF arxiv acceptance calculation histogram names
+  extern TString histname_arxiv_cutflow;
+  extern TString histname_arxiv_rawcutflow;
 
   // bins
   extern float mllbin[5];

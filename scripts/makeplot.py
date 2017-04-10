@@ -943,6 +943,8 @@ class HistogramPainter:
         self.objs.append(bkghist)
         sig_scan_lower_hists = []
         sig_scan_upper_hists = []
+        sig_scan_lower_hists_accept = []
+        sig_scan_upper_hists_accept = []
         hists = []
         hists.append(bkghist)
         hists += sighists
@@ -951,6 +953,8 @@ class HistogramPainter:
                 continue
             sig_scan_lower_hists.append(hist.Clone())
             sig_scan_upper_hists.append(hist.Clone())
+            sig_scan_lower_hists_accept.append(hist.Clone())
+            sig_scan_upper_hists_accept.append(hist.Clone())
 
         for index, sig_scan_lower_hist in enumerate(sig_scan_lower_hists):
 
@@ -958,6 +962,8 @@ class HistogramPainter:
             sighist = sighists[index]
 
             sig_scan_lower_hist.Reset()
+            sig_scan_lower_hists_accept[index].Reset()
+            sig_scan_lower_hists_accept[index].SetLineStyle(3)
 
             all_sig_err = ROOT.Double()
             all_bkg_err = ROOT.Double()
@@ -966,6 +972,8 @@ class HistogramPainter:
             error_term = math.sqrt(0.1*0.1+(all_bkg_err/all_bkg)*(all_bkg_err/all_bkg))
             signif_base = ROOT.RooStats.NumberCountingUtils.BinomialExpZ(all_sig,all_bkg,error_term)
             print all_sig, all_sig_err, all_bkg, all_bkg_err, signif_base
+            if option == "s/sqrt(b)":
+                signif_base = all_sig / math.sqrt(all_bkg)
 
             passed_sig_err = ROOT.Double()
             passed_bkg_err = ROOT.Double()
@@ -976,12 +984,14 @@ class HistogramPainter:
                 if passed_bkg > 0:
                     if option == "s/sqrt(b)":
                         signif = passed_sig / math.sqrt(passed_bkg)
+                        signif /= signif_base
                     else:
                         error_term = math.sqrt(0.1*0.1+(passed_bkg_err/passed_bkg)*(passed_bkg_err/passed_bkg))
                         signif = ROOT.RooStats.NumberCountingUtils.BinomialExpZ(passed_sig,passed_bkg,error_term)
                         print i, signif, signif_base
                         signif /= signif_base
                 sig_scan_lower_hist.SetBinContent(i+1,signif)
+                sig_scan_lower_hists_accept[index].SetBinContent(i+1,passed_sig/all_sig)
 
         for index, sig_scan_upper_hist in enumerate(sig_scan_upper_hists):
 
@@ -990,6 +1000,8 @@ class HistogramPainter:
 
             sig_scan_upper_hist.Reset()
             sig_scan_upper_hist.SetLineStyle(2)
+            sig_scan_upper_hists_accept[index].Reset()
+            sig_scan_upper_hists_accept[index].SetLineStyle(3)
 
             all_sig_err = ROOT.Double()
             all_bkg_err = ROOT.Double()
@@ -998,6 +1010,8 @@ class HistogramPainter:
             error_term = math.sqrt(0.1*0.1+(all_bkg_err/all_bkg)*(all_bkg_err/all_bkg))
             signif_base = ROOT.RooStats.NumberCountingUtils.BinomialExpZ(all_sig,all_bkg,error_term)
             print all_sig, all_sig_err, all_bkg, all_bkg_err, signif_base
+            if option == "s/sqrt(b)":
+                signif_base = all_sig / math.sqrt(all_bkg)
 
             passed_sig_err = ROOT.Double()
             passed_bkg_err = ROOT.Double()
@@ -1008,12 +1022,14 @@ class HistogramPainter:
                 if passed_bkg > 0:
                     if option == "s/sqrt(b)":
                         signif = passed_sig / math.sqrt(passed_bkg)
+                        signif /= signif_base
                     else:
                         error_term = math.sqrt(0.1*0.1+(passed_bkg_err/passed_bkg)*(passed_bkg_err/passed_bkg))
                         signif = ROOT.RooStats.NumberCountingUtils.BinomialExpZ(passed_sig,passed_bkg,error_term)
                         print i, signif, signif_base
                         signif /= signif_base
                 sig_scan_upper_hist.SetBinContent(i+1,signif)
+                sig_scan_upper_hists_accept[index].SetBinContent(i+1,passed_sig/all_sig)
 
 
         globalmax = 0
@@ -1025,11 +1041,14 @@ class HistogramPainter:
                 globalmax = localmax
             if index == 0:
                 sig_scan_lower_hist.Draw('hist')
-                sig_scan_lower_hist.SetMaximum(1.5)
-                sig_scan_lower_hist.SetMinimum(0.95)
+                sig_scan_lower_hist.SetMaximum(2.0)
+                sig_scan_lower_hist.SetMinimum(0.0)
                 self.histmanager.set_histaxis_settings(sig_scan_lower_hist, 2.0)
                 self.histmanager.set_histaxis_labels(sig_scan_lower_hist)
-                sig_scan_lower_hist.GetYaxis().SetTitle('Z / Z_{0}')
+                if option == "s/sqrt(b)":
+                    sig_scan_lower_hist.GetYaxis().SetTitle('s/sqrt(b)')
+                else:
+                    sig_scan_lower_hist.GetYaxis().SetTitle('Z / Z_{0}')
                 #sig_scan_lower_hist.Print("all")
             else:
                 sig_scan_lower_hist.Draw('histsame')
@@ -1050,8 +1069,27 @@ class HistogramPainter:
             else:
                 sig_scan_upper_hist.Draw('histsame')
             self.objs.append(sig_scan_upper_hist)
-        sig_scan_lower_hists[0].SetMaximum(globalmax*1.1)
+        #sig_scan_lower_hists[0].SetMaximum(globalmax*1.1)
 
+        for index, hist in enumerate(sig_scan_upper_hists_accept):
+            localmax = hist.GetMaximum()
+            if localmax > globalmax:
+                globalmax = localmax
+            if index == 0:
+                hist.Draw('histsame')
+            else:
+                hist.Draw('histsame')
+            self.objs.append(hist)
+
+        for index, hist in enumerate(sig_scan_lower_hists_accept):
+            localmax = hist.GetMaximum()
+            if localmax > globalmax:
+                globalmax = localmax
+            if index == 0:
+                hist.Draw('histsame')
+            else:
+                hist.Draw('histsame')
+            self.objs.append(hist)
 
 if __name__ == '__main__':
 

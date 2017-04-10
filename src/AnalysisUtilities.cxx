@@ -848,6 +848,7 @@ namespace AnalysisUtilities
 
     ELECTRON_ID_type ELECTRON_ID = kELECTRON_MED;
     MUON_ID_type MUON_ID = kMUON_TIGHT;
+    PROD_type prodmode = kPRODSTRONG;
 
     //################################################################################################
     void setMC1(double mC1) { mC1_event = mC1; }
@@ -881,6 +882,35 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // parse production mode
+    //
+    void parseProductionMode(int ngen, int* gen_pdgId, int* gen_status)
+    {
+      if      (gen_pdgId[0] == 21 || gen_pdgId[1] == 21)
+        setProductionMode(kPRODSTRONG);
+      else if (gen_pdgId[4] == 21 || gen_pdgId[5] == 21)
+        setProductionMode(kPRODVSTAR);
+      else
+        setProductionMode(kPRODVBF);
+    }
+
+    //################################################################################################
+    // set production mode
+    //
+    void setProductionMode(PROD_type prodmode_)
+    {
+      prodmode = prodmode_;
+    }
+
+    //################################################################################################
+    // get production mode
+    //
+    PROD_type getProductionMode()
+    {
+      return prodmode;
+    }
+
+    //################################################################################################
     // Create the mass suffix for the ewkino spectrum
     //
     TString getMassSuffixTString()
@@ -889,11 +919,24 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // Create the suffix for production mode
+    //
+    TString getProdSuffixTString()
+    {
+      if (getProductionMode() == kPRODSTRONG) return "_strong";
+      else if (getProductionMode() == kPRODVSTAR ) return "_vstar";
+      else if (getProductionMode() == kPRODVBF) return "_vbf";
+      else
+        PrintUtilities::error("VBFSUSYUtilities::getProdSuffixTString() production mode not recognized!");
+      return "";
+    }
+
+    //################################################################################################
     // return a new name with suffix attached.
     //
-    TString getNameWithMassSuffix(TString name)
+    TString getSignalSuffix(TString name)
     {
-      return (name + getMassSuffixTString()).Data();
+      return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
     }
 
     //################################################################################################
@@ -1220,11 +1263,21 @@ namespace AnalysisUtilities
     //################################################################################################
     // compute VBF Delta Eta variable
     //
-    float getVBFDeltaEta()
+    float getVBFDEtajj()
     {
       if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getVBFDeltaEta() asked to compute delta eta but does not have vbf jets");
+        PrintUtilities::error("VBFSUSYUtilities::getVBFDEtajj() asked to compute delta eta but does not have vbf jets");
       return fabs(getLeadingVBFJet().p4.Eta() - getSubleadingVBFJet().p4.Eta());
+    }
+
+    //################################################################################################
+    // compute VBF Delta Eta variable
+    //
+    float getVBFDPhijj()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getVBFDPhijj() asked to compute delta phi but does not have vbf jets");
+      return fabs(getLeadingVBFJet().p4.DeltaPhi(getSubleadingVBFJet().p4));
     }
 
     //################################################################################################
@@ -1235,6 +1288,23 @@ namespace AnalysisUtilities
       if (!hasVBFJets())
         PrintUtilities::error("VBFSUSYUtilities::getVBFMjj() asked to compute Mjj but does not have VBF jets");
       return (getLeadingVBFJet().p4 + getSubleadingVBFJet().p4).M();
+    }
+
+    //################################################################################################
+    // compute VBF Delta Eta variable
+    //
+    float getLeptonCentrality()
+    {
+      if (!hasVBFJets())
+        PrintUtilities::error("VBFSUSYUtilities::getLeptonCentrality() asked to compute lepton centrality when there are no two jets");
+      if (getNSelectedGoodLeptons() == 0)
+        PrintUtilities::error("VBFSUSYUtilities::getLeptonCentrality() asked to compute lepton centrality when there are no leptons");
+
+      float avgeta = (getLeadingVBFJet().p4.Eta() + getSubleadingVBFJet().p4.Eta())/2.;
+      float dlepeta = fabs(getLeadingGoodLepton().p4.Eta() - avgeta);
+      float deta_div_2 = getVBFDEtajj() / 2.;
+      return dlepeta / deta_div_2;
+
     }
 
     //################################################################################################
@@ -1315,6 +1385,46 @@ namespace AnalysisUtilities
     float getMTsubleadLep()
     {
       return getMT(getSubleadingGoodLepton());
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getMlj(Jet jet, Lepton lep)
+    {
+      return (jet.p4 + lep.p4).M();
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getLeadMlj()
+    {
+      if (getNSelectedGoodJets() == 0)
+        PrintUtilities::error("VBFSUSYUtilities::getLeadMlj() asked for Mlj when no jets exist");
+      if (getNSelectedGoodJets() == 0)
+        PrintUtilities::error("VBFSUSYUtilities::getLeadMlj() asked for Mlj when no leptons exist");
+      return getMlj(getLeadingVBFJet(), getLeadingGoodLepton());
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getSubleadMlj()
+    {
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getSubleadMlj() asked when there are less than two jets");
+      if (getNSelectedGoodJets() == 0)
+        PrintUtilities::error("VBFSUSYUtilities::getLeadMlj() asked for Mlj when no leptons exist");
+      return getMlj(getSubleadingVBFJet(), getLeadingGoodLepton());
+    }
+
+    //################################################################################################
+    // get sum mlj
+    //
+    float getSumMlj()
+    {
+      return getLeadMlj() + getSubleadMlj();
     }
 
     //################################################################################################

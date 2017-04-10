@@ -5,7 +5,7 @@
 #  .
 # ..: P. Chang, philip@physics.ucsd.edu
 
-cores=20
+cores=90
 mkdir -p output
 sh scripts/link_input_files.sh
 xargs --arg-file=scripts/jobs.txt \
