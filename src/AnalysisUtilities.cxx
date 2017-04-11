@@ -848,8 +848,8 @@ namespace AnalysisUtilities
     float met_phi;
     TLorentzVector met_p4;
 
-    ELECTRON_ID_type ELECTRON_ID = kELECTRON_MED;
-    MUON_ID_type MUON_ID = kMUON_TIGHT;
+    ELECTRON_ID_type ELECTRON_ID = kELECTRON_LOOSE;
+    MUON_ID_type MUON_ID = kMUON_LOOSE;
     PROD_type prodmode = kPRODSTRONG;
 
     //################################################################################################

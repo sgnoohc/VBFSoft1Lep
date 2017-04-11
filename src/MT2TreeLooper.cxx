@@ -840,7 +840,7 @@ void computeAcceptanceWrtArxiv1502_05044()
 
   if (LSPindices.size() != 2)
   {
-    TString errormsg = TString::Format("Event #%d does not have two final state LSPs! (size = %d)", LoopUtilities::getCurrentTTreeEventIndex(), LSPindices.size());
+    TString errormsg = TString::Format("Event #%d does not have two final state LSPs! (size = %d)", LoopUtilities::getCurrentTTreeEventIndex(), (int) LSPindices.size());
     PrintUtilities::error(errormsg);
   }
 
