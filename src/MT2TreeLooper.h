@@ -99,9 +99,6 @@ void fillVBFCutflow(int cutflowbin);
 // The per event analysis module
 void computeAcceptanceWrtArxiv1502_05044();
 
-// Booking histograms
-void bookArxivHistograms();
-
 
 
 
@@ -169,10 +166,7 @@ namespace Vbf {
   extern TString histname_vbf_summlj;
   extern TString histname_vbf_ht;
   extern TString histname_vbf_methtratio;
-
-  // VBF arxiv acceptance calculation histogram names
-  extern TString histname_arxiv_cutflow;
-  extern TString histname_arxiv_rawcutflow;
+  extern TString histname_vbf_lepid;
 
 }
 

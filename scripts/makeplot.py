@@ -645,8 +645,8 @@ class HistogramPainter:
             totalbkghist.SetFillStyle(3245)
             totalbkghist.SetFillColor(12)
             totalbkghist.Draw('E2 same')
-        #print 'totalbkghist'
-        #totalbkghist.Print('all')
+        print 'totalbkghist'
+        totalbkghist.Print('all')
         #print totalbkghist.Integral(2,3)
         #print totalbkghist.Integral(19,25)
         #print totalbkghist.Integral(19,26)
@@ -660,8 +660,8 @@ class HistogramPainter:
                 datahist.Draw(self.args.datadrawstyle)
         for sighist in sighists:
             sighist.Draw('histsame')
-            #print 'sighist'
-            #sighist.Print('all')
+            print 'sighist'
+            sighist.Print('all')
             #print sighist.Integral(19,20)
             #print sighist.Integral(19,25)
             #print sighist.Integral(19,26)

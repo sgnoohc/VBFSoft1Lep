@@ -310,9 +310,9 @@ void MT2Tree::Init(TTree *tree)
    fChain ->SetBranchStatus("genLep_charge"                                  , 0); fChain ->SetBranchAddress("genLep_charge"                                  , genLep_charge                                   , &b_genLep_charge);
    fChain ->SetBranchStatus("genLep_sourceId"                                , 0); fChain ->SetBranchAddress("genLep_sourceId"                                , genLep_sourceId                                 , &b_genLep_sourceId);
    fChain ->SetBranchStatus("ngenStat23"                                     , 1); fChain ->SetBranchAddress("ngenStat23"                                     , &ngenStat23                                     , &b_ngenStat23);
-   fChain ->SetBranchStatus("genStat23_pt"                                   , 0); fChain ->SetBranchAddress("genStat23_pt"                                   , genStat23_pt                                    , &b_genStat23_pt);
-   fChain ->SetBranchStatus("genStat23_eta"                                  , 0); fChain ->SetBranchAddress("genStat23_eta"                                  , genStat23_eta                                   , &b_genStat23_eta);
-   fChain ->SetBranchStatus("genStat23_phi"                                  , 0); fChain ->SetBranchAddress("genStat23_phi"                                  , genStat23_phi                                   , &b_genStat23_phi);
+   fChain ->SetBranchStatus("genStat23_pt"                                   , 1); fChain ->SetBranchAddress("genStat23_pt"                                   , genStat23_pt                                    , &b_genStat23_pt);
+   fChain ->SetBranchStatus("genStat23_eta"                                  , 1); fChain ->SetBranchAddress("genStat23_eta"                                  , genStat23_eta                                   , &b_genStat23_eta);
+   fChain ->SetBranchStatus("genStat23_phi"                                  , 1); fChain ->SetBranchAddress("genStat23_phi"                                  , genStat23_phi                                   , &b_genStat23_phi);
    fChain ->SetBranchStatus("genStat23_mass"                                 , 1); fChain ->SetBranchAddress("genStat23_mass"                                 , genStat23_mass                                  , &b_genStat23_mass);
    fChain ->SetBranchStatus("genStat23_pdgId"                                , 1); fChain ->SetBranchAddress("genStat23_pdgId"                                , genStat23_pdgId                                 , &b_genStat23_pdgId);
    fChain ->SetBranchStatus("genStat23_status"                               , 1); fChain ->SetBranchAddress("genStat23_status"                               , genStat23_status                                , &b_genStat23_status);
@@ -389,6 +389,7 @@ void MT2Tree::Init(TTree *tree)
    fChain ->SetBranchStatus("genRecoil_pt"                                   , 0); fChain ->SetBranchAddress("genRecoil_pt"                                   , &genRecoil_pt                                   , &b_genRecoil_pt);
    fChain ->SetBranchStatus("genTop_pt"                                      , 0); fChain ->SetBranchAddress("genTop_pt"                                      , &genTop_pt                                      , &b_genTop_pt);
    fChain ->SetBranchStatus("genTbar_pt"                                     , 0); fChain ->SetBranchAddress("genTbar_pt"                                     , &genTbar_pt                                     , &b_genTbar_pt);
+
    Notify();
 }
 

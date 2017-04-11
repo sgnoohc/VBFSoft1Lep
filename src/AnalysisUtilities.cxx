@@ -302,7 +302,7 @@ namespace AnalysisUtilities
     unsigned int max_nevents               = 0;
     unsigned int total_nevents             = 0;
     unsigned int current_ttree_max_nevents = 0;
-    unsigned int current_ttree_event_index = 0;
+    unsigned int current_ttree_event_index = -1;
     unsigned int total_nevents_processed   = 0;
     double fraction_of_booked_nevents      = 1;
     TObjArray* list_of_input_files         = 0;
@@ -411,7 +411,7 @@ namespace AnalysisUtilities
     void resetCurrentTTreeLoopCondition()
     {
       resetCurrentTTreeEventIndex();
-      loadCurrentTTreeEvent();
+      //loadCurrentTTreeEvent();
     }
 
     //################################################################################################
@@ -497,6 +497,8 @@ namespace AnalysisUtilities
     {
       if (!current_ttree)
         PrintUtilities::error("current ttree not set!");
+      current_tchain->LoadTree(current_ttree_event_index);
+      current_tchain->GetEntry(current_ttree_event_index);
       return current_ttree->LoadTree(current_ttree_event_index);
     }
 
@@ -505,8 +507,8 @@ namespace AnalysisUtilities
     //
     bool nextEvent()
     {
-      int loadresult = loadCurrentTTreeEvent();
       incrementCurrentTTreeEventIndex();
+      int loadresult = loadCurrentTTreeEvent();
       incrementTotalNEventsProcessed();
       printProgressBar();
       if (loadresult == -2) // TTree::LoadTree returns -2 if no entry exist
@@ -539,7 +541,7 @@ namespace AnalysisUtilities
     void resetCurrentTTreeEventIndex()
     {
       //PrintUtilities::print("LoopUtilities::resetCurrentTTreeEventIndex(): set current ttree event index to 0");
-      current_ttree_event_index = 0;
+      current_ttree_event_index = -1;
     }
 
     //################################################################################################

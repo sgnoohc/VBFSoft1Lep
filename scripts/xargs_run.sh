@@ -5,12 +5,26 @@
 #  .
 # ..: P. Chang, philip@physics.ucsd.edu
 
-cores=90
+cores=40
+
+# create output directory if needed
 mkdir -p output
+
+# filter some jobs
+if [ "x${1}" != "x" ]; then
+  cat scripts/jobs.txt | grep $1 > /tmp/jobs.txt
+else
+  cat scripts/jobs.txt > /tmp/jobs.txt
+fi
+
+# link input files if needed
 sh scripts/link_input_files.sh
-xargs --arg-file=scripts/jobs.txt \
+
+# run the job in parallel
+xargs --arg-file=/tmp/jobs.txt \
       --max-procs=$cores  \
       --replace \
       --verbose \
       /bin/sh -c "{}"
+
 #eof

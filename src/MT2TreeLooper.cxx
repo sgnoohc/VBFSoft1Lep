@@ -62,10 +62,7 @@ namespace Vbf {
   TString histname_vbf_summlj     = "vbf_summlj";
   TString histname_vbf_ht         = "vbf_ht";
   TString histname_vbf_methtratio = "vbf_methtratio";
-
-  // VBF arxiv acceptance calculation histogram names
-  TString histname_arxiv_cutflow     = "arxiv_cutflow";
-  TString histname_arxiv_rawcutflow  = "arxiv_rawcutflow";
+  TString histname_vbf_lepid      = "vbf_lepid";
 
   // mll bin
   float mllbin[5] = {5., 10., 20., 30., 50.};
@@ -132,9 +129,6 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
 
   // bookVBF histograms
   bookVBFHistograms();
-
-  // bookArxiv histograms
-  bookArxivHistograms();
 
 }
 
@@ -223,25 +217,34 @@ void processMT2TreeEvent()
   // select objects
   selectObjects();
 
-  //===============================================================================================
-  //
-  //
-  // reproduce ISR analysis
-  //
-  //
-  //===============================================================================================
+  ////===============================================================================================
+  ////
+  ////
+  //// reproduce ISR analysis
+  ////
+  ////
+  ////===============================================================================================
 
-  // Reproduce ISR analysis
-  reproduceISRAnalysis();
+  //// Reproduce ISR analysis
+  //reproduceISRAnalysis();
 
-  //===============================================================================================
-  //
-  //
-  // develop VBF analysis
-  //
-  //
-  //===============================================================================================
+  ////===============================================================================================
+  ////
+  ////
+  //// develop VBF analysis
+  ////
+  ////
+  ////===============================================================================================
   doVBFAnalysis();
+
+  //===============================================================================================
+  //
+  //
+  // compute acceptance
+  //
+  //
+  //===============================================================================================
+  //computeAcceptanceWrtArxiv1502_05044();
 
 }
 
@@ -642,22 +645,32 @@ void doVBFAnalysis()
       {
         fillVBFCutflow(2);
         fillVBFHistograms("NSoftLepCut");
-        if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+        if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
         {
           fillVBFCutflow(3);
-          fillVBFHistograms("METCut");
-          if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
+          fillVBFHistograms("AntiMuonCut");
+          if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
           {
             fillVBFCutflow(4);
-            fillVBFHistograms("DEtajjCut");
-            if (VBFSUSYUtilities::getMTleadLep() < 50.)
+            fillVBFHistograms("METCut");
+            if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
             {
               fillVBFCutflow(5);
-              fillVBFHistograms("MTCut");
-              if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+              fillVBFHistograms("DEtajjCut");
+              if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
               {
                 fillVBFCutflow(6);
-                fillVBFHistograms("MjjCut");
+                fillVBFHistograms("SubleadJetPtCut");
+                if (VBFSUSYUtilities::getMTleadLep() < 50.)
+                {
+                  fillVBFCutflow(7);
+                  fillVBFHistograms("MTCut");
+                  if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+                  {
+                    fillVBFCutflow(8);
+                    fillVBFHistograms("MjjCut");
+                  }
+                }
               }
             }
           }
@@ -678,7 +691,8 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("NoCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("NSoftLepCut");
-  bookVBFHistogramsWithPrefix("NSubleadJetPtCut");
+  bookVBFHistogramsWithPrefix("AntiMuonCut");
+  bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
   bookVBFHistogramsWithPrefix("MTCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");
@@ -698,7 +712,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphijj     , 180,    0.,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetpt   , 180,  -30.,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadleppt  , 180,    0.,    35.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met        , 180,    0.,   350.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met        , 180,    0.,   450.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjetpt  , 180,    0.,   350.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt  , 180,    0.,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent    , 180,    0.,     3.    );
@@ -708,6 +722,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_summlj     , 180,    0.,   750.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ht         , 180,    0.,   350.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_methtratio , 180,    0.,     4.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepid      ,   4,    0.,     4.    );
 }
 
 //______________________________________________________________________________________
@@ -739,6 +754,10 @@ void fillVBFHistograms(TString cutprefix)
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj     , VBFSUSYUtilities::getSumMlj()                     );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht         , Vbf::mt2tree.ht                                   );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio , Vbf::mt2tree.met_pt / Vbf::mt2tree.ht             );
+      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 0);
+      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 1);
+      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 2);
+      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 3);
     }
   }
 
@@ -809,25 +828,45 @@ void fillVBFCutflow(int cutflowbin)
 //______________________________________________________________________________________
 void computeAcceptanceWrtArxiv1502_05044()
 {
-}
+  if (!Vbf::output_name.Contains("VBF"))
+    return;
 
-//______________________________________________________________________________________
-void bookArxivHistograms()
-{
-}
+  std::vector<int> LSPindices;
+  for (int igen = 0; igen < Vbf::mt2tree.ngenStat23; ++igen)
+  {
+    if (Vbf::mt2tree.genStat23_pdgId[igen] == 1000022 && Vbf::mt2tree.genStat23_status[igen] == 1)
+      LSPindices.push_back(igen);
+  }
 
-//______________________________________________________________________________________
-void bookArxivHistogram(TString name, int nbins, float min, float max)
-{
-  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_arxiv_1d, name.Data(), nbins, min, max);
-}
+  if (LSPindices.size() != 2)
+  {
+    TString errormsg = TString::Format("Event #%d does not have two final state LSPs! (size = %d)", LoopUtilities::getCurrentTTreeEventIndex(), LSPindices.size());
+    PrintUtilities::error(errormsg);
+  }
 
-//______________________________________________________________________________________
-void bookArxivHistogram(TString name, int nbins, const float* xbins)
-{
-  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_arxiv_1d, name.Data(), nbins, xbins);
+  TString name = "arxiv_cutflow"; name = VBFSUSYUtilities::getSignalSuffix(name);
+
+  // pass all
+  PlotUtil::plot1D(name.Data(), 0, 1, Vbf::h_arxiv_1d, name.Data(), 2, 0, 2);
+
+  TLorentzVector vbfparton0;
+  TLorentzVector vbfparton1;
+  vbfparton0.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[4], Vbf::mt2tree.genStat23_eta[4], Vbf::mt2tree.genStat23_phi[4], Vbf::mt2tree.genStat23_mass[4]);
+  vbfparton1.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[5], Vbf::mt2tree.genStat23_eta[5], Vbf::mt2tree.genStat23_phi[5], Vbf::mt2tree.genStat23_mass[5]);
+  if (vbfparton0.Pt() < 50. || vbfparton0.Pt() < 50.)
+    return;
+
+  TLorentzVector lspparton0;
+  TLorentzVector lspparton1;
+  lspparton0.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[LSPindices[0]], Vbf::mt2tree.genStat23_eta[LSPindices[0]], Vbf::mt2tree.genStat23_phi[LSPindices[0]], Vbf::mt2tree.genStat23_mass[LSPindices[0]]);
+  lspparton1.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[LSPindices[1]], Vbf::mt2tree.genStat23_eta[LSPindices[1]], Vbf::mt2tree.genStat23_phi[LSPindices[1]], Vbf::mt2tree.genStat23_mass[LSPindices[1]]);
+
+  if ( (lspparton0 + lspparton1).Pt() < 100. )
+    return;
+
+  // pass 1502_05044 selections (on figure 1. of their paper)
+  PlotUtil::plot1D(name.Data(), 1, 1, Vbf::h_arxiv_1d, name.Data(), 2, 0, 2);
+
 }
 
 
