@@ -641,34 +641,39 @@ void doVBFAnalysis()
     {
       fillVBFCutflow(1);
       fillVBFHistograms("NJetCut");
-      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+      if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
       {
         fillVBFCutflow(2);
-        fillVBFHistograms("NSoftLepCut");
-        if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+        fillVBFHistograms("NBJetCut");
+        if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
         {
           fillVBFCutflow(3);
-          fillVBFHistograms("AntiMuonCut");
-          if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+          fillVBFHistograms("NSoftLepCut");
+          if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
           {
             fillVBFCutflow(4);
-            fillVBFHistograms("METCut");
-            if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
+            fillVBFHistograms("AntiMuonCut");
+            if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
             {
               fillVBFCutflow(5);
-              fillVBFHistograms("DEtajjCut");
-              if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+              fillVBFHistograms("METCut");
+              if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
               {
                 fillVBFCutflow(6);
-                fillVBFHistograms("SubleadJetPtCut");
-                if (VBFSUSYUtilities::getMTleadLep() < 50.)
+                fillVBFHistograms("DEtajjCut");
+                if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
                 {
                   fillVBFCutflow(7);
-                  fillVBFHistograms("MTCut");
-                  if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+                  fillVBFHistograms("SubleadJetPtCut");
+                  if (VBFSUSYUtilities::getMTleadLep() < 50.)
                   {
                     fillVBFCutflow(8);
-                    fillVBFHistograms("MjjCut");
+                    fillVBFHistograms("MTCut");
+                    if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+                    {
+                      fillVBFCutflow(9);
+                      fillVBFHistograms("MjjCut");
+                    }
                   }
                 }
               }
@@ -690,6 +695,7 @@ void bookVBFHistograms()
   // Book histograms
   bookVBFHistogramsWithPrefix("NoCut");
   bookVBFHistogramsWithPrefix("NJetCut");
+  bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("NSoftLepCut");
   bookVBFHistogramsWithPrefix("AntiMuonCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
