@@ -674,21 +674,21 @@ void doVBFAnalysis()
           fillVBFHistograms("DEtajjCut");
 
           // 100 - 200 MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+          if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
           {
             fillVBFCutflow(4);
             fillVBFHistograms("MET100200Cut");
           }
 
           // 200 - 300 MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+          if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
           {
             fillVBFCutflow(5);
             fillVBFHistograms("MET200300Cut");
           }
 
           // 300 - inf MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+          if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
           {
             fillVBFCutflow(6);
             fillVBFHistograms("MET300infCut");
