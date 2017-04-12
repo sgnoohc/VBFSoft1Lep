@@ -19,6 +19,7 @@ namespace Vbf {
   PlotUtil::Hist1D_DB h_isr_1d;
   PlotUtil::Hist1D_DB h_vbf_1d;
   PlotUtil::Hist1D_DB h_arxiv_1d;
+  PlotUtil::Hist1D_DB h_truth_1d;
 
   // Event data
   MT2Tree mt2tree;
@@ -181,6 +182,7 @@ void afterLoop()
   PlotUtil::savePlots(Vbf::h_isr_1d, Vbf::output_name+".root");
   PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+"_vbf.root");
   PlotUtil::savePlots(Vbf::h_arxiv_1d, Vbf::output_name+"_arxiv.root");
+  PlotUtil::savePlots(Vbf::h_truth_1d, Vbf::output_name+"_truth.root");
 
   // Fun exit
   PrintUtilities::exit();
@@ -227,25 +229,34 @@ void processMT2TreeEvent()
   // select objects
   selectObjects();
 
-  ////===============================================================================================
-  ////
-  ////
-  //// reproduce ISR analysis
-  ////
-  ////
-  ////===============================================================================================
+  //===============================================================================================
+  //
+  //
+  // reproduce ISR analysis
+  //
+  //
+  //===============================================================================================
 
-  //// Reproduce ISR analysis
+  // Reproduce ISR analysis
   //reproduceISRAnalysis();
 
-  ////===============================================================================================
-  ////
-  ////
-  //// develop VBF analysis
-  ////
-  ////
-  ////===============================================================================================
+  //===============================================================================================
+  //
+  //
+  // develop VBF analysis
+  //
+  //
+  //===============================================================================================
   doVBFAnalysis();
+
+  //===============================================================================================
+  //
+  //
+  // truth level VBF analysis
+  //
+  //
+  //===============================================================================================
+  //truthVBFAnalysis();
 
   //===============================================================================================
   //
@@ -651,55 +662,114 @@ void doVBFAnalysis()
     {
       fillVBFCutflow(1);
       fillVBFHistograms("NJetCut");
-      if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+
+      // 1 lepton case
+      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
       {
         fillVBFCutflow(2);
-        fillVBFHistograms("NBJetCut");
-        if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+        fillVBFHistograms("OneLepCut");
+        if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
         {
           fillVBFCutflow(3);
-          fillVBFHistograms("NSoftLepCut");
-          if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+          fillVBFHistograms("LowMETCut");
+          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
           {
             fillVBFCutflow(4);
-            fillVBFHistograms("MuonCut");
-            if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pt < 20.)
+            fillVBFHistograms("LowMETDEtajjCut");
+          }
+          if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+          {
+            fillVBFCutflow(5);
+            fillVBFHistograms("METCut");
+            if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
             {
-              fillVBFCutflow(5);
-              fillVBFHistograms("LeadPtCut");
-              if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
-              {
-                fillVBFCutflow(6);
-                fillVBFHistograms("METCut");
-                if (VBFSUSYUtilities::getVBFDEtajj() > 3.5)
-                {
-                  fillVBFCutflow(7);
-                  fillVBFHistograms("DEtajjCut");
-                  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
-                  {
-                    fillVBFCutflow(8);
-                    fillVBFHistograms("SubleadJetPtCut");
-                    if (VBFSUSYUtilities::getMTleadLep() < 50.)
-                    {
-                      fillVBFCutflow(9);
-                      fillVBFHistograms("MTCut");
-                      if (VBFSUSYUtilities::getVBFMjj() > 1400.)
-                      {
-                        fillVBFCutflow(10);
-                        fillVBFHistograms("MjjCut");
-                      }
-                    }
-                  }
-                }
-              }
+              fillVBFCutflow(6);
+              fillVBFHistograms("DEtajjCut");
             }
           }
         }
       }
+
+      // 2 soft lepton case
+      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 2)
+      {
+        fillVBFHistograms("TwoLepCut");
+      }
+
     }
   }
 }
 
+      //if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+      //{
+      //  fillVBFCutflow(2);
+      //  fillVBFHistograms("NBJetCut");
+      //  if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+      //  {
+      //    fillVBFCutflow(3);
+      //    fillVBFHistograms("NSoftLepCut");
+      //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+      //    {
+      //      fillVBFCutflow(4);
+      //      fillVBFHistograms("MuonCut");
+      //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pt < 20.)
+      //      {
+      //        fillVBFCutflow(5);
+      //        fillVBFHistograms("LeadPtCut");
+      //        if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+      //        {
+      //          fillVBFCutflow(6);
+      //          fillVBFHistograms("METCut");
+      //          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+      //          {
+      //            fillVBFCutflow(7);
+      //            fillVBFHistograms("DEtajjCut");
+      //            if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+      //            {
+      //              fillVBFCutflow(8);
+      //              fillVBFHistograms("SubleadJetPtCut");
+      //              if (VBFSUSYUtilities::getMTleadLep() < 50.)
+      //              {
+      //                fillVBFCutflow(9);
+      //                fillVBFHistograms("MTCut");
+      //                if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+      //                {
+      //                  fillVBFCutflow(10);
+      //                  fillVBFHistograms("MjjCut");
+      //                }
+      //              }
+      //            }
+      //          }
+      //        }
+      //        else
+      //        {
+      //          fillVBFCutflow(11);
+      //          fillVBFHistograms("LowMETCut");
+      //          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+      //          {
+      //            fillVBFCutflow(12);
+      //            fillVBFHistograms("DEtajjCut");
+      //          //  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+      //          //  {
+      //          //    fillVBFCutflow(13);
+      //          //    fillVBFHistograms("SubleadJetPtCut");
+      //          //    if (VBFSUSYUtilities::getMTleadLep() < 50.)
+      //          //    {
+      //          //      fillVBFCutflow(14);
+      //          //      fillVBFHistograms("MTCut");
+      //          //      if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+      //          //      {
+      //          //        fillVBFCutflow(15);
+      //          //        fillVBFHistograms("MjjCut");
+      //          //      }
+      //          //    }
+      //          //  }
+      //          }
+      //        }
+      //      }
+      //    }
+      //  }
+      //}
 
 //______________________________________________________________________________________
 void bookVBFHistograms()
@@ -709,6 +779,8 @@ void bookVBFHistograms()
   bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  50,    0.,   50.);
   // Book histograms
   bookVBFHistogramsWithPrefix("NoCut");
+  bookVBFHistogramsWithPrefix("OneLepCut");
+  bookVBFHistogramsWithPrefix("TwoLepCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("NSoftLepCut");
@@ -716,8 +788,10 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
+  bookVBFHistogramsWithPrefix("LowMETCut");
   bookVBFHistogramsWithPrefix("MTCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");
+  bookVBFHistogramsWithPrefix("LowMETDEtajjCut");
   bookVBFHistogramsWithPrefix("CJVCut");
   bookVBFHistogramsWithPrefix("MjjCut");
   bookVBFHistogramsWithPrefix("MET200Cut");
@@ -839,6 +913,139 @@ void fillVBFCutflow(int cutflowbin)
   fillVBFHistogram(Vbf::histname_vbf_cutflow.Data()   , cutflowbin, Vbf::evt_scale1fb);
   fillVBFHistogram(Vbf::histname_vbf_rawcutflow.Data(), cutflowbin,                1.);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// truth VBF analysis
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+//______________________________________________________________________________________
+void truthVBFAnalysis()
+{
+
+  // if not VBF sample no need to do anything
+  if (!Vbf::output_name.Contains("VBF"))
+    return;
+
+  // obtaining LSPs and leptons
+  std::vector<int> LSPindices;
+  std::vector<int> leptonindices;
+  for (int igen = 0; igen < Vbf::mt2tree.ngenStat23; ++igen)
+  {
+    if (Vbf::mt2tree.genStat23_pdgId[igen] == 1000022 && Vbf::mt2tree.genStat23_status[igen] == 1)
+      LSPindices.push_back(igen);
+    if (abs(Vbf::mt2tree.genStat23_pdgId[igen]) == 11 || abs(Vbf::mt2tree.genStat23_pdgId[igen]) == 13 || abs(Vbf::mt2tree.genStat23_pdgId[igen]) == 15)
+      leptonindices.push_back(igen);
+  }
+
+  // parse VBF partons
+  TLorentzVector vbfparton0;
+  TLorentzVector vbfparton1;
+  vbfparton0.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[4], Vbf::mt2tree.genStat23_eta[4], Vbf::mt2tree.genStat23_phi[4], Vbf::mt2tree.genStat23_mass[4]);
+  vbfparton1.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[5], Vbf::mt2tree.genStat23_eta[5], Vbf::mt2tree.genStat23_phi[5], Vbf::mt2tree.genStat23_mass[5]);
+
+  // check I got two LSPs
+  if (LSPindices.size() != 2)
+  {
+    TString errormsg = TString::Format("Event #%d does not have two final state LSPs! (size = %d)", LoopUtilities::getCurrentTTreeEventIndex(), (int) LSPindices.size());
+    PrintUtilities::error(errormsg);
+  }
+
+  // parse LSP partons
+  TLorentzVector lspparton0;
+  TLorentzVector lspparton1;
+  lspparton0.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[LSPindices[0]], Vbf::mt2tree.genStat23_eta[LSPindices[0]], Vbf::mt2tree.genStat23_phi[LSPindices[0]], Vbf::mt2tree.genStat23_mass[LSPindices[0]]);
+  lspparton1.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[LSPindices[1]], Vbf::mt2tree.genStat23_eta[LSPindices[1]], Vbf::mt2tree.genStat23_phi[LSPindices[1]], Vbf::mt2tree.genStat23_mass[LSPindices[1]]);
+
+  // parse leptons
+  TLorentzVector lep0;
+  TLorentzVector lep1;
+  TLorentzVector lep2;
+  if (leptonindices.size() > 0)
+  lep0.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[leptonindices[0]], Vbf::mt2tree.genStat23_eta[leptonindices[0]], Vbf::mt2tree.genStat23_phi[leptonindices[0]], Vbf::mt2tree.genStat23_mass[leptonindices[0]]);
+  if (leptonindices.size() > 1)
+  lep1.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[leptonindices[1]], Vbf::mt2tree.genStat23_eta[leptonindices[1]], Vbf::mt2tree.genStat23_phi[leptonindices[1]], Vbf::mt2tree.genStat23_mass[leptonindices[1]]);
+  if (leptonindices.size() > 2)
+  lep2.SetPtEtaPhiM(Vbf::mt2tree.genStat23_pt[leptonindices[2]], Vbf::mt2tree.genStat23_eta[leptonindices[2]], Vbf::mt2tree.genStat23_phi[leptonindices[2]], Vbf::mt2tree.genStat23_mass[leptonindices[2]]);
+
+  // form combined objects
+  TLorentzVector dijet = vbfparton0 + vbfparton1;
+  TLorentzVector dilsp = lspparton0 + lspparton1;
+
+  // setting up histogram names
+  TString histname_prodmode = "truth_prodmode"; histname_prodmode+= VBFSUSYUtilities::getMassSuffixTString();
+  TString histname_mjj      = "truth_mjj";      histname_mjj      = VBFSUSYUtilities::getSignalSuffix(histname_mjj);
+  TString histname_detajj   = "truth_detajj";   histname_detajj   = VBFSUSYUtilities::getSignalSuffix(histname_detajj);
+  TString histname_dphijj   = "truth_dphijj";   histname_dphijj   = VBFSUSYUtilities::getSignalSuffix(histname_dphijj);
+  TString histname_met      = "truth_met";      histname_met      = VBFSUSYUtilities::getSignalSuffix(histname_met);
+  TString histname_nlep     = "truth_nlep";     histname_nlep     = VBFSUSYUtilities::getSignalSuffix(histname_nlep);
+  TString histname_lep_pt0  = "truth_lep_pt0";  histname_lep_pt0  = VBFSUSYUtilities::getSignalSuffix(histname_lep_pt0);
+  TString histname_lep_pt1  = "truth_lep_pt1";  histname_lep_pt1  = VBFSUSYUtilities::getSignalSuffix(histname_lep_pt1);
+  TString histname_lep_pt2  = "truth_lep_pt2";  histname_lep_pt2  = VBFSUSYUtilities::getSignalSuffix(histname_lep_pt2);
+  TString histname_jet_pt0  = "truth_jet_pt0";  histname_jet_pt0  = VBFSUSYUtilities::getSignalSuffix(histname_jet_pt0);
+  TString histname_jet_pt1  = "truth_jet_pt1";  histname_jet_pt1  = VBFSUSYUtilities::getSignalSuffix(histname_jet_pt1);
+
+  float nlep    = leptonindices.size();
+  float mjj     = dijet.M();
+  float detajj  = fabs(vbfparton0.Eta() - vbfparton1.Eta());
+  float dphijj  = fabs(vbfparton0.DeltaPhi(vbfparton1));
+  float met     = dilsp.Pt();
+  float lep_pt0 = nlep > 0 ? lep0.Pt() : -999;
+  float lep_pt1 = nlep > 1 ? lep1.Pt() : -999;
+  float lep_pt2 = nlep > 2 ? lep2.Pt() : -999;
+  float jet_pt0 = vbfparton0.Pt();
+  float jet_pt1 = vbfparton1.Pt();
+
+  // pass 1502_05044 selections (on figure 1. of their paper)
+  PlotUtil::plot1D(histname_mjj    .Data() , mjj     , 1 , Vbf::h_truth_1d , histname_mjj    .Data() , 180. , 0 , 3500.     );
+  PlotUtil::plot1D(histname_detajj .Data() , detajj  , 1 , Vbf::h_truth_1d , histname_detajj .Data() , 180. , 0 ,    9.     );
+  PlotUtil::plot1D(histname_dphijj .Data() , dphijj  , 1 , Vbf::h_truth_1d , histname_dphijj .Data() , 180. , 0 ,    3.1416 );
+  PlotUtil::plot1D(histname_met    .Data() , met     , 1 , Vbf::h_truth_1d , histname_met    .Data() , 180. , 0 ,  350.     );
+  PlotUtil::plot1D(histname_nlep   .Data() , nlep    , 1 , Vbf::h_truth_1d , histname_nlep   .Data() ,   4. , 0 ,    4.     );
+  PlotUtil::plot1D(histname_lep_pt0.Data() , lep_pt0 , 1 , Vbf::h_truth_1d , histname_lep_pt0.Data() , 180. , 0 ,   30.     );
+  PlotUtil::plot1D(histname_lep_pt1.Data() , lep_pt1 , 1 , Vbf::h_truth_1d , histname_lep_pt1.Data() , 180. , 0 ,   30.     );
+  PlotUtil::plot1D(histname_lep_pt2.Data() , lep_pt2 , 1 , Vbf::h_truth_1d , histname_lep_pt2.Data() , 180. , 0 ,   30.     );
+  PlotUtil::plot1D(histname_jet_pt0.Data() , jet_pt0 , 1 , Vbf::h_truth_1d , histname_jet_pt0.Data() , 180. , 0 ,  250.     );
+  PlotUtil::plot1D(histname_jet_pt1.Data() , jet_pt1 , 1 , Vbf::h_truth_1d , histname_jet_pt1.Data() , 180. , 0 ,  150.     );
+
+  // fill by "production" mode
+  PlotUtil::plot1D(histname_prodmode.Data(), VBFSUSYUtilities::getProductionMode(), 1, Vbf::h_truth_1d, histname_prodmode.Data(), 3, 0, 3);
+
+}
+
+
+
+
+
+
+
+
+
 
 
 

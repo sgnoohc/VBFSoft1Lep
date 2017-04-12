@@ -691,8 +691,14 @@ class HistogramPainter:
             maxvalue = totalbkghist.GetBinContent(totalbkghist.GetMaximumBin())
             for sighist in sighists:
                 sigmaxvalue = sighist.GetBinContent(sighist.GetMaximumBin())
-                scale = maxvalue / sigmaxvalue
-                sighist.Scale(scale)
+                scaletomax = 1
+                scaletosize = 1
+                if sigmaxvalue != 0: scaletomax = maxvalue / sigmaxvalue
+                if sighist.Integral() != 0: scaletosize = totalbkghist.Integral() / sighist.Integral()
+                if scaletomax < scaletosize:
+                    sighist.Scale(scaletomax)
+                else:
+                    sighist.Scale(scaletosize)
         if datahist:
             if totalbkghist:
                 datahist.Draw(self.args.datadrawstyle+'same')

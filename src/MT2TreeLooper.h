@@ -93,6 +93,13 @@ void fillVBFHistogram(TString name, float val, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
 //=============================================================================
+// truth level VBF analysis (mostly to understand signal sample)
+//=============================================================================
+
+// The per event analysis module
+void truthVBFAnalysis();
+
+//=============================================================================
 // arXiv analysis
 //=============================================================================
 
@@ -116,6 +123,7 @@ namespace Vbf {
   extern PlotUtil::Hist1D_DB h_isr_1d;
   extern PlotUtil::Hist1D_DB h_vbf_1d;
   extern PlotUtil::Hist1D_DB h_arxiv_1d;
+  extern PlotUtil::Hist1D_DB h_truth_1d;
 
   // Event data
   extern MT2Tree mt2tree;

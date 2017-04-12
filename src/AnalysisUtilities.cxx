@@ -635,7 +635,7 @@ namespace AnalysisUtilities
       {
 
         // sanity check
-        if (entry >= totalN) // +2 instead of +1 since, the loop might be a while loop where to check I got a bad event the index may go over 1.
+        if (entry >= totalN+1) // +2 instead of +1 since, the loop might be a while loop where to check I got a bad event the index may go over 1.
         {
           TString msg = TString::Format("%d %d", entry, totalN);
           PrintUtilities::print(msg);
