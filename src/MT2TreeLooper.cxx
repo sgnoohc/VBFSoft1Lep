@@ -662,7 +662,6 @@ void doVBFAnalysis()
     {
       fillVBFCutflow(1);
       fillVBFHistograms("NJetCut");
-
       // 1 lepton case
       if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
       {
@@ -700,6 +699,11 @@ void doVBFAnalysis()
               {
                 fillVBFCutflow(6);
                 fillVBFHistograms("MET200300MTCut");
+                if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
+                {
+                  fillVBFCutflow(6);
+                  fillVBFHistograms("MET200300LeadLepPtCut");
+                }
               }
             }
 
@@ -712,6 +716,11 @@ void doVBFAnalysis()
               {
                 fillVBFCutflow(6);
                 fillVBFHistograms("MET300infMTCut");
+                if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 15.)
+                {
+                  fillVBFCutflow(6);
+                  fillVBFHistograms("MET300infLeadLepPtCut");
+                }
               }
             }
           }
@@ -728,40 +737,45 @@ void doVBFAnalysis()
         {
           fillVBFCutflow(10);
           fillVBFHistograms("TwoLepBVetoCut");
-          // 100 - 200 MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
+          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
           {
-            fillVBFCutflow(5);
-            fillVBFHistograms("TwoLepMET100200Cut");
-//	            if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 10.)
-//	            {
-//	              fillVBFCutflow(6);
-//	              fillVBFHistograms("MET100200LeadLepPtCut");
-//	            }
-          }
+            fillVBFCutflow(10);
+            fillVBFHistograms("TwoLepDEtajjCut");
+            // 100 - 200 MET bin
+            if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
+            {
+              fillVBFCutflow(5);
+              fillVBFHistograms("TwoLepMET100200Cut");
+              //	            if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 10.)
+              //	            {
+              //	              fillVBFCutflow(6);
+              //	              fillVBFHistograms("MET100200LeadLepPtCut");
+              //	            }
+            }
 
-          // 200 - 300 MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
-          {
-            fillVBFCutflow(7);
-            fillVBFHistograms("TwoLepMET200300Cut");
-//	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//	            {
-//	              fillVBFCutflow(6);
-//	              fillVBFHistograms("MET200300MTCut");
-//	            }
-          }
+            // 200 - 300 MET bin
+            if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
+            {
+              fillVBFCutflow(7);
+              fillVBFHistograms("TwoLepMET200300Cut");
+              //	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
+              //	            {
+              //	              fillVBFCutflow(6);
+              //	              fillVBFHistograms("MET200300MTCut");
+              //	            }
+            }
 
-          // 300 - inf MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
-          {
-            fillVBFCutflow(8);
-            fillVBFHistograms("TwoLepMET300infCut");
-//	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//	            {
-//	              fillVBFCutflow(6);
-//	              fillVBFHistograms("MET300infMTCut");
-//	            }
+            // 300 - inf MET bin
+            if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
+            {
+              fillVBFCutflow(8);
+              fillVBFHistograms("TwoLepMET300infCut");
+              //	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
+              //	            {
+              //	              fillVBFCutflow(6);
+              //	              fillVBFHistograms("MET300infMTCut");
+              //	            }
+            }
           }
         }
       }
@@ -852,6 +866,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("OneLepCut");
   bookVBFHistogramsWithPrefix("TwoLepCut");
   bookVBFHistogramsWithPrefix("TwoLepBVetoCut");
+  bookVBFHistogramsWithPrefix("TwoLepDEtajjCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("NSoftLepCut");
@@ -869,8 +884,9 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("MET100200LeadLepPtCut");
   bookVBFHistogramsWithPrefix("MET200300Cut");
   bookVBFHistogramsWithPrefix("MET200300MTCut");
+  bookVBFHistogramsWithPrefix("MET200300LeadLepPtCut");
   bookVBFHistogramsWithPrefix("MET300infCut");
-  bookVBFHistogramsWithPrefix("MET300infMTCut");
+  bookVBFHistogramsWithPrefix("MET300infLeadLepPtCut");
   bookVBFHistogramsWithPrefix("TwoLepMET100200Cut");
   bookVBFHistogramsWithPrefix("TwoLepMET200300Cut");
   bookVBFHistogramsWithPrefix("TwoLepMET300infCut");
