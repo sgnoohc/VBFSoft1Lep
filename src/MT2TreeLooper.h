@@ -151,6 +151,7 @@ namespace Vbf {
   extern TString histname_vbf_rawcutflow;
   extern TString histname_vbf_nsoftleps;
   extern TString histname_vbf_njets;
+  extern TString histname_vbf_nbjets;
   extern TString histname_vbf_mjj;
   extern TString histname_vbf_detajj;
   extern TString histname_vbf_dphijj;
@@ -167,6 +168,15 @@ namespace Vbf {
   extern TString histname_vbf_ht;
   extern TString histname_vbf_methtratio;
   extern TString histname_vbf_lepid;
+  extern TString histname_vbf_dphilepmet;
+  extern TString histname_vbf_sumpt;
+  extern TString histname_vbf_sumptall;
+  extern TString histname_vbf_dphileadjetmet;
+  extern TString histname_vbf_dphisubljetmet;
+  extern TString histname_vbf_dphidijetmet;
+  extern TString histname_vbf_dphidijetlep;
+  extern TString histname_vbf_metphicent;
+  extern TString histname_vbf_lepphicent;
 
 }
 

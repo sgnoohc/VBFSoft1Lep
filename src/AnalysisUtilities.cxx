@@ -635,8 +635,12 @@ namespace AnalysisUtilities
       {
 
         // sanity check
-        if (entry+1 > totalN)
+        if (entry >= totalN) // +2 instead of +1 since, the loop might be a while loop where to check I got a bad event the index may go over 1.
+        {
+          TString msg = TString::Format("%d %d", entry, totalN);
+          PrintUtilities::print(msg);
           PrintUtilities::error("Total number of events processed went over max allowed! Check your loop boundary conditions!!");
+        }
 
         int nbars = entry/(totalN/20);
         Double_t elapsed = my_timer.RealTime();
@@ -1463,6 +1467,139 @@ namespace AnalysisUtilities
       return mtt;
 
     }
+
+    //################################################################################################
+    // get DPhi(lep,met)
+    //
+    float getDPhiLepMET()
+    {
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiLepMET() asked when there are less than one lepton");
+      return fabs(getLeadingGoodLepton().p4.DeltaPhi(getMETp4()));
+    }
+
+    //################################################################################################
+    // get vector sum of pt of all objects
+    //
+    float getVecSumPt()
+    {
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getVecSumPt() asked when there are less than one lepton");
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getVecSumPt() asked when there are less than two jets");
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector system = lep + jet0 + jet1 + met;
+      return system.Pt();
+    }
+
+    //################################################################################################
+    // get vector sum of pt of all objects
+    //
+    float getVecSumPtAll()
+    {
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getVecSumPt() asked when there are less than one lepton");
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector system = lep + met;
+      for (int ijet = 0; ijet < getNSelectedGoodJets(); ++ijet)
+      {
+        system = selected_good_jets.at(ijet).p4;
+      }
+      return system.Pt();
+    }
+
+    //################################################################################################
+    // get delta phi between leading jet and met
+    //
+    float getDPhiLeadJetMET()
+    {
+      if (getNSelectedGoodJets() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiLeadJetMET() asked when there are less than one jet");
+      return fabs(getLeadingVBFJet().p4.DeltaPhi(getMETp4()));
+    }
+
+    //################################################################################################
+    // get delta phi between subleading jet and met
+    //
+    float getDPhiSubleadJetMET()
+    {
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiSubleadJetMET() asked when there are less than two jet");
+      return fabs(getSubleadingVBFJet().p4.DeltaPhi(getMETp4()));
+    }
+
+    //################################################################################################
+    // get delta phi between dijet and lepton
+    //
+    float getDPhiDiJetLep()
+    {
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than one lepton");
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than two jet");
+      TLorentzVector dijet = getLeadingVBFJet().p4 + getSubleadingVBFJet().p4;
+      return fabs(dijet.DeltaPhi(getLeadingGoodLepton().p4));
+    }
+
+    //################################################################################################
+    // get delta phi between dijet and met
+    //
+    float getDPhiDiJetMET()
+    {
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetMET() asked when there are less than two jet");
+      TLorentzVector dijet = getLeadingVBFJet().p4 + getSubleadingVBFJet().p4;
+      return fabs(dijet.DeltaPhi(getMETp4()));
+    }
+
+    //################################################################################################
+    // get met phi centrality wrt to jets
+    //
+    float getMETPhiCent()
+    {
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetMET() asked when there are less than two jet");
+      // Additional Variables for the VBF BDT
+      float var_aPhi = getLeadingVBFJet().p4.Phi();
+      float var_bPhi = getSubleadingVBFJet().p4.Phi();
+      float var_cPhi = getMETp4().Phi();
+      if (var_bPhi==var_aPhi) {
+          var_aPhi+=0.01 ;
+          var_bPhi-=0.01 ;
+      }
+      float var_A = TMath::Sin(var_cPhi - var_aPhi)/TMath::Sin(var_bPhi - var_aPhi);
+      float var_B = TMath::Sin(var_bPhi - var_cPhi)/TMath::Sin(var_bPhi - var_aPhi);
+      float cent = (var_A+var_B)/TMath::Sqrt(var_A*var_A + var_B*var_B);
+      return cent;
+    }
+
+    //################################################################################################
+    // get met phi centrality wrt to jets
+    //
+    float getLepPhiCent()
+    {
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than two jet");
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than one lep");
+      // Additional Variables for the VBF BDT
+      float var_aPhi = getLeadingVBFJet().p4.Phi();
+      float var_bPhi = getSubleadingVBFJet().p4.Phi();
+      float var_cPhi = getLeadingGoodLepton().p4.Phi();
+      if (var_bPhi==var_aPhi) {
+          var_aPhi+=0.01 ;
+          var_bPhi-=0.01 ;
+      }
+      float var_A = TMath::Sin(var_cPhi - var_aPhi)/TMath::Sin(var_bPhi - var_aPhi);
+      float var_B = TMath::Sin(var_bPhi - var_cPhi)/TMath::Sin(var_bPhi - var_aPhi);
+      float cent = (var_A+var_B)/TMath::Sqrt(var_A*var_A + var_B*var_B);
+      return cent;
+    }
+
 
   }
 

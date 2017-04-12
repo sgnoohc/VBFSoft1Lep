@@ -314,6 +314,15 @@ namespace AnalysisUtilities
     float getMTleadLep();
     float getMTsubleadLep();
     float getMtt();
+    float getDPhiLepMET();
+    float getVecSumPt();
+    float getVecSumPtAll();
+    float getDPhiLeadJetMET();
+    float getDPhiSubleadJetMET();
+    float getDPhiDiJetMET();
+    float getDPhiDiJetLep();
+    float getMETPhiCent();
+    float getLepPhiCent();
 
     // lep jet variables
     float getLeptonCentrality();

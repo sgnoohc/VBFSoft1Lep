@@ -13,6 +13,7 @@
 #
 ########################################################################
 
+import os
 import argparse
 
 parser = argparse.ArgumentParser(description='Create plots from rootfiles with TH1 objects', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -68,8 +69,14 @@ parser.add_argument('--canvas_logx', dest='canvas_logx', help='SetLogx', action=
 parser.add_argument('--delimiter_canvas_def', dest='delimiter_canvas_def', default=':', help=argparse.SUPPRESS)
 parser.add_argument('--delimiter_canvas_def_splitindex', dest='delimiter_canvas_def_splitindex', default=0, help=argparse.SUPPRESS)
 
+# Options for saving TCanvases for root2html.py
+parser.add_argument('--output_filename', dest='output_filename', help='output root file name where we will hold TCanvases for root2html.py', default='')
+parser.add_argument('--output_path', dest='output_path', help='output path name for the given TCanvas', default='')
+parser.add_argument('--output_tcanvas_name', dest='output_tcanvas_name', help='output path name for the given TCanvas', default='')
+parser.add_argument('--output_file_open_option', dest='output_file_open_option', help='open to update? or open to recreate? etc.', default='update')
+
 # Options for saving plot
-parser.add_argument('--plotfiletype', dest='plotfiletypes', action='append', help='plot types (e.g. pdf, eps, png, etc.)', default=['png'])
+parser.add_argument('--plotfiletype', dest='plotfiletypes', action='append', help='plot types (e.g. pdf, eps, png, etc.)', default=['pdf'])
 parser.add_argument('--plotname', dest='plotname', help='plot name', default='myplot')
 parser.add_argument('--plotlabel', dest='plotlabel', help='plot label on top')
 parser.add_argument('--plotlabelXcoord', dest='plotlabelXcoord', default=.92, type=float, help='plot label X-coord on top')
@@ -100,6 +107,9 @@ parser.add_argument('--XTitleOffset', dest='XTitleOffset', help='X-axis title of
 parser.add_argument('--YTitleOffset', dest='YTitleOffset', help='Y-axis title offset (i.e. varname)', default=1.4, type=float)
 parser.add_argument('--XNdivisions', dest='XNdivisions', help='X-axis Ndivisions', type=int, default=505)
 parser.add_argument('--YNdivisions', dest='YNdivisions', help='Y-axis Ndivisions', type=int, default=505)
+
+# Options for auto scaling signal sample
+parser.add_argument('--auto_scale_signal', dest='auto_scale_signal', action='store_true', help='stack Integrate() small first', default=False)
 
 # Options for stacking
 parser.add_argument('--autostack', dest='autostack', action='store_true', help='stack Integrate() small first', default=False)
@@ -211,7 +221,10 @@ class CanvasFactory:
         self.stylize_canvas(canvas)
         return canvas
     def get_canvas_name(self):
-        return self.args.canvas_name_prefix + '___' + str(self.canvas_index)
+        if self.args.output_tcanvas_name:
+            return self.args.output_tcanvas_name
+        plotname = os.path.basename(self.args.plotname)
+        return self.args.canvas_name_prefix + '___' + plotname + '___' + str(self.canvas_index)
     def increment_canvas_index(self):
         self.canvas_index = self.canvas_index + 1
     def stylize_canvas(self, canvas):
@@ -237,8 +250,29 @@ class CanvasSaver:
     def __init__(self, args):
         self.args = args
     def save_canvas(self, canvas):
+        if self.args.output_filename:
+            ofile = ROOT.TFile(self.args.output_filename, self.args.output_file_open_option)
+            ofile.cd()
+            self.cd_recursive_directory(self.args.output_path.strip('/'))
+            canvas.Write()
         for plotfiletype in self.args.plotfiletypes:
             canvas.SaveAs(self.args.plotname + '.' + plotfiletype)
+    def cd_recursive_directory(self, path):
+        paths = path.split('/')
+        if len(paths) == 1:
+            if ROOT.gDirectory.cd(paths[0]):
+                return ROOT.gDirectory
+            else:
+                ROOT.gDirectory.mkdir(paths[0])
+                ROOT.gDirectory.cd(paths[0])
+        else:
+            parentpath = paths[0]
+            if ROOT.gDirectory.cd(parentpath):
+                self.cd_recursive_directory(os.path.join(*paths[1:]))
+            else:
+                ROOT.gDirectory.mkdir(parentpath)
+                ROOT.gDirectory.cd(parentpath)
+                self.cd_recursive_directory(os.path.join(*paths[1:]))
 
 class HistogramManager:
     def __init__(self, args):
@@ -653,6 +687,12 @@ class HistogramPainter:
         #print totalbkghist.Integral(22,24)
         #print totalbkghist.Integral(41,50)
         #print totalbkghist.Integral(82,100)
+        if self.args.auto_scale_signal:
+            maxvalue = totalbkghist.GetBinContent(totalbkghist.GetMaximumBin())
+            for sighist in sighists:
+                sigmaxvalue = sighist.GetBinContent(sighist.GetMaximumBin())
+                scale = maxvalue / sigmaxvalue
+                sighist.Scale(scale)
         if datahist:
             if totalbkghist:
                 datahist.Draw(self.args.datadrawstyle+'same')
@@ -1001,7 +1041,7 @@ class HistogramPainter:
             sig_scan_upper_hist.Reset()
             sig_scan_upper_hist.SetLineStyle(2)
             sig_scan_upper_hists_accept[index].Reset()
-            sig_scan_upper_hists_accept[index].SetLineStyle(3)
+            sig_scan_upper_hists_accept[index].SetLineStyle(4)
 
             all_sig_err = ROOT.Double()
             all_bkg_err = ROOT.Double()
@@ -1069,7 +1109,7 @@ class HistogramPainter:
             else:
                 sig_scan_upper_hist.Draw('histsame')
             self.objs.append(sig_scan_upper_hist)
-        #sig_scan_lower_hists[0].SetMaximum(globalmax*1.1)
+        sig_scan_lower_hists[0].SetMaximum(globalmax*1.1)
 
         for index, hist in enumerate(sig_scan_upper_hists_accept):
             localmax = hist.GetMaximum()
@@ -1094,8 +1134,8 @@ class HistogramPainter:
 if __name__ == '__main__':
 
     histpainter = HistogramPainter(args)
-    if args.plottype == 'plot1d': histpainter.draw_standard_1d()
-    if args.plottype == 'plot1dratio': histpainter.draw_standard_1d_with_ratio()
-    if args.plottype == 'ratio1d': histpainter.draw_ratio_1d()
-    if args.plottype == 'plot1dsig': histpainter.draw_standard_1d_with_sigscan()
+    if args.plottype == 'plot1d'      : histpainter.draw_standard_1d()
+    if args.plottype == 'plot1dratio' : histpainter.draw_standard_1d_with_ratio()
+    if args.plottype == 'ratio1d'     : histpainter.draw_ratio_1d()
+    if args.plottype == 'plot1dsig'   : histpainter.draw_standard_1d_with_sigscan()
 
