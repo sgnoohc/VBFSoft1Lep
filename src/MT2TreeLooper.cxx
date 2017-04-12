@@ -886,6 +886,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("MET200300MTCut");
   bookVBFHistogramsWithPrefix("MET200300LeadLepPtCut");
   bookVBFHistogramsWithPrefix("MET300infCut");
+  bookVBFHistogramsWithPrefix("MET300infMTCut");
   bookVBFHistogramsWithPrefix("MET300infLeadLepPtCut");
   bookVBFHistogramsWithPrefix("TwoLepMET100200Cut");
   bookVBFHistogramsWithPrefix("TwoLepMET200300Cut");
