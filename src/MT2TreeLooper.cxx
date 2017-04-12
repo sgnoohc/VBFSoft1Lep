@@ -668,32 +668,45 @@ void doVBFAnalysis()
       {
         fillVBFCutflow(2);
         fillVBFHistograms("OneLepCut");
-        if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+        if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
         {
           fillVBFCutflow(3);
-          fillVBFHistograms("LowMETCut");
-          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+          fillVBFHistograms("DEtajjCut");
+
+          // 100 - 200 MET bin
+          if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
           {
             fillVBFCutflow(4);
-            fillVBFHistograms("LowMETDEtajjCut");
+            fillVBFHistograms("MET100200Cut");
           }
-          if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+
+          // 200 - 300 MET bin
+          if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
           {
             fillVBFCutflow(5);
-            fillVBFHistograms("METCut");
-            if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
-            {
-              fillVBFCutflow(6);
-              fillVBFHistograms("DEtajjCut");
-            }
+            fillVBFHistograms("MET200300Cut");
           }
+
+          // 300 - inf MET bin
+          if (VBFSUSYUtilities::getMETp4().Pt() > 100.)
+          {
+            fillVBFCutflow(6);
+            fillVBFHistograms("MET300infCut");
+          }
+
         }
       }
 
       // 2 soft lepton case
       if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 2)
       {
+        fillVBFCutflow(7);
         fillVBFHistograms("TwoLepCut");
+        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+        {
+          fillVBFCutflow(8);
+          fillVBFHistograms("TwoLepBVetoCut");
+        }
       }
 
     }
@@ -781,20 +794,22 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("NoCut");
   bookVBFHistogramsWithPrefix("OneLepCut");
   bookVBFHistogramsWithPrefix("TwoLepCut");
+  bookVBFHistogramsWithPrefix("TwoLepBVetoCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("NSoftLepCut");
   bookVBFHistogramsWithPrefix("MuonCut");
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
+  bookVBFHistogramsWithPrefix("MET100200Cut");
+  bookVBFHistogramsWithPrefix("MET200300Cut");
+  bookVBFHistogramsWithPrefix("MET300infCut");
   bookVBFHistogramsWithPrefix("METCut");
   bookVBFHistogramsWithPrefix("LowMETCut");
   bookVBFHistogramsWithPrefix("MTCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");
-  bookVBFHistogramsWithPrefix("LowMETDEtajjCut");
   bookVBFHistogramsWithPrefix("CJVCut");
   bookVBFHistogramsWithPrefix("MjjCut");
-  bookVBFHistogramsWithPrefix("MET200Cut");
 }
 
 //______________________________________________________________________________________
