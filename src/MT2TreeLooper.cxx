@@ -673,25 +673,37 @@ void doVBFAnalysis()
           fillVBFCutflow(3);
           fillVBFHistograms("DEtajjCut");
 
-          // 100 - 200 MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
+          // apply to all to get rid of low MET QCD junk and also helps reject W+jets for higher MET bins too
+          if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
           {
             fillVBFCutflow(4);
-            fillVBFHistograms("MET100200Cut");
-          }
+            fillVBFHistograms("SubleadJetPtCut");
 
-          // 200 - 300 MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
-          {
-            fillVBFCutflow(5);
-            fillVBFHistograms("MET200300Cut");
-          }
+            // 100 - 200 MET bin
+            if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
+            {
+              fillVBFCutflow(5);
+              fillVBFHistograms("MET100200Cut");
+              if (VBFSUSYUtilities::getMTleadLep() < 50.)
+              {
+                fillVBFCutflow(6);
+                fillVBFHistograms("MET100200MTCut");
+              }
+            }
 
-          // 300 - inf MET bin
-          if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
-          {
-            fillVBFCutflow(6);
-            fillVBFHistograms("MET300infCut");
+            // 200 - 300 MET bin
+            if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
+            {
+              fillVBFCutflow(7);
+              fillVBFHistograms("MET200300Cut");
+            }
+
+            // 300 - inf MET bin
+            if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
+            {
+              fillVBFCutflow(8);
+              fillVBFHistograms("MET300infCut");
+            }
           }
 
         }
@@ -700,11 +712,11 @@ void doVBFAnalysis()
       // 2 soft lepton case
       if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 2)
       {
-        fillVBFCutflow(7);
+        fillVBFCutflow(9);
         fillVBFHistograms("TwoLepCut");
         if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
         {
-          fillVBFCutflow(8);
+          fillVBFCutflow(10);
           fillVBFHistograms("TwoLepBVetoCut");
         }
       }
@@ -801,15 +813,16 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("MuonCut");
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
-  bookVBFHistogramsWithPrefix("MET100200Cut");
-  bookVBFHistogramsWithPrefix("MET200300Cut");
-  bookVBFHistogramsWithPrefix("MET300infCut");
   bookVBFHistogramsWithPrefix("METCut");
   bookVBFHistogramsWithPrefix("LowMETCut");
   bookVBFHistogramsWithPrefix("MTCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");
   bookVBFHistogramsWithPrefix("CJVCut");
   bookVBFHistogramsWithPrefix("MjjCut");
+  bookVBFHistogramsWithPrefix("MET100200Cut");
+  bookVBFHistogramsWithPrefix("MET100200MTCut");
+  bookVBFHistogramsWithPrefix("MET200300Cut");
+  bookVBFHistogramsWithPrefix("MET300infCut");
 }
 
 //______________________________________________________________________________________
