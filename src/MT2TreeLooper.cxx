@@ -776,7 +776,7 @@ void doVBFAnalysis()
             if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
             {
               fillVBFCutflow(7);
-              fillVBFHistograms("TwoLepMET200inf");
+              fillVBFHistograms("TwoLepMET200infCut");
               //	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
               //	            {
               //	              fillVBFCutflow(6);
