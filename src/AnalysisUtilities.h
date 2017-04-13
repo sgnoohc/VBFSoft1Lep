@@ -324,6 +324,7 @@ namespace AnalysisUtilities
     float getDPhiDiJetLep();
     float getMETPhiCent();
     float getLepPhiCent();
+    float getDPhiDiJetLepMet();
 
     // lep jet variables
     float getLeptonCentrality();

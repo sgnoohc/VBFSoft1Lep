@@ -184,6 +184,7 @@ namespace Vbf {
   extern TString histname_vbf_dphidijetlep;
   extern TString histname_vbf_metphicent;
   extern TString histname_vbf_lepphicent;
+  extern TString histname_vbf_dphidijetlepmet;
   // dilepton channel
   extern TString histname_vbf_mll;
   extern TString histname_vbf_dphill;

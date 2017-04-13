@@ -1610,6 +1610,24 @@ namespace AnalysisUtilities
       return cent;
     }
 
+    //################################################################################################
+    // get dphi between dijet , lepmet system
+    //
+    float getDPhiDiJetLepMet()
+    {
+      if (getNSelectedGoodJets() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than two jet");
+      if (getNSelectedGoodLeptons() < 1)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than one lep");
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector system = lep + jet0 + jet1 + met;
+      TLorentzVector dijet = jet0 + jet1;
+      TLorentzVector lepmet = lep + met;
+      return fabs(dijet.DeltaPhi(lepmet));
+    }
 
   }
 
