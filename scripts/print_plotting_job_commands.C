@@ -46,8 +46,8 @@ int determine_nbins(TH1F* hist)
     if (avg < 0.2)
       return 180 / possible_bins.at(iconf);
   }
-  if (histname.Contains("modmt"))
-    return 180;
+  //if (histname.Contains("modmt"))
+  //  return 180;
   return 10;
 }
 
