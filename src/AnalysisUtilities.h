@@ -310,6 +310,7 @@ namespace AnalysisUtilities
     bool isMMChannel();
     float getMll();
     float getPtll();
+    float getDPhill();
     float getMT(Lepton lep);
     float getMTleadLep();
     float getMTsubleadLep();

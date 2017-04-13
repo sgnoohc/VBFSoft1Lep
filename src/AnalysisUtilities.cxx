@@ -1359,6 +1359,16 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // get Mll
+    //
+    float getDPhill()
+    {
+      if (getNSelectedGoodLeptons() < 2)
+        PrintUtilities::error("VBFSUSYUtilities::getDPhill() asked for DPhill when no two leptons exist");
+      return fabs(getLeadingGoodLepton().p4.DeltaPhi(getSubleadingGoodLepton().p4));
+    }
+
+    //################################################################################################
     // get Ptll
     //
     float getPtll()

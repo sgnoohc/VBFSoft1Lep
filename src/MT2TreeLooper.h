@@ -154,7 +154,6 @@ namespace Vbf {
   extern float mllbin[5];
 
   // VBF histogram names
-  // multiplicity
   extern TString histname_vbf_cutflow;
   extern TString histname_vbf_rawcutflow;
   extern TString histname_vbf_nsoftleps;
@@ -185,6 +184,13 @@ namespace Vbf {
   extern TString histname_vbf_dphidijetlep;
   extern TString histname_vbf_metphicent;
   extern TString histname_vbf_lepphicent;
+  // dilepton channel
+  extern TString histname_vbf_mll;
+  extern TString histname_vbf_dphill;
+  extern TString histname_vbf_ptll;
+  extern TString histname_vbf_sublleppt;
+  extern TString histname_vbf_dilepchannel;
+  extern TString histname_vbf_mtt;
 
 }
 
