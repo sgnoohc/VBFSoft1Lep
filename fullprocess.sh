@@ -18,6 +18,14 @@ fi
 
 TAG=$(git log --pretty=oneline | head -n1 | awk '{print $1}')
 echo $TAG
+
+if [ -d "~/public_html/dump/plots_${1}_${TAG}" ]; then
+  echo "ERROR - the output directory of this submission already exists!"
+  echo "Did you forget to git commit?"
+  echo ""
+  usage
+fi
+
 if [ "x$2" == "x" ]; then
   make clean; make -j4
   sh scripts/xargs_run.sh

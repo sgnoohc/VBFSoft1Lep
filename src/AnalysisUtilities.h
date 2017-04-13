@@ -23,6 +23,7 @@
 #include <TFile.h>
 #include <TGraph.h>
 #include <TLorentzVector.h>
+#include <TVector3.h>
 #include <TObjArray.h>
 #include <TH1.h>
 #include <TH2.h>
@@ -293,6 +294,16 @@ namespace AnalysisUtilities
     TLorentzVector getMETp4();
 
     //
+    // guarntee functions
+    //
+    void checkNJets(int N, TString function="");
+    void checkNLeptons(int N, TString function="");
+    void checkOneJet(TString function="");
+    void checkTwoJets(TString function="");
+    void checkOneLepton(TString function="");
+    void checkTwoLeptons(TString function="");
+
+    //
     // VBF Topology variables
     //
     bool hasVBFJets();
@@ -320,11 +331,14 @@ namespace AnalysisUtilities
     float getVecSumPtAll();
     float getDPhiLeadJetMET();
     float getDPhiSubleadJetMET();
+    float getDPhiLeadJetLep();
+    float getDPhiSubleadJetLep();
     float getDPhiDiJetMET();
     float getDPhiDiJetLep();
     float getMETPhiCent();
     float getLepPhiCent();
     float getDPhiDiJetLepMet();
+    float getDPhiLepMETInvDijetFrame();
 
     // lep jet variables
     float getLeptonCentrality();

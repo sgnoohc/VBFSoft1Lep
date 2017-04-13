@@ -1058,8 +1058,7 @@ namespace AnalysisUtilities
     //
     Lepton getLeadingGoodLepton()
     {
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getLeadingGoodLepton() asked for leading good lepton when there are no good leptons");
+      checkOneLepton(__FUNCTION__);
       return selected_good_leptons.at(0);
     }
 
@@ -1068,8 +1067,7 @@ namespace AnalysisUtilities
     //
     Lepton getSubleadingGoodLepton()
     {
-      if (getNSelectedGoodLeptons() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getLeadingGoodLepton() asked for subleading good lepton when there are no good leptons");
+      checkTwoLeptons(__FUNCTION__);
       return selected_good_leptons.at(1);
     }
 
@@ -1218,8 +1216,7 @@ namespace AnalysisUtilities
     // get leading VBF jet
     Jet getLeadingVBFJet()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getLeadingVBFJet() asked to retrieve leading vbf jet when the event does not even have >=2 n selected jets.");
+      checkTwoJets(__FUNCTION__);
       return selected_good_jets.at(0);
     }
 
@@ -1227,8 +1224,7 @@ namespace AnalysisUtilities
     // get subleading VBF jet
     Jet getSubleadingVBFJet()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getSubleadingVBFJet() asked to retrieve subleading vbf jet when the event does not even have >=2 n selected jets.");
+      checkTwoJets(__FUNCTION__);
       return selected_good_jets.at(1);
     }
 
@@ -1271,8 +1267,7 @@ namespace AnalysisUtilities
     //
     float getVBFDEtajj()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getVBFDEtajj() asked to compute delta eta but does not have vbf jets");
+      checkTwoJets(__FUNCTION__);
       return fabs(getLeadingVBFJet().p4.Eta() - getSubleadingVBFJet().p4.Eta());
     }
 
@@ -1281,8 +1276,7 @@ namespace AnalysisUtilities
     //
     float getVBFDPhijj()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getVBFDPhijj() asked to compute delta phi but does not have vbf jets");
+      checkTwoJets(__FUNCTION__);
       return fabs(getLeadingVBFJet().p4.DeltaPhi(getSubleadingVBFJet().p4));
     }
 
@@ -1291,8 +1285,7 @@ namespace AnalysisUtilities
     //
     float getVBFMjj()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getVBFMjj() asked to compute Mjj but does not have VBF jets");
+      checkTwoJets(__FUNCTION__);
       return (getLeadingVBFJet().p4 + getSubleadingVBFJet().p4).M();
     }
 
@@ -1301,10 +1294,8 @@ namespace AnalysisUtilities
     //
     float getLeptonCentrality()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getLeptonCentrality() asked to compute lepton centrality when there are no two jets");
-      if (getNSelectedGoodLeptons() == 0)
-        PrintUtilities::error("VBFSUSYUtilities::getLeptonCentrality() asked to compute lepton centrality when there are no leptons");
+      checkTwoJets(__FUNCTION__);
+      checkOneLepton(__FUNCTION__);
 
       float avgeta = (getLeadingVBFJet().p4.Eta() + getSubleadingVBFJet().p4.Eta())/2.;
       float dlepeta = fabs(getLeadingGoodLepton().p4.Eta() - avgeta);
@@ -1318,8 +1309,7 @@ namespace AnalysisUtilities
     //
     float getLeadCenJetPt()
     {
-      if (!hasVBFJets())
-        PrintUtilities::error("VBFSUSYUtilities::getVBFMjj() asked to compute Mjj but does not have VBF jets");
+      checkTwoJets(__FUNCTION__);
       if (getNSelectedGoodJets() == 2)
         return -20;
       for (unsigned int ijet = 2; ijet < selected_good_jets.size(); ++ijet)
@@ -1333,8 +1323,7 @@ namespace AnalysisUtilities
     //
     bool isEEChannel()
     {
-      if (getNSelectedGoodLeptons() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::isEEChannel() asked whether it's ee channel when there are no more than 1 leptons");
+      checkTwoLeptons(__FUNCTION__);
       return (getLeadingGoodLepton().lep_pdgId*getSubleadingGoodLepton().lep_pdgId == -121);
     }
 
@@ -1343,8 +1332,7 @@ namespace AnalysisUtilities
     //
     bool isMMChannel()
     {
-      if (getNSelectedGoodLeptons() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::isMMChannel() asked whether it's mm channel when there are no more than 1 leptons");
+      checkTwoLeptons(__FUNCTION__);
       return (getLeadingGoodLepton().lep_pdgId*getSubleadingGoodLepton().lep_pdgId == -169);
     }
 
@@ -1353,8 +1341,7 @@ namespace AnalysisUtilities
     //
     float getMll()
     {
-      if (getNSelectedGoodLeptons() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getMll() asked for Mll when no two leptons exist");
+      checkTwoLeptons(__FUNCTION__);
       return (getLeadingGoodLepton().p4 + getSubleadingGoodLepton().p4).M();
     }
 
@@ -1363,8 +1350,7 @@ namespace AnalysisUtilities
     //
     float getDPhill()
     {
-      if (getNSelectedGoodLeptons() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhill() asked for DPhill when no two leptons exist");
+      checkTwoLeptons(__FUNCTION__);
       return fabs(getLeadingGoodLepton().p4.DeltaPhi(getSubleadingGoodLepton().p4));
     }
 
@@ -1373,8 +1359,7 @@ namespace AnalysisUtilities
     //
     float getPtll()
     {
-      if (getNSelectedGoodLeptons() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getPtll() asked for Ptll when no two leptons exist");
+      checkTwoLeptons(__FUNCTION__);
       return (getLeadingGoodLepton().p4 + getSubleadingGoodLepton().p4).Pt();
     }
 
@@ -1392,6 +1377,7 @@ namespace AnalysisUtilities
     //
     float getMTleadLep()
     {
+      checkOneLepton(__FUNCTION__);
       return getMT(getLeadingGoodLepton());
     }
 
@@ -1400,6 +1386,7 @@ namespace AnalysisUtilities
     //
     float getMTsubleadLep()
     {
+      checkTwoLeptons(__FUNCTION__);
       return getMT(getSubleadingGoodLepton());
     }
 
@@ -1416,10 +1403,8 @@ namespace AnalysisUtilities
     //
     float getLeadMlj()
     {
-      if (getNSelectedGoodJets() == 0)
-        PrintUtilities::error("VBFSUSYUtilities::getLeadMlj() asked for Mlj when no jets exist");
-      if (getNSelectedGoodJets() == 0)
-        PrintUtilities::error("VBFSUSYUtilities::getLeadMlj() asked for Mlj when no leptons exist");
+      checkOneLepton(__FUNCTION__);
+      checkOneJet(__FUNCTION__);
       return getMlj(getLeadingVBFJet(), getLeadingGoodLepton());
     }
 
@@ -1428,10 +1413,8 @@ namespace AnalysisUtilities
     //
     float getSubleadMlj()
     {
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getSubleadMlj() asked when there are less than two jets");
-      if (getNSelectedGoodJets() == 0)
-        PrintUtilities::error("VBFSUSYUtilities::getLeadMlj() asked for Mlj when no leptons exist");
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
       return getMlj(getSubleadingVBFJet(), getLeadingGoodLepton());
     }
 
@@ -1448,6 +1431,8 @@ namespace AnalysisUtilities
     //
     float getMtt()
     {
+
+      checkTwoLeptons(__FUNCTION__);
 
       TLorentzVector lep0_tlv;
       TLorentzVector lep1_tlv;
@@ -1483,8 +1468,7 @@ namespace AnalysisUtilities
     //
     float getDPhiLepMET()
     {
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiLepMET() asked when there are less than one lepton");
+      checkOneLepton(__FUNCTION__);
       return fabs(getLeadingGoodLepton().p4.DeltaPhi(getMETp4()));
     }
 
@@ -1493,10 +1477,8 @@ namespace AnalysisUtilities
     //
     float getVecSumPt()
     {
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getVecSumPt() asked when there are less than one lepton");
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getVecSumPt() asked when there are less than two jets");
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
       TLorentzVector lep = getLeadingGoodLepton().p4;
       TLorentzVector jet0 = getLeadingVBFJet().p4;
       TLorentzVector jet1 = getSubleadingVBFJet().p4;
@@ -1510,8 +1492,7 @@ namespace AnalysisUtilities
     //
     float getVecSumPtAll()
     {
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getVecSumPt() asked when there are less than one lepton");
+      checkOneLepton(__FUNCTION__);
       TLorentzVector lep = getLeadingGoodLepton().p4;
       TLorentzVector met = getMETp4();
       TLorentzVector system = lep + met;
@@ -1527,8 +1508,7 @@ namespace AnalysisUtilities
     //
     float getDPhiLeadJetMET()
     {
-      if (getNSelectedGoodJets() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiLeadJetMET() asked when there are less than one jet");
+      checkOneJet(__FUNCTION__);
       return fabs(getLeadingVBFJet().p4.DeltaPhi(getMETp4()));
     }
 
@@ -1537,9 +1517,30 @@ namespace AnalysisUtilities
     //
     float getDPhiSubleadJetMET()
     {
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiSubleadJetMET() asked when there are less than two jet");
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
       return fabs(getSubleadingVBFJet().p4.DeltaPhi(getMETp4()));
+    }
+
+
+    //################################################################################################
+    // get delta phi between leading jet and met
+    //
+    float getDPhiLeadJetLep()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkOneJet(__FUNCTION__);
+      return fabs(getLeadingVBFJet().p4.DeltaPhi(getLeadingGoodLepton().p4));
+    }
+
+    //################################################################################################
+    // get delta phi between subleading jet and met
+    //
+    float getDPhiSubleadJetLep()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      return fabs(getSubleadingVBFJet().p4.DeltaPhi(getLeadingGoodLepton().p4));
     }
 
     //################################################################################################
@@ -1547,10 +1548,8 @@ namespace AnalysisUtilities
     //
     float getDPhiDiJetLep()
     {
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than one lepton");
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than two jet");
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
       TLorentzVector dijet = getLeadingVBFJet().p4 + getSubleadingVBFJet().p4;
       return fabs(dijet.DeltaPhi(getLeadingGoodLepton().p4));
     }
@@ -1560,8 +1559,7 @@ namespace AnalysisUtilities
     //
     float getDPhiDiJetMET()
     {
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetMET() asked when there are less than two jet");
+      checkTwoJets(__FUNCTION__);
       TLorentzVector dijet = getLeadingVBFJet().p4 + getSubleadingVBFJet().p4;
       return fabs(dijet.DeltaPhi(getMETp4()));
     }
@@ -1571,8 +1569,7 @@ namespace AnalysisUtilities
     //
     float getMETPhiCent()
     {
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetMET() asked when there are less than two jet");
+      checkTwoJets(__FUNCTION__);
       // Additional Variables for the VBF BDT
       float var_aPhi = getLeadingVBFJet().p4.Phi();
       float var_bPhi = getSubleadingVBFJet().p4.Phi();
@@ -1592,10 +1589,8 @@ namespace AnalysisUtilities
     //
     float getLepPhiCent()
     {
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than two jet");
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than one lep");
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
       // Additional Variables for the VBF BDT
       float var_aPhi = getLeadingVBFJet().p4.Phi();
       float var_bPhi = getSubleadingVBFJet().p4.Phi();
@@ -1615,10 +1610,8 @@ namespace AnalysisUtilities
     //
     float getDPhiDiJetLepMet()
     {
-      if (getNSelectedGoodJets() < 2)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than two jet");
-      if (getNSelectedGoodLeptons() < 1)
-        PrintUtilities::error("VBFSUSYUtilities::getDPhiDiJetLep() asked when there are less than one lep");
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
       TLorentzVector lep = getLeadingGoodLepton().p4;
       TLorentzVector jet0 = getLeadingVBFJet().p4;
       TLorentzVector jet1 = getSubleadingVBFJet().p4;
@@ -1629,6 +1622,39 @@ namespace AnalysisUtilities
       return fabs(dijet.DeltaPhi(lepmet));
     }
 
+    //################################################################################################
+    // get DPhi(lep,met)
+    //
+    float getDPhiLepMETInvDijetFrame()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      TLorentzVector dijet = jet0 + jet1;
+      TVector3 boost = dijet.BoostVector();
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      lep.Boost(boost);
+      met.Boost(boost);
+      return fabs(lep.DeltaPhi(met));
+    }
+
+    //################################################################################################
+    void checkNJets(int N, TString function)
+    {
+      if (getNSelectedGoodJets() < N)
+        PrintUtilities::error(TString::Format("VBFSUSYUtilities::%s() asked when there are less than %d jet", function.Data(), N));
+    }
+    void checkNLeptons(int N, TString function)
+    {
+      if (getNSelectedGoodLeptons() < N)
+        PrintUtilities::error(TString::Format("VBFSUSYUtilities::%s() asked when there are less than %d lepton", function.Data(), N));
+    }
+    void checkOneJet    (TString function) { checkNJets   (1, function); }
+    void checkTwoJets   (TString function) { checkNJets   (1, function); }
+    void checkOneLepton (TString function) { checkNLeptons(1, function); }
+    void checkTwoLeptons(TString function) { checkNLeptons(1, function); }
   }
 
 }
