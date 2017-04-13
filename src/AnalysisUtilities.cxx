@@ -1366,6 +1366,33 @@ namespace AnalysisUtilities
     //################################################################################################
     // get MT
     //
+    float getModMT(Lepton lep)
+    {
+      float mt = sqrt(2 * lep.p4.Pt() * ( 1 - cos(met_p4.DeltaPhi(lep.p4) ) ));
+      return mt;
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getModMTleadLep()
+    {
+      checkOneLepton(__FUNCTION__);
+      return getModMT(getLeadingGoodLepton());
+    }
+
+    //################################################################################################
+    // get MT leading lepton
+    //
+    float getModMTsubleadLep()
+    {
+      checkTwoLeptons(__FUNCTION__);
+      return getModMT(getSubleadingGoodLepton());
+    }
+
+    //################################################################################################
+    // get MT
+    //
     float getMT(Lepton lep)
     {
       float mt = sqrt(2 * lep.p4.Pt() * met_p4.Pt() * ( 1 - cos(met_p4.DeltaPhi(lep.p4) ) ));
@@ -1620,6 +1647,24 @@ namespace AnalysisUtilities
       TLorentzVector dijet = jet0 + jet1;
       TLorentzVector lepmet = lep + met;
       return fabs(dijet.DeltaPhi(lepmet));
+    }
+
+    //################################################################################################
+    // get DPhi(lep,met)
+    //
+    float getDPhiLepMETInvDijetFrame()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      TLorentzVector dijet = jet0 + jet1;
+      TVector3 boost = dijet.BoostVector();
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      lep.Boost(boost);
+      met.Boost(boost);
+      return fabs(lep.DeltaPhi(met));
     }
 
     //################################################################################################

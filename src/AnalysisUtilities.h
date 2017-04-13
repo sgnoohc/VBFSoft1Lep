@@ -322,6 +322,9 @@ namespace AnalysisUtilities
     float getMll();
     float getPtll();
     float getDPhill();
+    float getModMT(Lepton lep);
+    float getModMTleadLep();
+    float getModMTsubleadLep();
     float getMT(Lepton lep);
     float getMTleadLep();
     float getMTsubleadLep();

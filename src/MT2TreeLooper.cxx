@@ -59,6 +59,7 @@ namespace Vbf {
   TString histname_vbf_subljetpt        = "vbf_subljetpt";
   TString histname_vbf_lepcent          = "vbf_lepcent";
   TString histname_vbf_mt               = "vbf_mt";
+  TString histname_vbf_modmt            = "vbf_modmt";
   TString histname_vbf_mlj0             = "vbf_mlj0";
   TString histname_vbf_mlj1             = "vbf_mlj1";
   TString histname_vbf_summlj           = "vbf_summlj";
@@ -993,6 +994,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.  ,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent         , 180,    0.  ,     3.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mt              , 180,    0.  ,   150.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_modmt           , 180,    0.  ,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj0            , 180,    0.  ,   250.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj1            , 180,    0.  ,   250.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_summlj          , 180,    0.  ,   750.    );
@@ -1045,6 +1047,7 @@ void fillVBFHistograms(TString cutprefix)
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadleppt       , VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt()  );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepcent         , VBFSUSYUtilities::getLeptonCentrality()           );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mt              , VBFSUSYUtilities::getMTleadLep()                  );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_modmt           , VBFSUSYUtilities::getModMTleadLep()               );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj0            , VBFSUSYUtilities::getLeadMlj()                    );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj1            , VBFSUSYUtilities::getSubleadMlj()                 );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj          , VBFSUSYUtilities::getSumMlj()                     );
