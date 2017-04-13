@@ -690,21 +690,25 @@ void doVBFAnalysis()
               if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
               {
                 fillVBFHistograms("NBJetCut");
-                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13)
+                if (VBFSUSYUtilities::getModMTleadLep() < 3.)
                 {
-                  fillVBFHistograms("MMCut");
-                }
-                else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11)
-                {
-                  fillVBFHistograms("MPCut");
-                }
-                else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13)
-                {
-                  fillVBFHistograms("EMCut");
-                }
-                else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11)
-                {
-                  fillVBFHistograms("EPCut");
+                  fillVBFHistograms("ModMTCut");
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13)
+                  {
+                    fillVBFHistograms("MMCut");
+                  }
+                  else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11)
+                  {
+                    fillVBFHistograms("MPCut");
+                  }
+                  else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13)
+                  {
+                    fillVBFHistograms("EMCut");
+                  }
+                  else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11)
+                  {
+                    fillVBFHistograms("EPCut");
+                  }
                 }
               }
             }
@@ -938,6 +942,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
+  bookVBFHistogramsWithPrefix("ModMTCut");
   bookVBFHistogramsWithPrefix("MMCut");
   bookVBFHistogramsWithPrefix("MPCut");
   bookVBFHistogramsWithPrefix("EMCut");
