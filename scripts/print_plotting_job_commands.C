@@ -22,6 +22,8 @@ int determine_nbins(TH1F* hist)
   //possible_bins.push_back(90);
   //possible_bins.push_back(180);
 
+  TString histname = hist->GetName();
+
   for (unsigned int iconf = 0; iconf < possible_bins.size(); ++iconf)
   {
     TH1F* clonedhist = (TH1F*) hist->Clone();
@@ -31,17 +33,21 @@ int determine_nbins(TH1F* hist)
     {
       float error = clonedhist->GetBinError(ibin);
       float content = clonedhist->GetBinContent(ibin);
-      frac_errors.push_back(error / content);
+      if (content > 0)
+        frac_errors.push_back(error / content);
     }
     float sum = 0;
     for (unsigned int icontent = 0; icontent < frac_errors.size(); ++icontent)
     {
-      sum += frac_errors.at(icontent);
+      float fracerror = frac_errors.at(icontent);
+      sum += fracerror;
     }
     float avg = sum / frac_errors.size();
-    if (avg < 0.5)
+    if (avg < 0.2)
       return 180 / possible_bins.at(iconf);
   }
+  if (histname.Contains("modmt"))
+    return 180;
   return 10;
 }
 

@@ -994,7 +994,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.  ,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent         , 180,    0.  ,     3.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mt              , 180,    0.  ,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_modmt           , 180,    0.  ,   150.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_modmt           , 180,    0.  ,    10.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj0            , 180,    0.  ,   250.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj1            , 180,    0.  ,   250.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_summlj          , 180,    0.  ,   750.    );

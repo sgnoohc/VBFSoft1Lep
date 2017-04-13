@@ -1668,24 +1668,6 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
-    // get DPhi(lep,met)
-    //
-    float getDPhiLepMETInvDijetFrame()
-    {
-      checkOneLepton(__FUNCTION__);
-      checkTwoJets(__FUNCTION__);
-      TLorentzVector jet0 = getLeadingVBFJet().p4;
-      TLorentzVector jet1 = getSubleadingVBFJet().p4;
-      TLorentzVector dijet = jet0 + jet1;
-      TVector3 boost = dijet.BoostVector();
-      TLorentzVector lep = getLeadingGoodLepton().p4;
-      TLorentzVector met = getMETp4();
-      lep.Boost(boost);
-      met.Boost(boost);
-      return fabs(lep.DeltaPhi(met));
-    }
-
-    //################################################################################################
     void checkNJets(int N, TString function)
     {
       if (getNSelectedGoodJets() < N)
