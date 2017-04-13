@@ -663,6 +663,7 @@ void doVBFAnalysis()
 
   if (true)
   {
+    fillVBFCutflow(0);
     fillVBFHistograms("NoCut");
     if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
     {
@@ -906,45 +907,45 @@ void bookVBFHistograms()
   bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  50,    0.,   50.);
   // Book histograms
   bookVBFHistogramsWithPrefix("NoCut");
-  bookVBFHistogramsWithPrefix("OneLepCut");
-  bookVBFHistogramsWithPrefix("TwoLepCut");
-  bookVBFHistogramsWithPrefix("TwoLepBVetoCut");
-  bookVBFHistogramsWithPrefix("TwoLepDEtajjCut");
   bookVBFHistogramsWithPrefix("NJetCut");
-  bookVBFHistogramsWithPrefix("NBJetCut");
-  bookVBFHistogramsWithPrefix("NSoftLepCut");
-  bookVBFHistogramsWithPrefix("MuonCut");
-  bookVBFHistogramsWithPrefix("LeadPtCut");
+  bookVBFHistogramsWithPrefix("OneLepCut");
+  bookVBFHistogramsWithPrefix("DEtajjCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
-  bookVBFHistogramsWithPrefix("LowMETCut");
-  bookVBFHistogramsWithPrefix("MTCut");
-  bookVBFHistogramsWithPrefix("DEtajjCut");
-  bookVBFHistogramsWithPrefix("CJVCut");
-  bookVBFHistogramsWithPrefix("MjjCut");
-  bookVBFHistogramsWithPrefix("MET100200Cut");
-  bookVBFHistogramsWithPrefix("MET100200MTCut");
-  bookVBFHistogramsWithPrefix("MET100200LeadLepPtCut");
-  bookVBFHistogramsWithPrefix("MET100200ElPlusCut");
-  bookVBFHistogramsWithPrefix("MET100200MuPlusCut");
-  bookVBFHistogramsWithPrefix("MET100200ElMinusCut");
-  bookVBFHistogramsWithPrefix("MET100200MuMinusCut");
-  bookVBFHistogramsWithPrefix("MET200300Cut");
-  bookVBFHistogramsWithPrefix("MET200300MTCut");
-  bookVBFHistogramsWithPrefix("MET200300LeadLepPtCut");
-  bookVBFHistogramsWithPrefix("MET200300ElPlusCut");
-  bookVBFHistogramsWithPrefix("MET200300MuPlusCut");
-  bookVBFHistogramsWithPrefix("MET200300ElMinusCut");
-  bookVBFHistogramsWithPrefix("MET200300MuMinusCut");
-  bookVBFHistogramsWithPrefix("MET300infCut");
-  bookVBFHistogramsWithPrefix("MET300infMTCut");
-  bookVBFHistogramsWithPrefix("MET300infLeadLepPtCut");
-  bookVBFHistogramsWithPrefix("MET300infElPlusCut");
-  bookVBFHistogramsWithPrefix("MET300infMuPlusCut");
-  bookVBFHistogramsWithPrefix("MET300infElMinusCut");
-  bookVBFHistogramsWithPrefix("MET300infMuMinusCut");
-  bookVBFHistogramsWithPrefix("TwoLepMET100200Cut");
-  bookVBFHistogramsWithPrefix("TwoLepMET200infCut");
+  //bookVBFHistogramsWithPrefix("TwoLepCut");
+  //bookVBFHistogramsWithPrefix("TwoLepBVetoCut");
+  //bookVBFHistogramsWithPrefix("TwoLepDEtajjCut");
+  //bookVBFHistogramsWithPrefix("NBJetCut");
+  //bookVBFHistogramsWithPrefix("NSoftLepCut");
+  //bookVBFHistogramsWithPrefix("MuonCut");
+  //bookVBFHistogramsWithPrefix("LeadPtCut");
+  //bookVBFHistogramsWithPrefix("LowMETCut");
+  //bookVBFHistogramsWithPrefix("MTCut");
+  //bookVBFHistogramsWithPrefix("CJVCut");
+  //bookVBFHistogramsWithPrefix("MjjCut");
+  //bookVBFHistogramsWithPrefix("MET100200Cut");
+  //bookVBFHistogramsWithPrefix("MET100200MTCut");
+  //bookVBFHistogramsWithPrefix("MET100200LeadLepPtCut");
+  //bookVBFHistogramsWithPrefix("MET100200ElPlusCut");
+  //bookVBFHistogramsWithPrefix("MET100200MuPlusCut");
+  //bookVBFHistogramsWithPrefix("MET100200ElMinusCut");
+  //bookVBFHistogramsWithPrefix("MET100200MuMinusCut");
+  //bookVBFHistogramsWithPrefix("MET200300Cut");
+  //bookVBFHistogramsWithPrefix("MET200300MTCut");
+  //bookVBFHistogramsWithPrefix("MET200300LeadLepPtCut");
+  //bookVBFHistogramsWithPrefix("MET200300ElPlusCut");
+  //bookVBFHistogramsWithPrefix("MET200300MuPlusCut");
+  //bookVBFHistogramsWithPrefix("MET200300ElMinusCut");
+  //bookVBFHistogramsWithPrefix("MET200300MuMinusCut");
+  //bookVBFHistogramsWithPrefix("MET300infCut");
+  //bookVBFHistogramsWithPrefix("MET300infMTCut");
+  //bookVBFHistogramsWithPrefix("MET300infLeadLepPtCut");
+  //bookVBFHistogramsWithPrefix("MET300infElPlusCut");
+  //bookVBFHistogramsWithPrefix("MET300infMuPlusCut");
+  //bookVBFHistogramsWithPrefix("MET300infElMinusCut");
+  //bookVBFHistogramsWithPrefix("MET300infMuMinusCut");
+  //bookVBFHistogramsWithPrefix("TwoLepMET100200Cut");
+  //bookVBFHistogramsWithPrefix("TwoLepMET200infCut");
 }
 
 //______________________________________________________________________________________
