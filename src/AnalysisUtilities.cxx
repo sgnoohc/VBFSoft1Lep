@@ -1668,6 +1668,51 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    float getPtRel(Lepton lepton)
+    {
+      TLorentzVector lep = lepton.p4;
+      TLorentzVector met = getMETp4();
+      return lep.Pt() * sin( fabs( lep.DeltaPhi( met ) ) );
+    }
+
+    //################################################################################################
+    float getMETRel(Lepton lepton)
+    {
+      TLorentzVector lep = lepton.p4;
+      TLorentzVector met = getMETp4();
+      return met.Pt() * cos( fabs( lep.DeltaPhi( met ) ) );
+    }
+
+    //################################################################################################
+    float getLeadLepPtRel()
+    {
+      checkOneLepton(__FUNCTION__);
+      return getPtRel(getLeadingGoodLepton());
+    }
+
+    //################################################################################################
+    float getLeadLepMETRel()
+    {
+      checkOneLepton(__FUNCTION__);
+      return getMETRel(getLeadingGoodLepton());
+    }
+
+    //################################################################################################
+    float getMTRel()
+    {
+      checkOneLepton(__FUNCTION__);
+      float mt = sqrt(2 * getLeadLepPtRel() * getLeadLepMETRel() * ( 1 - cos( getDPhiLepMET() ) ));
+      return mt;
+    }
+
+    //################################################################################################
+    float getDPtJet()
+    {
+      checkTwoJets(__FUNCTION__);
+      return getLeadingVBFJet().p4.Pt() - getSubleadingVBFJet().p4.Pt();
+    }
+
+    //################################################################################################
     void checkNJets(int N, TString function)
     {
       if (getNSelectedGoodJets() < N)
