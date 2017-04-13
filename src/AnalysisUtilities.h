@@ -300,6 +300,7 @@ namespace AnalysisUtilities
     void checkNLeptons(int N, TString function="");
     void checkOneJet(TString function="");
     void checkTwoJets(TString function="");
+    void checkThreeJets(TString function="");
     void checkOneLepton(TString function="");
     void checkTwoLeptons(TString function="");
 
@@ -348,6 +349,9 @@ namespace AnalysisUtilities
     float getLeadLepPtRel();
     float getLeadLepMETRel();
     float getMTRel();
+
+    float getMinDRLeadCenJet();
+    float getMinDRCenJet();
 
     // lep jet variables
     float getLeptonCentrality();

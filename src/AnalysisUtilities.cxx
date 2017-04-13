@@ -1713,6 +1713,55 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    float getMinDRLeadCenJet()
+    {
+      checkTwoJets(__FUNCTION__);
+      if (getNSelectedGoodJets() == 2)
+        return -20;
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      for (unsigned int ijet = 2; ijet < selected_good_jets.size(); ++ijet)
+      {
+        if (isCenJet(selected_good_jets.at(ijet)))
+        {
+          TLorentzVector cenjet = selected_good_jets.at(ijet).p4;
+          float drjet0;
+          float drjet1;
+          drjet0 = jet0.DeltaR(cenjet);
+          drjet1 = jet0.DeltaR(cenjet);
+          float localmindr = drjet0 < drjet1 ? drjet0 : drjet1;
+          return localmindr;
+        }
+      }
+      return -10;
+    }
+
+    //################################################################################################
+    float getMinDRCenJet()
+    {
+      checkTwoJets(__FUNCTION__);
+      if (getNSelectedGoodJets() == 2)
+        return -20;
+      float mindr = 99;
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      for (unsigned int ijet = 2; ijet < selected_good_jets.size(); ++ijet)
+      {
+        if (isCenJet(selected_good_jets.at(ijet)))
+        {
+          TLorentzVector cenjet = selected_good_jets.at(ijet).p4;
+          float drjet0;
+          float drjet1;
+          drjet0 = jet0.DeltaR(cenjet);
+          drjet1 = jet0.DeltaR(cenjet);
+          float localmindr = drjet0 < drjet1 ? drjet0 : drjet1;
+          if (localmindr < mindr) mindr = localmindr;
+        }
+      }
+      return mindr;
+    }
+
+    //################################################################################################
     void checkNJets(int N, TString function)
     {
       if (getNSelectedGoodJets() < N)
@@ -1724,9 +1773,10 @@ namespace AnalysisUtilities
         PrintUtilities::error(TString::Format("VBFSUSYUtilities::%s() asked when there are less than %d lepton", function.Data(), N));
     }
     void checkOneJet    (TString function) { checkNJets   (1, function); }
-    void checkTwoJets   (TString function) { checkNJets   (1, function); }
+    void checkTwoJets   (TString function) { checkNJets   (2, function); }
+    void checkThreeJets (TString function) { checkNJets   (3, function); }
     void checkOneLepton (TString function) { checkNLeptons(1, function); }
-    void checkTwoLeptons(TString function) { checkNLeptons(1, function); }
+    void checkTwoLeptons(TString function) { checkNLeptons(2, function); }
   }
 
 }

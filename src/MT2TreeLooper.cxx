@@ -1051,8 +1051,6 @@ void fillVBFHistograms(TString cutprefix)
     fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_met      , VBFSUSYUtilities::getMETp4().Pt()                  );
     fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjetpt, VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
     fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljetpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
-
-    if (VBFSUSYUtilities::getNSelectedGoodJets() > 2)
     fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()                );
 
     if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
