@@ -682,6 +682,26 @@ void doVBFAnalysis()
             if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
             {
               fillVBFHistograms("METCut");
+              if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+              {
+                fillVBFHistograms("NBJetCut");
+                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13)
+                {
+                  fillVBFHistograms("MMCut");
+                }
+                else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11)
+                {
+                  fillVBFHistograms("MPCut");
+                }
+                else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13)
+                {
+                  fillVBFHistograms("EMCut");
+                }
+                else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11)
+                {
+                  fillVBFHistograms("EPCut");
+                }
+              }
             }
 
             //int nbtag = VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46);
@@ -912,10 +932,14 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("DEtajjCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
+  bookVBFHistogramsWithPrefix("NBJetCut");
+  bookVBFHistogramsWithPrefix("MMCut");
+  bookVBFHistogramsWithPrefix("MPCut");
+  bookVBFHistogramsWithPrefix("EMCut");
+  bookVBFHistogramsWithPrefix("EPCut");
   //bookVBFHistogramsWithPrefix("TwoLepCut");
   //bookVBFHistogramsWithPrefix("TwoLepBVetoCut");
   //bookVBFHistogramsWithPrefix("TwoLepDEtajjCut");
-  //bookVBFHistogramsWithPrefix("NBJetCut");
   //bookVBFHistogramsWithPrefix("NSoftLepCut");
   //bookVBFHistogramsWithPrefix("MuonCut");
   //bookVBFHistogramsWithPrefix("LeadPtCut");
@@ -1055,7 +1079,7 @@ void fillVBFHistograms(TString cutprefix)
 void bookVBFHistogram(TString name, int nbins, float min, float max)
 {
   if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  if (Vbf::is_signal && !name.Contains("_100.0_0.0")) return;
+  if (Vbf::is_signal && !name.Contains("_100.0_0.0") && !name.Contains("_150.0_0.0") && !name.Contains("_200.0_0.0")) return;
   PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, min, max);
 }
 
@@ -1063,7 +1087,7 @@ void bookVBFHistogram(TString name, int nbins, float min, float max)
 void bookVBFHistogram(TString name, int nbins, const float* xbins)
 {
   if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
-  if (Vbf::is_signal && !name.Contains("_100.0_0.0")) return;
+  if (Vbf::is_signal && !name.Contains("_100.0_0.0") && !name.Contains("_150.0_0.0") && !name.Contains("_200.0_0.0")) return;
   PlotUtil::plot1D(name.Data(), -999, 0, Vbf::h_vbf_1d, name.Data(), nbins, xbins);
 }
 
@@ -1072,7 +1096,7 @@ void fillVBFHistogram(TString name, float val, float wgt)
 {
   if (Vbf::is_signal)
     name = VBFSUSYUtilities::getSignalSuffix(name);
-  if (Vbf::is_signal && !name.Contains("_100.0_0.0")) return;
+  if (Vbf::is_signal && !name.Contains("_100.0_0.0") && !name.Contains("_150.0_0.0") && !name.Contains("_200.0_0.0")) return;
   if (wgt == -999)
     PlotUtil::plot1D(name.Data(), val, Vbf::evt_scale1fb, Vbf::h_vbf_1d);
   else
