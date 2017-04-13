@@ -50,6 +50,9 @@ hadd -f haddoutput/hist_vbf_vv.root          output/hist_ww*root_vbf.root output
 # signal
 hadd -f haddoutput/hist_vbf_signal.root      output/hist_VBF*.root_vbf.root
 
+# EWK W
+hadd -f haddoutput/hist_vbf_ewkw_vv.root     output/hist_EWK*.root_vbf.root output/hist_ww*root_vbf.root output/hist_wz*root_vbf.root output/hist_zz*root_vbf.root
+
 # Truth
 
 # signal
