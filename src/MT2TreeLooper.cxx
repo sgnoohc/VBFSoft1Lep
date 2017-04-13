@@ -685,6 +685,8 @@ void doVBFAnalysis()
             fillVBFCutflow(4);
             fillVBFHistograms("SubleadJetPtCut");
 
+            int nbtag = VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46);
+
             // 100 - 200 MET bin
             if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
             {
@@ -694,10 +696,22 @@ void doVBFAnalysis()
               {
                 fillVBFCutflow(6);
                 fillVBFHistograms("MET100200LeadLepPtCut");
-                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11) fillVBFHistograms("MET100200ElPlusCut");
-                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11) fillVBFHistograms("MET100200ElMinusCut");
-                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13) fillVBFHistograms("MET100200MuPlusCut");
-                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13) fillVBFHistograms("MET100200MuMinusCut");
+                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11)
+                {
+                  fillVBFHistograms("MET100200ElPlusCut");
+                }
+                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11)
+                {
+                  fillVBFHistograms("MET100200ElMinusCut");
+                }
+                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13)
+                {
+                  fillVBFHistograms("MET100200MuPlusCut");
+                }
+                if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+                {
+                  fillVBFHistograms("MET100200MuMinusCut");
+                }
               }
             }
 
@@ -714,10 +728,22 @@ void doVBFAnalysis()
                 {
                   fillVBFCutflow(6);
                   fillVBFHistograms("MET200300LeadLepPtCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11) fillVBFHistograms("MET200300ElPlusCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11) fillVBFHistograms("MET200300ElMinusCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13) fillVBFHistograms("MET200300MuPlusCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13) fillVBFHistograms("MET200300MuMinusCut");
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11)
+                  {
+                    fillVBFHistograms("MET200300ElPlusCut");
+                  }
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11)
+                  {
+                    fillVBFHistograms("MET200300ElMinusCut");
+                  }
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13)
+                  {
+                    fillVBFHistograms("MET200300MuPlusCut");
+                  }
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+                  {
+                    fillVBFHistograms("MET200300MuMinusCut");
+                  }
                 }
               }
             }
@@ -735,10 +761,22 @@ void doVBFAnalysis()
                 {
                   fillVBFCutflow(6);
                   fillVBFHistograms("MET300infLeadLepPtCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11) fillVBFHistograms("MET300infElPlusCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11) fillVBFHistograms("MET300infElMinusCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13) fillVBFHistograms("MET300infMuPlusCut");
-                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13) fillVBFHistograms("MET300infMuMinusCut");
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11 && nbtag < 1)
+                  {
+                    fillVBFHistograms("MET300infElPlusCut");
+                  }
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11 && nbtag < 1)
+                  {
+                    fillVBFHistograms("MET300infElMinusCut");
+                  }
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13 && nbtag < 2)
+                  {
+                    fillVBFHistograms("MET300infMuPlusCut");
+                  }
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13 && nbtag < 2)
+                  {
+                    fillVBFHistograms("MET300infMuMinusCut");
+                  }
                 }
               }
             }
