@@ -80,8 +80,10 @@ if [ "x$7" == "x" ]; then
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG4}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>'${BKGLEGEND4}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG5}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>'${BKGLEGEND5}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG6}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7002 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7002 , SetName=>'${BKGLEGEND6}'%f, Scale=>'$SCALE'' \
-    --sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf${MASSPOINT}'    ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    --sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf_100.0_0.0_95.0'    ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>100%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     $2
+    #--sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf_150.0_0.0_145.0'   ::: SetLineColor=>1 , SetLineWidth=>4 , SetName=>150%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    #--sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf_200.0_0.0_195.0'   ::: SetLineColor=>4 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     #--sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vstar${MASSPOINT}'  ::: SetLineColor=>4 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vstar'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     #--sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_strong${MASSPOINT}' ::: SetLineColor=>1 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_strong'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     #--sighist         'haddoutput/hist_signal.root    ::: '$1${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>'$SIGSCALE'' \

@@ -189,6 +189,7 @@ namespace Vbf {
   extern TString histname_vbf_dphileadjetlep;
   extern TString histname_vbf_dphisubljetlep;
   extern TString histname_vbf_dphilepmetboost;
+  extern TString histname_vbf_dphilepmetwframe;
   extern TString histname_vbf_dptjet;
   extern TString histname_vbf_ptrel;
   extern TString histname_vbf_metrel;

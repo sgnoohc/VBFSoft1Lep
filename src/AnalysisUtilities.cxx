@@ -1668,6 +1668,25 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // get DPhi(lep,met)
+    //
+    float getDPhiLepMETWFrame()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      TLorentzVector dijet = jet0 + jet1;
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector wpt = lep + met;
+      TVector3 boost = wpt.BoostVector();
+      lep.Boost(-boost);
+      met.Boost(-boost);
+      return fabs(lep.DeltaPhi(met));
+    }
+
+    //################################################################################################
     float getPtRel(Lepton lepton)
     {
       TLorentzVector lep = lepton.p4;

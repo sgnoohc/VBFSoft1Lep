@@ -343,6 +343,7 @@ namespace AnalysisUtilities
     float getLepPhiCent();
     float getDPhiDiJetLepMet();
     float getDPhiLepMETInvDijetFrame();
+    float getDPhiLepMETWFrame();
     float getDPtJet();
     float getPtRel(Lepton lep);
     float getMETRel(Lepton lep);
