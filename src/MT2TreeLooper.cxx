@@ -83,6 +83,7 @@ namespace Vbf {
   TString histname_vbf_ptrel            = "vbf_ptrel";
   TString histname_vbf_metrel           = "vbf_metrel";
   TString histname_vbf_mtrel            = "vbf_mtrel";
+  TString histname_vbf_cenjetdr         = "vbf_cenjetdr";
   // dilepton channel
   TString histname_vbf_mll          = "vbf_mll";
   TString histname_vbf_dphill       = "vbf_dphill";
@@ -1027,6 +1028,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptrel           , 180,    0.  ,     30.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180,    0.  ,    400.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtrel           , 180,    0.  ,    150.   );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetdr        , 180,    0.  ,      9.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mll             , 180,    0.  ,    30.0   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphill          , 180,    0.  ,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptll            , 180,    0.  ,    30.0   );
@@ -1081,6 +1083,7 @@ void fillVBFHistograms(TString cutprefix)
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptrel           , VBFSUSYUtilities::getLeadLepPtRel()               );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metrel          , VBFSUSYUtilities::getLeadLepMETRel()              );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtrel           , VBFSUSYUtilities::getMTRel()                      );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetdr        , VBFSUSYUtilities::getMinDRLeadCenJet()            );
       if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 0);
       if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 1);
       if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 2);
