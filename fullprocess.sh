@@ -28,6 +28,7 @@ fi
 
 if [ "x$2" == "x" ]; then
   make clean; make -j4
+  rm output/*
   sh scripts/xargs_run.sh
   sh scripts/hadd.sh
   cp -r haddoutput archive/haddoutput_${1}_${TAG}

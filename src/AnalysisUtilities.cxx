@@ -878,14 +878,24 @@ namespace AnalysisUtilities
       setMN2(0);
       setMN1(0);
 
+      if (abs(gen_pdgId[2]) == 1000024) setMC1(gen_mass[2]);
+      if (abs(gen_pdgId[3]) == 1000024) setMC1(gen_mass[3]);
+
+      if (abs(gen_pdgId[2]) == 1000023) setMN2(gen_mass[2]);
+      if (abs(gen_pdgId[3]) == 1000023) setMN2(gen_mass[3]);
+
+      if (abs(gen_pdgId[9]) == 1000022) setMN1(gen_mass[9]);
+      if (abs(gen_pdgId[10])== 1000022) setMN1(gen_mass[10]);
+
+      // Old deprecated way of computing
       // If signal sample by checking whether the output name contains "sig"
-      for (int igen = 0; igen < ngen; ++igen)
-      {
-        if (abs(gen_pdgId[igen]) == 1000024 &&  gen_status[igen] == 22) setMC1(gen_mass[igen]);
-        if (abs(gen_pdgId[igen]) == 1000023 &&  gen_status[igen] == 22) setMN2(gen_mass[igen]);
-        if (abs(gen_pdgId[igen]) == 1000022 && (gen_status[igen] == 23
-                                              ||gen_status[igen] == 1)) setMN1(gen_mass[igen]);
-      }
+      //for (int igen = 0; igen < ngen; ++igen)
+      //{
+      //  if (abs(gen_pdgId[igen]) == 1000024 &&  gen_status[igen] == 22) setMC1(gen_mass[igen]);
+      //  if (abs(gen_pdgId[igen]) == 1000023 &&  gen_status[igen] == 22) setMN2(gen_mass[igen]);
+      //  if (abs(gen_pdgId[igen]) == 1000022 && (gen_status[igen] == 23
+      //                                        ||gen_status[igen] == 1)) setMN1(gen_mass[igen]);
+      //}
 
       return;
     }
