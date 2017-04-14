@@ -99,20 +99,23 @@ namespace AnalysisUtilities
         Hist1D_DB &allhistos)
     {
 
-      // Find whether a histogram with the name already exists
-      map<string, TH1*>::iterator iter= allhistos.find(name);
+      //// Find whether a histogram with the name already exists
+      //map<string, TH1*>::iterator iter= allhistos.find(name);
 
-      // If the histogram is not found, make a new one
-      if (iter == allhistos.end())
-      {
-        TString error_msg = TString::Format("PlotUtil::plot1D() trying to fill %s when it doesn't exist", name.c_str());
-        PrintUtilities::error(error_msg);
-      }
-      // exists already, so just fill it
-      else
-      {
-        (*iter).second->Fill(xval, weight);
-      }
+      //// If the histogram is not found, make a new one
+      //if (iter == allhistos.end())
+      //{
+      //  TString error_msg = TString::Format("PlotUtil::plot1D() trying to fill %s when it doesn't exist", name.c_str());
+      //  PrintUtilities::error(error_msg);
+      //}
+      //// exists already, so just fill it
+      //else
+      //{
+      //  (*iter).second->Fill(xval, weight);
+      //}
+
+
+      allhistos[name]->Fill(xval, weight);
 
       return;
     }
