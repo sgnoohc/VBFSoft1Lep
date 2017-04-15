@@ -59,7 +59,7 @@ void print_plotting_job_commands()
   {
     TKey* key = (TKey*) list->At(ikey);
     TString histname = key->GetName();
-    if (histname.Contains("Cut_vbf"))
+    if (histname.Contains("_vbf"))
     {
       TH1F* hist = (TH1F*) file->Get(key->GetName());
       int desired_nbins = hist->GetNbinsX();
@@ -67,10 +67,13 @@ void print_plotting_job_commands()
         continue;
       if (!histname.Contains("vbf_n") && !histname.Contains("vbf_lepid"))
         desired_nbins = determine_nbins(hist);
-      printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d --auto_scale_signal \\' \\'\\' 100.0 0.0 95.0 \\'\\' \\'1\\' \\'_sigshape\\'\n",
+      printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d --auto_scale_signal \\' \\'\\'    \\'_sigshape\\'\n",
              key->GetName(),
              desired_nbins);
-      printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'\\' 100.0 0.0 95.0 \\'\\' \\'1\\' \\'_signorm\\'\n",
+      printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'\\'    \\'_signorm\\'\n",
+             key->GetName(),
+             desired_nbins);
+      printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'yes\\'\n",
              key->GetName(),
              desired_nbins);
     }
