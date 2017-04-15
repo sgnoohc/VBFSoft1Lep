@@ -418,8 +418,8 @@ void selectLeptons()
 {
   // Select leptons
   VBFSUSYUtilities::Leptons mt2tree_leptons = getLeptonsFromMT2Tree();
-  VBFSUSYUtilities::selectVBFLeptons(mt2tree_leptons);
-  VBFSUSYUtilities::selectISRLeptons(mt2tree_leptons);
+  //VBFSUSYUtilities::selectVBFLeptons(mt2tree_leptons);
+  //VBFSUSYUtilities::selectISRLeptons(mt2tree_leptons);
   VBFSUSYUtilities::selectGoodLeptons(mt2tree_leptons);
 
 }
@@ -430,6 +430,7 @@ void selectJets()
   // Select jets
   VBFSUSYUtilities::Jets mt2tree_jets = getJetsFromMT2Tree();
   VBFSUSYUtilities::selectGoodJets(mt2tree_jets);
+  VBFSUSYUtilities::selectGoodBJets(mt2tree_jets);
 }
 
 //______________________________________________________________________________________
@@ -491,7 +492,7 @@ void reproduceISRAnalysis()
       if ((VBFSUSYUtilities::isEEChannel()))
       {
         fillISRCutflow(2);
-        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+        if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
         {
           fillISRCutflow(3);
           if (VBFSUSYUtilities::getMll() < 50.)
@@ -538,7 +539,7 @@ void reproduceISRAnalysis()
       if ((VBFSUSYUtilities::isMMChannel()))
       {
         fillISRCutflow(13);
-        if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+        if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
         {
           fillISRCutflow(14);
           if (VBFSUSYUtilities::getMll() < 50.)
@@ -693,7 +694,7 @@ void doVBFAnalysis()
             if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
             {
               fillVBFHistograms("METCut");
-              if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+              if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
               {
                 fillVBFHistograms("NBJetCut");
                 if (VBFSUSYUtilities::getModMTleadLep() < 3.)
@@ -991,120 +992,148 @@ void bookVBFHistograms()
 //______________________________________________________________________________________
 void bookVBFHistogramsWithPrefix(TString prefix)
 {
+  std::vector<TString> channels;
+  channels.push_back("eplus");
+  channels.push_back("emminus");
+  channels.push_back("muplus");
+  channels.push_back("muminus");
   // Book histograms
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_nsoftleps       ,   5,   -1.  ,     4.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_njets           ,   5,    0.  ,     5.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_nbjets          ,   5,    0.  ,     5.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mjj             , 180,    0.  ,  3500.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_detajj          , 180,    0.  ,     9.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphijj          , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetpt        , 180,  -30.  ,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadleppt       , 180,    0.  ,    35.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met             , 180,    0.  ,   450.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjetpt       , 180,    0.  ,   350.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.  ,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent         , 180,    0.  ,     3.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mt              , 180,    0.  ,   150.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_modmt           , 180,    0.  ,    10.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj0            , 180,    0.  ,   250.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mlj1            , 180,    0.  ,   250.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_summlj          , 180,    0.  ,   750.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ht              , 180,    0.  ,   350.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_methtratio      , 180,    0.  ,     4.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepid           ,   4,    0.  ,     4.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmet      , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sumpt           , 180,    0.  ,   100.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sumptall        , 180,    0.  ,   100.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphileadjetmet  , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphisubljetmet  , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphileadjetlep  , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphisubljetlep  , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphidijetmet    , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphidijetlep    , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metphicent      , 180,   -1.42,     1.42  );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepphicent      , 180,   -1.42,     1.42  );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphidijetlepmet , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetboost , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetwframe, 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dptjet          , 180,    0.  ,    300.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptrel           , 180,    0.  ,     30.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180,    0.  ,    400.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtrel           , 180,    0.  ,    150.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetdr        , 180,    0.  ,      9.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mll             , 180,    0.  ,    30.0   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphill          , 180,    0.  ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptll            , 180,    0.  ,    30.0   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sublleppt       , 180,    0.  ,    20.0   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dilepchannel    ,   4,    0.  ,     4.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtt             , 180,    0.  ,    60.0   );
+  for (unsigned int ich = 0; ich < channels.size(); ++ich)
+  {
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_nsoftleps       ,   5,   -1.  ,     4.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_njets           ,   5,    0.  ,     5.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_nbjets          ,   5,    0.  ,     5.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mjj             , 180,    0.  ,  3500.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_detajj          , 180,    0.  ,     9.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphijj          , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_cenjetpt        , 180,  -30.  ,   150.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_leadleppt       , 180,    0.  ,    35.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_met             , 180,    0.  ,   450.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_leadjetpt       , 180,    0.  ,   350.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.  ,   150.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_lepcent         , 180,    0.  ,     3.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mt              , 180,    0.  ,   150.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_modmt           , 180,    0.  ,    10.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mlj0            , 180,    0.  ,   250.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mlj1            , 180,    0.  ,   250.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_summlj          , 180,    0.  ,   750.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_ht              , 180,    0.  ,   350.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_methtratio      , 180,    0.  ,     4.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_lepid           ,   4,    0.  ,     4.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphilepmet      , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_sumpt           , 180,    0.  ,   100.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_sumptall        , 180,    0.  ,   100.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphileadjetmet  , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphisubljetmet  , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphileadjetlep  , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphisubljetlep  , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphidijetmet    , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphidijetlep    , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_metphicent      , 180,   -1.42,     1.42  );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_lepphicent      , 180,   -1.42,     1.42  );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphidijetlepmet , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphilepmetboost , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphilepmetwframe, 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dptjet          , 180,    0.  ,    300.   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_ptrel           , 180,    0.  ,     30.   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_metrel          , 180,    0.  ,    400.   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mtrel           , 180,    0.  ,    150.   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_cenjetdr        , 180,    0.  ,      9.   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mll             , 180,    0.  ,    30.0   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dphill          , 180,    0.  ,     3.1416);
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_ptll            , 180,    0.  ,    30.0   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_sublleppt       , 180,    0.  ,    20.0   );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_dilepchannel    ,   4,    0.  ,     4.    );
+    bookVBFHistogram(prefix + "_" + channels.at(ich) + "_" + Vbf::histname_vbf_mtt             , 180,    0.  ,    60.0   );
+  }
 }
 
 //______________________________________________________________________________________
-void fillVBFHistograms(TString cutprefix)
+void fillVBFHistograms(TString cutprefix_)
 {
 
-  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons()      );
-  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()             );
-  fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_nbjets,    VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46)    );
+  if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 0)
+    return;
 
-  if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+  std::vector<TString> channels;
+  channels.push_back("eplus");
+  channels.push_back("emminus");
+  channels.push_back("muplus");
+  channels.push_back("muminus");
+
+  for (unsigned int ich = 0; ich < channels.size(); ++ich)
   {
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mjj,       VBFSUSYUtilities::getVBFMjj()                      );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_detajj,    VBFSUSYUtilities::getVBFDEtajj()                   );
-    //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphijj,    VBFSUSYUtilities::getVBFDPhijj()                   );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_met      , VBFSUSYUtilities::getMETp4().Pt()                  );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjetpt, VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljetpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
-    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()                );
 
-    if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
+    TString cutprefix = cutprefix_ + "_" + channels.at(ich);
+
+    if (channels.at(ich).Contains("eplus") && VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId != -11) continue;
+    if (channels.at(ich).Contains("eminus") && VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId !=  11) continue;
+    if (channels.at(ich).Contains("muplus") && VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId != -13) continue;
+    if (channels.at(ich).Contains("muminus") && VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId !=  13) continue;
+
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_nsoftleps, VBFSUSYUtilities::getNSelectedSoftGoodLeptons()      );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_njets,     VBFSUSYUtilities::getNSelectedGoodJets()             );
+    fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_nbjets,    VBFSUSYUtilities::getNSelectedGoodBJets()            );
+
+    if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
     {
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadleppt       , VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt()  );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepcent         , VBFSUSYUtilities::getLeptonCentrality()           );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mt              , VBFSUSYUtilities::getMTleadLep()                  );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_modmt           , VBFSUSYUtilities::getModMTleadLep()               );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj0            , VBFSUSYUtilities::getLeadMlj()                    );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj1            , VBFSUSYUtilities::getSubleadMlj()                 );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj          , VBFSUSYUtilities::getSumMlj()                     );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht              , Vbf::mt2tree.ht                                   );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio      , Vbf::mt2tree.met_pt / Vbf::mt2tree.ht             );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmet      , VBFSUSYUtilities::getDPhiLepMET()                 );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sumpt           , VBFSUSYUtilities::getVecSumPt()                   );
-      //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sumptall        , VBFSUSYUtilities::getVecSumPtAll()                );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphileadjetmet  , VBFSUSYUtilities::getDPhiLeadJetMET()             );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphisubljetmet  , VBFSUSYUtilities::getDPhiSubleadJetMET()          );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphileadjetlep  , VBFSUSYUtilities::getDPhiLeadJetLep()             );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphisubljetlep  , VBFSUSYUtilities::getDPhiSubleadJetLep()          );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetmet    , VBFSUSYUtilities::getDPhiDiJetMET()               );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetlep    , VBFSUSYUtilities::getDPhiDiJetLep()               );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metphicent      , VBFSUSYUtilities::getMETPhiCent()                 );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepphicent      , VBFSUSYUtilities::getLepPhiCent()                 );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetlepmet , VBFSUSYUtilities::getDPhiDiJetLepMet()            );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetboost , VBFSUSYUtilities::getDPhiLepMETInvDijetFrame()    );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetwframe, VBFSUSYUtilities::getDPhiLepMETWFrame()           );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dptjet          , VBFSUSYUtilities::getDPtJet()                     );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptrel           , VBFSUSYUtilities::getLeadLepPtRel()               );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metrel          , VBFSUSYUtilities::getLeadLepMETRel()              );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtrel           , VBFSUSYUtilities::getMTRel()                      );
-      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetdr        , VBFSUSYUtilities::getMinDRLeadCenJet()            );
-      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 0);
-      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 1);
-      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 2);
-      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 3);
-      if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 1)
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mjj,       VBFSUSYUtilities::getVBFMjj()                      );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_detajj,    VBFSUSYUtilities::getVBFDEtajj()                   );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphijj,    VBFSUSYUtilities::getVBFDPhijj()                   );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_met      , VBFSUSYUtilities::getMETp4().Pt()                  );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjetpt, VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljetpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()                );
+
+      if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
       {
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mll       , VBFSUSYUtilities::getMll());
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphill    , VBFSUSYUtilities::getDPhill());
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptll      , VBFSUSYUtilities::getPtll());
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sublleppt , VBFSUSYUtilities::getSubleadingGoodLepton().p4.Pt());
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtt       , VBFSUSYUtilities::getMtt());
-        int leadid = VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId;
-        int sublid = VBFSUSYUtilities::getSubleadingGoodLepton().lep_pdgId;
-        if (leadid * sublid > 0) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 0);
-        else if (leadid * sublid == -121) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 1);
-        else if (leadid * sublid == -143) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 2);
-        else if (leadid * sublid == -169) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 3);
-        else PrintUtilities::error("two lepton events were not categorized correctly. Check your leptons");
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadleppt       , VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt()  );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepcent         , VBFSUSYUtilities::getLeptonCentrality()           );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mt              , VBFSUSYUtilities::getMTleadLep()                  );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_modmt           , VBFSUSYUtilities::getModMTleadLep()               );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj0            , VBFSUSYUtilities::getLeadMlj()                    );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj1            , VBFSUSYUtilities::getSubleadMlj()                 );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj          , VBFSUSYUtilities::getSumMlj()                     );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht              , Vbf::mt2tree.ht                                   );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio      , Vbf::mt2tree.met_pt / Vbf::mt2tree.ht             );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmet      , VBFSUSYUtilities::getDPhiLepMET()                 );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sumpt           , VBFSUSYUtilities::getVecSumPt()                   );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sumptall        , VBFSUSYUtilities::getVecSumPtAll()                );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphileadjetmet  , VBFSUSYUtilities::getDPhiLeadJetMET()             );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphisubljetmet  , VBFSUSYUtilities::getDPhiSubleadJetMET()          );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphileadjetlep  , VBFSUSYUtilities::getDPhiLeadJetLep()             );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphisubljetlep  , VBFSUSYUtilities::getDPhiSubleadJetLep()          );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetmet    , VBFSUSYUtilities::getDPhiDiJetMET()               );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetlep    , VBFSUSYUtilities::getDPhiDiJetLep()               );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metphicent      , VBFSUSYUtilities::getMETPhiCent()                 );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepphicent      , VBFSUSYUtilities::getLepPhiCent()                 );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetlepmet , VBFSUSYUtilities::getDPhiDiJetLepMet()            );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetboost , VBFSUSYUtilities::getDPhiLepMETInvDijetFrame()    );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetwframe, VBFSUSYUtilities::getDPhiLepMETWFrame()           );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dptjet          , VBFSUSYUtilities::getDPtJet()                     );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptrel           , VBFSUSYUtilities::getLeadLepPtRel()               );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metrel          , VBFSUSYUtilities::getLeadLepMETRel()              );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtrel           , VBFSUSYUtilities::getMTRel()                      );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetdr        , VBFSUSYUtilities::getMinDRLeadCenJet()            );
+        //if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 0);
+        //if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 1);
+        //if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 2);
+        //if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 3);
+        if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 1)
+        {
+          fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mll       , VBFSUSYUtilities::getMll());
+          fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphill    , VBFSUSYUtilities::getDPhill());
+          fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptll      , VBFSUSYUtilities::getPtll());
+          fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sublleppt , VBFSUSYUtilities::getSubleadingGoodLepton().p4.Pt());
+          fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtt       , VBFSUSYUtilities::getMtt());
+          int leadid = VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId;
+          int sublid = VBFSUSYUtilities::getSubleadingGoodLepton().lep_pdgId;
+          if (leadid * sublid > 0) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 0);
+          else if (leadid * sublid == -121) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 1);
+          else if (leadid * sublid == -143) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 2);
+          else if (leadid * sublid == -169) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 3);
+          else PrintUtilities::error("two lepton events were not categorized correctly. Check your leptons");
+        }
       }
     }
   }

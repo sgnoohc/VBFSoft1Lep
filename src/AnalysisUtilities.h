@@ -274,12 +274,19 @@ namespace AnalysisUtilities
     };
     typedef std::vector<Jet> Jets;
     extern Jets selected_good_jets;
-    void resetSelectedJets();
-    void addJet(Jet jet);
+    extern Jets selected_good_bjets;
+    void resetSelectedGoodJets();
+    void resetSelectedGoodBJets();
+    void addGoodJet(Jet jet);
+    void addGoodBJet(Jet jet);
     bool isGoodJet(Jet jet);
+    bool isGoodBJet(Jet jet);
     void selectGoodJets(Jets jets);
+    void selectGoodBJets(Jets jets);
 
     int getNBTaggedJetsWithCSVCut(float csvcut);
+
+    int getNSelectedGoodBJets();
 
     int getNSelectedGoodJets();
     Jet getLeadingVBFJet();

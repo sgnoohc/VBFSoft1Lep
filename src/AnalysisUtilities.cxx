@@ -850,6 +850,7 @@ namespace AnalysisUtilities
     Leptons selected_vbf_leptons;
     Leptons selected_isr_leptons;
     Jets    selected_good_jets;
+    Jets    selected_good_bjets;
 
     float met_pt;
     float met_phi;
@@ -1153,17 +1154,33 @@ namespace AnalysisUtilities
     //################################################################################################
     // Clear jets
     //
-    void resetSelectedJets()
+    void resetSelectedGoodJets()
     {
       selected_good_jets.clear();
     }
 
     //################################################################################################
+    // Clear jets
+    //
+    void resetSelectedGoodBJets()
+    {
+      selected_good_bjets.clear();
+    }
+
+    //################################################################################################
     // Add jets
     //
-    void addJet(Jet jet)
+    void addGoodJet(Jet jet)
     {
       selected_good_jets.push_back(jet);
+    }
+
+    //################################################################################################
+    // Add jets
+    //
+    void addGoodBJet(Jet jet)
+    {
+      selected_good_bjets.push_back(jet);
     }
 
     //################################################################################################
@@ -1194,16 +1211,39 @@ namespace AnalysisUtilities
       //if ( !(fabs(jet.jet_eta) < 2.4) ) fail |= true;
       return ( !fail );
     }
+    //################################################################################################
+    // Is good jet
+    //
+    bool isGoodBJet(Jet jet)
+    {
+      bool fail = false;
+      if ( !(jet.jet_pt > 25.        ) ) fail |= true;
+      if ( !(fabs(jet.jet_eta) < 2.4 ) ) fail |= true;
+      if ( !(jet.jet_btagCSV > 0.46  ) ) fail |= true;
+      return ( !fail );
+    }
+
 
     //################################################################################################
     // Select jets
     //
     void selectGoodJets(Jets jets)
     {
-      resetSelectedJets();
+      resetSelectedGoodJets();
       for (auto& jet: jets)
         if (isGoodJet(jet))
-          addJet(jet);
+          addGoodJet(jet);
+    }
+
+    //################################################################################################
+    // Select jets
+    //
+    void selectGoodBJets(Jets jets)
+    {
+      resetSelectedGoodBJets();
+      for (auto& jet: jets)
+        if (isGoodBJet(jet))
+          addGoodBJet(jet);
     }
 
     //################################################################################################
@@ -1212,6 +1252,14 @@ namespace AnalysisUtilities
     int getNSelectedGoodJets()
     {
       return selected_good_jets.size();
+    }
+
+    //################################################################################################
+    // get number of selected jets
+    //
+    int getNSelectedGoodBJets()
+    {
+      return selected_good_bjets.size();
     }
 
     //################################################################################################
