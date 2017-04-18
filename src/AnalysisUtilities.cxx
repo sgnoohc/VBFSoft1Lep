@@ -1747,7 +1747,7 @@ namespace AnalysisUtilities
       // Additional Variables for the VBF BDT
       TLorentzVector vbf0 = getLeadingVBFJet().p4;
       TLorentzVector vbf1 = getSubleadingVBFJet().p4;
-      TLorentzVector lep = getLeadingGoodLepton().p4
+      TLorentzVector lep = getLeadingGoodLepton().p4;
       TLorentzVector dijet = vbf0 + vbf1;
       TVector3 boost = dijet.BoostVector();
       lep.Boost(-boost);
