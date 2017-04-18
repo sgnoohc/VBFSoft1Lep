@@ -991,10 +991,11 @@ void doVBFAnalysis()
 void bookVBFHistograms()
 {
   // Book histogram that does not require "prefix" of the cut
-  bool alreadyprocessed = bookVBFHistogram(Vbf::histname_vbf_cutflow    ,  50,    0.,   50.);
+  int cutflow_nbin = __COUNTER__;
+  bool alreadyprocessed = bookVBFHistogram(Vbf::histname_vbf_cutflow    ,  cutflow_nbin,    0.,   cutflow_nbin);
   //std::cout << alreadyprocessed << Vbf::histname_vbf_cutflow << VBFSUSYUtilities::getSignalSuffix(Vbf::histname_vbf_cutflow) << std::endl;
   if (alreadyprocessed) return;
-  bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  50,    0.,   50.);
+  bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  cutflow_nbin,    0.,   cutflow_nbin);
   // Book histograms
   bookVBFHistogramsWithPrefix("NoCut");
   bookVBFHistogramsWithPrefix("NJetCut");

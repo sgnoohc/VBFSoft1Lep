@@ -47,6 +47,7 @@ parser.add_argument('--minimum_logy', dest='minimum_logy', type=float, help='Ran
 parser.add_argument('--maximum'     , dest='maximum'     , type=str,   help='Range maximum')
 parser.add_argument('--minimum'     , dest='minimum'     , type=str,   help='Range minimum')
 parser.add_argument('--show_overflow',dest='show_overflow',action='store_true',help='show overflow bin', default=False)
+parser.add_argument('--do_cutflow_style',dest='do_cutflow_style',action='store_true',help='show overflow bin', default=False)
 parser.add_argument('--no_legend'    ,dest='no_legend'    ,action='store_true',help='do not draw legend', default=False)
 parser.add_argument('--ratio_maximum', dest='ratio_maximum', type=float, help='Range maximum', default=3.5)
 parser.add_argument('--ratio_minimum', dest='ratio_minimum', type=float, help='Range minimum', default=-1.5)
@@ -631,20 +632,85 @@ class HistogramPainter:
 
     # Draw standard 1d plot on current pad (bkg-stacked, signal, data)
     def draw_standard_1d_on_current_pad(self):
-        stacked, bkghists = self.histmanager.get_background_stacked_histograms()
-        self.objs.append(stacked)
-        self.objs.append(bkghists)
-        sighists = self.histmanager.get_signal_histograms()
-        self.objs.append(sighists)
-        datahists = self.histmanager.get_data_histograms()
-        self.objs.append(datahists)
-        datahist = None
+
+        stacked = None
+        bkghists = None
         totalbkghist = None
-        if len(datahists) != 0:
-            datahist = self.histmanager.get_summed_histograms(datahists)
-        if len(bkghists) != 0:
+        datahists = None
+        datahist = None
+        sighists = None
+
+        # If cutflow
+        if self.args.do_cutflow_style:
+            bkghists = self.histmanager.get_background_histograms()
             totalbkghist = self.histmanager.get_summed_histograms(bkghists)
-        self.objs.append(totalbkghist)
+            sighists = self.histmanager.get_signal_histograms()
+            datahists = self.histmanager.get_data_histograms()
+            datahist = None
+            if len(datahists) != 0:
+                datahist = self.histmanager.get_summed_histograms(datahists)
+
+            scales = []
+            for i in xrange(1, totalbkghist.GetNbinsX()+1):
+                scales.append(totalbkghist.GetBinContent(i))
+            print 'here', scales
+            for sighist in sighists:
+                for i in xrange(1, sighist.GetNbinsX()+1):
+                    if scales[i-1] == 0: continue
+                    binc = sighist.GetBinContent(i)
+                    bine = sighist.GetBinError(i)
+                    binfe = bine / binc
+                    newbinc = binc / scales[i-1]
+                    newbine = binfe / scales[i-1] * newbinc
+                    sighist.SetBinContent(i, newbinc)
+                    sighist.SetBinError(i, newbine)
+            for bkghist in bkghists:
+                for i in xrange(1, bkghist.GetNbinsX()+1):
+                    if scales[i-1] == 0: continue
+                    binc = bkghist.GetBinContent(i)
+                    bine = bkghist.GetBinError(i)
+                    binfe = bine / binc
+                    newbinc = binc / scales[i-1]
+                    newbine = binfe / scales[i-1] * newbinc
+                    bkghist.SetBinContent(i, newbinc)
+                    bkghist.SetBinError(i, newbine)
+            if datahist:
+                for i in xrange(1, datahist.GetNbinsX()+1):
+                    if scales[i-1] == 0: continue
+                    binc = datahist.GetBinContent(i)
+                    bine = datahist.GetBinError(i)
+                    binfe = bine / binc
+                    newbinc = binc / scales[i-1]
+                    newbine = binfe / scales[i-1] * newbinc
+                    datahist.SetBinContent(i, newbinc)
+                    datahist.SetBinError(i, newbine)
+
+            self.objs.append(bkghists)
+            totalbkghist = self.histmanager.get_summed_histograms(bkghists)
+            self.objs.append(totalbkghist)
+            self.objs.append(sighists)
+            self.objs.append(datahists)
+            stacked, dummy = self.histmanager.get_stacked_histograms(bkghists)
+            self.objs.append(stacked)
+
+
+        else:
+
+            stacked, bkghists = self.histmanager.get_background_stacked_histograms()
+            self.objs.append(stacked)
+            self.objs.append(bkghists)
+            sighists = self.histmanager.get_signal_histograms()
+            self.objs.append(sighists)
+            datahists = self.histmanager.get_data_histograms()
+            self.objs.append(datahists)
+            datahist = None
+            totalbkghist = None
+            if len(datahists) != 0:
+                datahist = self.histmanager.get_summed_histograms(datahists)
+            if len(bkghists) != 0:
+                totalbkghist = self.histmanager.get_summed_histograms(bkghists)
+            self.objs.append(totalbkghist)
+
         try:
             stacked.SetMaximum(self.get_max(totalbkghist, datahist) * self.args.maximum_scale) # assuming bkg matches data
         except:
@@ -659,6 +725,7 @@ class HistogramPainter:
             stacked.SetMaximum(self.args.maximum_logy)
         elif self.args.maximum:
             stacked.SetMaximum(eval(self.args.maximum))
+
         # print amounts
         for sighist in sighists:
             print sighist
