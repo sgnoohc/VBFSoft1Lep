@@ -1850,7 +1850,7 @@ namespace AnalysisUtilities
     {
       checkOneLepton(__FUNCTION__);
       //float mt = sqrt(2 * getLeadLepPtRel() * getLeadLepMETRel() * ( 1 - cos( getDPhiLepMET() ) ));
-      float mt = getLeadLepPtRel() / getLeadLepMETRel();
+      float mt = getLeadLepMETRel() / getLeadLepPtRel();
       return mt;
     }
 
