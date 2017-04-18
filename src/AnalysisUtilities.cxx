@@ -1722,6 +1722,39 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    // get met phi centrality wrt to jets
+    //
+    float getMETPhiCentBoost()
+    {
+      checkTwoJets(__FUNCTION__);
+      // Additional Variables for the VBF BDT
+      TLorentzVector vbf0 = getLeadingVBFJet().p4;
+      TLorentzVector vbf1 = getSubleadingVBFJet().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector dijet = vbf0 + vbf1;
+      TVector3 boost = dijet.BoostVector();
+      met.Boost(-boost);
+      return TVector2::Phi_mpi_pi(met.Phi());
+    }
+
+    //################################################################################################
+    // get met phi centrality wrt to jets
+    //
+    float getLepPhiCentBoost()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      // Additional Variables for the VBF BDT
+      TLorentzVector vbf0 = getLeadingVBFJet().p4;
+      TLorentzVector vbf1 = getSubleadingVBFJet().p4;
+      TLorentzVector lep = getLeadingGoodLepton().p4
+      TLorentzVector dijet = vbf0 + vbf1;
+      TVector3 boost = dijet.BoostVector();
+      lep.Boost(-boost);
+      return TVector2::Phi_mpi_pi(lep.Phi());
+    }
+
+    //################################################################################################
     // get dphi between dijet , lepmet system
     //
     float getDPhiDiJetLepMet()

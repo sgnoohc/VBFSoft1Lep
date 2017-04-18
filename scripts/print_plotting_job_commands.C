@@ -43,7 +43,7 @@ int determine_nbins(TH1F* hist)
       sum += fracerror;
     }
     float avg = sum / frac_errors.size();
-    if (avg < 0.2)
+    if (avg < 0.15)
       return 180 / possible_bins.at(iconf);
   }
   //if (histname.Contains("modmt"))

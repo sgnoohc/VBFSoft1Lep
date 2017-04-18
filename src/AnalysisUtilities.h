@@ -350,6 +350,8 @@ namespace AnalysisUtilities
     float getDPhiDiJetLep();
     float getMETPhiCent();
     float getLepPhiCent();
+    float getMETPhiCentBoost();
+    float getLepPhiCentBoost();
     float getDPhiDiJetLepMet();
     float getDPhiLepMETInvDijetFrame();
     float getDPhiLepMETWFrame();

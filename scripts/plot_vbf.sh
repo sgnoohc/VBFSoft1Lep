@@ -74,7 +74,7 @@ BKGLEGEND6="Top(1l)"
 # parse 7th argument to decide whether to draw signal only or bkg as well.
 if [ "x$3" == "x" ]; then
   python scripts/makeplot.py \
-    --plottype plot1d \
+    --plottype plot1dsig \
     --plotname plots/$1$4 \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG1}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7003 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7003 , SetName=>'${BKGLEGEND1}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG2}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7006 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7006 , SetName=>'${BKGLEGEND2}'%f, Scale=>'$SCALE'' \

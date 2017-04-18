@@ -651,9 +651,11 @@ class HistogramPainter:
                 datahist = self.histmanager.get_summed_histograms(datahists)
 
             scales = []
+            scales_error = []
             for i in xrange(1, totalbkghist.GetNbinsX()+1):
-                scales.append(totalbkghist.GetBinContent(i))
-            print 'here', scales
+                scales.append(totalbkghist.GetBinContent(i) / 100.)
+                scales_error.append(totalbkghist.GetBinError(i))
+            #print 'here', scales
             for sighist in sighists:
                 for i in xrange(1, sighist.GetNbinsX()+1):
                     if scales[i-1] == 0: continue
@@ -692,6 +694,10 @@ class HistogramPainter:
             self.objs.append(datahists)
             stacked, dummy = self.histmanager.get_stacked_histograms(bkghists)
             self.objs.append(stacked)
+            print stacked.GetXaxis().GetNbins()+1
+            for i in xrange(1, stacked.GetXaxis().GetNbins()+1):
+                print i
+                stacked.GetXaxis().SetBinLabel(i, '%.1f #pm %.1f'%(scales[i-1] * 100., scales_error[i-1]))
 
 
         else:
@@ -737,7 +743,11 @@ class HistogramPainter:
             print datahist
             datahist.Print("all")
         self.objs.append(datahist)
-        stacked.Draw('hist')
+        if self.args.do_cutflow_style:
+            ROOT.gStyle.SetPaintTextFormat("3.1f")
+            stacked.Draw('histtext0')
+        else:
+            stacked.Draw('hist')
         if totalbkghist:
             totalbkghist.SetLineColor(1)
             totalbkghist.SetLineWidth(1)

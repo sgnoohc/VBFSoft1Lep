@@ -192,6 +192,8 @@ namespace Vbf {
   extern TString histname_vbf_dphidijetlep;
   extern TString histname_vbf_metphicent;
   extern TString histname_vbf_lepphicent;
+  extern TString histname_vbf_lepphicentboost;
+  extern TString histname_vbf_metphicentboost;
   extern TString histname_vbf_dphidijetlepmet;
   extern TString histname_vbf_dphileadjetlep;
   extern TString histname_vbf_dphisubljetlep;
