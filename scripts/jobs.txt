@@ -87,6 +87,7 @@
 ./susyvbf input/met100presel/unknown_EWK_LNuJJ_MJJ-120_8.root            output/hist_EWK_LNuJJ_MJJ-120_8.root                   &> output/hist_EWK_LNuJJ_MJJ-120_8.log
 ./susyvbf input/met100presel/unknown_EWK_LNuJJ_MJJ-120_9.root            output/hist_EWK_LNuJJ_MJJ-120_9.root                   &> output/hist_EWK_LNuJJ_MJJ-120_9.log
 ./susyvbf input/met100presel_signal/VBF_100_95.root                      output/hist_VBF_100_95.root                            &> output/hist_VBF_100_95.log
+./susyvbf input/met100presel_signal/VBF_100_90.root                      output/hist_VBF_100_90.root                            &> output/hist_VBF_100_90.log
 
 #./susyvbf input/met100presel_signal/unknown_VBF-C1N2_leptonicDecays_1.root      output/hist_VBF-C1N2_leptonicDecays_1.root             &> output/hist_VBF-C1N2_leptonicDecays_1.log
 #./susyvbf input/met100presel_signal/unknown_VBF-C1N2_leptonicDecays_10.root     output/hist_VBF-C1N2_leptonicDecays_10.root            &> output/hist_VBF-C1N2_leptonicDecays_10.log
