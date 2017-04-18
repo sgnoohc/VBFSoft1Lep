@@ -48,6 +48,7 @@ parser.add_argument('--maximum'     , dest='maximum'     , type=str,   help='Ran
 parser.add_argument('--minimum'     , dest='minimum'     , type=str,   help='Range minimum')
 parser.add_argument('--show_overflow',dest='show_overflow',action='store_true',help='show overflow bin', default=False)
 parser.add_argument('--do_cutflow_style',dest='do_cutflow_style',action='store_true',help='show overflow bin', default=False)
+parser.add_argument('--print_cutflow',dest='print_cutflow',action='store_true',help='show overflow bin', default=False)
 parser.add_argument('--no_legend'    ,dest='no_legend'    ,action='store_true',help='do not draw legend', default=False)
 parser.add_argument('--ratio_maximum', dest='ratio_maximum', type=float, help='Range maximum', default=3.5)
 parser.add_argument('--ratio_minimum', dest='ratio_minimum', type=float, help='Range minimum', default=-1.5)
@@ -660,6 +661,7 @@ class HistogramPainter:
                 for i in xrange(1, sighist.GetNbinsX()+1):
                     if scales[i-1] == 0: continue
                     binc = sighist.GetBinContent(i)
+                    if binc == 0: continue
                     bine = sighist.GetBinError(i)
                     binfe = bine / binc
                     newbinc = binc / scales[i-1]
@@ -670,6 +672,7 @@ class HistogramPainter:
                 for i in xrange(1, bkghist.GetNbinsX()+1):
                     if scales[i-1] == 0: continue
                     binc = bkghist.GetBinContent(i)
+                    if binc == 0: continue
                     bine = bkghist.GetBinError(i)
                     binfe = bine / binc
                     newbinc = binc / scales[i-1]
@@ -680,6 +683,7 @@ class HistogramPainter:
                 for i in xrange(1, datahist.GetNbinsX()+1):
                     if scales[i-1] == 0: continue
                     binc = datahist.GetBinContent(i)
+                    if binc == 0: continue
                     bine = datahist.GetBinError(i)
                     binfe = bine / binc
                     newbinc = binc / scales[i-1]
@@ -716,6 +720,81 @@ class HistogramPainter:
             if len(bkghists) != 0:
                 totalbkghist = self.histmanager.get_summed_histograms(bkghists)
             self.objs.append(totalbkghist)
+
+        if self.args.print_cutflow:
+
+            yields_table = []
+            errors_table = []
+
+            for sighist in sighists:
+                yields = []
+                errors = []
+                yields.append(sighist.GetName())
+                errors.append(sighist.GetName())
+                for i in xrange(1, sighist.GetNbinsX()+1):
+                    binc = sighist.GetBinContent(i)
+                    bine = sighist.GetBinError(i)
+                    yields.append(binc)
+                    errors.append(bine)
+                yields_table.append(yields)
+                errors_table.append(errors)
+            if totalbkghist:
+                yields = []
+                errors = []
+                yields.append("Total Background")
+                errors.append("Total Background")
+                for i in xrange(1, totalbkghist.GetNbinsX()+1):
+                    binc = totalbkghist.GetBinContent(i)
+                    bine = totalbkghist.GetBinError(i)
+                    yields.append(binc)
+                    errors.append(bine)
+                yields_table.append(yields)
+                errors_table.append(errors)
+            for bkghist in bkghists:
+                yields = []
+                errors = []
+                yields.append(bkghist.GetName())
+                errors.append(bkghist.GetName())
+                for i in xrange(1, bkghist.GetNbinsX()+1):
+                    binc = bkghist.GetBinContent(i)
+                    bine = bkghist.GetBinError(i)
+                    yields.append(binc)
+                    errors.append(bine)
+                yields_table.append(yields)
+                errors_table.append(errors)
+            if datahist:
+                yields = []
+                errors = []
+                yields.append("Data")
+                errors.append("Data")
+                for i in xrange(1, datahist.GetNbinsX()+1):
+                    binc = datahist.GetBinContent(i)
+                    bine = datahist.GetBinError(i)
+                    yields.append(binc)
+                    errors.append(bine)
+                yields_table.append(yields)
+                errors_table.append(errors)
+
+            # transpose
+            yields_table_transpose = map(list, zip(*yields_table))
+            errors_table_transpose = map(list, zip(*errors_table))
+
+            import codecs
+
+            # output file
+            cutflow_file = codecs.open(self.args.plotname + '.csv', 'w', 'utf-8')
+
+            index = 0
+            for yields, errors in zip(yields_table_transpose, errors_table_transpose):
+                row_string = ""
+                for y, e in zip(yields, errors):
+                    if index == 0:
+                        row_string += '%30s,,,'%y
+                    else:
+                        row_string += '%10.1f,'%y + u"\u00B1" + ', %10.1f, '%e
+                row_string += '\n'
+                cutflow_file.write(row_string)
+                index += 1
 
         try:
             stacked.SetMaximum(self.get_max(totalbkghist, datahist) * self.args.maximum_scale) # assuming bkg matches data
@@ -1213,6 +1292,10 @@ class HistogramPainter:
             else:
                 hist.Draw('histsame')
             self.objs.append(hist)
+
+        #for hist, accepthist in zip(sig_scan_upper_hists, sig_scan_upper_hists_accept):
+        #    for i in xrange(1, hist.GetNbinsX() + 1):
+        #        if accepthist.GetBinContent(i)
 
 if __name__ == '__main__':
 

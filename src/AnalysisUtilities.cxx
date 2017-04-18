@@ -1813,7 +1813,9 @@ namespace AnalysisUtilities
     {
       TLorentzVector lep = lepton.p4;
       TLorentzVector met = getMETp4();
-      return lep.Pt() * sin( fabs( lep.DeltaPhi( met ) ) );
+      if (lep.DeltaPhi(met) < TMath::PiOver2())
+        return lep.Pt() * sin( fabs( lep.DeltaPhi( met ) ) );
+      return lep.Pt();
     }
 
     //################################################################################################
@@ -1821,7 +1823,12 @@ namespace AnalysisUtilities
     {
       TLorentzVector lep = lepton.p4;
       TLorentzVector met = getMETp4();
-      return met.Pt() * cos( fabs( lep.DeltaPhi( met ) ) );
+      if (lep.DeltaPhi(met) < TMath::PiOver2())
+        return met.Pt() * cos( fabs( lep.DeltaPhi( met ) ) );
+      else if (lep.DeltaPhi(met) >= TMath::PiOver2())
+        return met.Pt() * sin( fabs( lep.DeltaPhi( met ) ) );
+      else
+        return met.Pt();
     }
 
     //################################################################################################
@@ -1842,7 +1849,8 @@ namespace AnalysisUtilities
     float getMTRel()
     {
       checkOneLepton(__FUNCTION__);
-      float mt = sqrt(2 * getLeadLepPtRel() * getLeadLepMETRel() * ( 1 - cos( getDPhiLepMET() ) ));
+      //float mt = sqrt(2 * getLeadLepPtRel() * getLeadLepMETRel() * ( 1 - cos( getDPhiLepMET() ) ));
+      float mt = getLeadLepPtRel() / getLeadLepMETRel();
       return mt;
     }
 

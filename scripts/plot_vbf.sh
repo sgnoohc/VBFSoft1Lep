@@ -11,7 +11,7 @@ function usage()
 {
   echo "Usage :"
   echo ""
-  echo "    $0 HISTNAME PLOTTEROPTION SIGNALONLY? [PLOTNAMESUFFIX]"
+  echo "    $0 HISTNAME PLOTTEROPTION SIGNALONLY? [PLOTNAMESUFFIX] [PLOTTYPE]"
   echo ""
   echo "  NOTE: If certain options are empty put single quotes to bypass the argument"
   echo ""
@@ -71,10 +71,22 @@ BKGLEGEND4="DY(2l)"
 BKGLEGEND5="Top(2l)"
 BKGLEGEND6="Top(1l)"
 
+if [[ "$1" == *"cutflow"* ]]; then
+  PLOTTYPE=plot1d
+else
+  PLOTTYPE=plot1dsig
+fi
+
+if [ "x$5" == "x" ]; then
+  echo ""
+else
+  PLOTTYPE=$5
+fi
+
 # parse 7th argument to decide whether to draw signal only or bkg as well.
 if [ "x$3" == "x" ]; then
   python scripts/makeplot.py \
-    --plottype plot1dsig \
+    --plottype ${PLOTTYPE} \
     --plotname plots/$1$4 \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG1}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7003 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7003 , SetName=>'${BKGLEGEND1}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG2}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7006 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7006 , SetName=>'${BKGLEGEND2}'%f, Scale=>'$SCALE'' \
