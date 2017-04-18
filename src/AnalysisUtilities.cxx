@@ -1823,12 +1823,13 @@ namespace AnalysisUtilities
     {
       TLorentzVector lep = lepton.p4;
       TLorentzVector met = getMETp4();
-      if (lep.DeltaPhi(met) < TMath::PiOver2())
-        return met.Pt() * cos( fabs( lep.DeltaPhi( met ) ) );
-      else if (lep.DeltaPhi(met) >= TMath::PiOver2())
-        return met.Pt() * sin( fabs( lep.DeltaPhi( met ) ) );
-      else
-        return met.Pt();
+      return met.Pt() * cos( fabs( lep.DeltaPhi( met ) ) );
+      //if (lep.DeltaPhi(met) < TMath::PiOver2())
+      //  return met.Pt() * cos( fabs( lep.DeltaPhi( met ) ) );
+      //else if (lep.DeltaPhi(met) >= TMath::PiOver2())
+      //  return met.Pt() * sin( fabs( lep.DeltaPhi( met ) ) );
+      //else
+      //  return met.Pt();
     }
 
     //################################################################################################
