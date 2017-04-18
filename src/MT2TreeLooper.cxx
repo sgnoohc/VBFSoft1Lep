@@ -748,6 +748,11 @@ void doVBFAnalysis()
                 {
                   fillVBFCutflow(__COUNTER__);
                   fillVBFHistograms("ModMTCut");
+                  if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
+                  {
+                    fillVBFCutflow(__COUNTER__);
+                    fillVBFHistograms("LeadPtCut");
+                  }
                 }
               }
             }
@@ -1017,6 +1022,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("METCut");
   bookVBFHistogramsWithPrefix("MMCut");
   bookVBFHistogramsWithPrefix("ModMTCut");
+  bookVBFHistogramsWithPrefix("LeadPtCut");
   //bookVBFHistogramsWithPrefix("NBJetCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
@@ -1026,7 +1032,6 @@ void bookVBFHistograms()
   //bookVBFHistogramsWithPrefix("TwoLepDEtajjCut");
   //bookVBFHistogramsWithPrefix("NSoftLepCut");
   //bookVBFHistogramsWithPrefix("MuonCut");
-  //bookVBFHistogramsWithPrefix("LeadPtCut");
   //bookVBFHistogramsWithPrefix("LowMETCut");
   //bookVBFHistogramsWithPrefix("MTCut");
   //bookVBFHistogramsWithPrefix("CJVCut");
@@ -1073,8 +1078,8 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.    ,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjeteta      , 180,   -5.    ,     5.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljeteta      , 180,   -5.    ,     5.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjete        , 180,    0.    ,   750.    );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljete        , 180,    0.    ,   500.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjete        , 180,    0.    ,  1750.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljete        , 180,    0.    ,  1500.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjeteoverpt  , 180,    0.    ,     5.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljeteoverpt  , 180,    0.    ,     5.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent         , 180,    0.    ,     3.    );
@@ -1101,7 +1106,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   //bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepphicentboost , 180,   -3.1416,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphidijetlepmet , 180,    0.    ,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetboost , 180,    0.    ,     3.1416);
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetwframe, 180,    0.    ,     3.1416);
+  //bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetwframe, 180,    0.    ,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dptjet          , 180,    0.    ,    300.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptrel           , 180,    0.    ,     30.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180,    0.    ,    400.   );
@@ -1242,7 +1247,7 @@ void fillVBFHistograms(TString cutprefix_)
         //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepphicentboost , VBFSUSYUtilities::getLepPhiCentBoost()            );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphidijetlepmet , VBFSUSYUtilities::getDPhiDiJetLepMet()            );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetboost , VBFSUSYUtilities::getDPhiLepMETInvDijetFrame()    );
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetwframe, VBFSUSYUtilities::getDPhiLepMETWFrame()           );
+        //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetwframe, VBFSUSYUtilities::getDPhiLepMETWFrame()           );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dptjet          , VBFSUSYUtilities::getDPtJet()                     );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptrel           , VBFSUSYUtilities::getLeadLepPtRel()               );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metrel          , VBFSUSYUtilities::getLeadLepMETRel()              );
