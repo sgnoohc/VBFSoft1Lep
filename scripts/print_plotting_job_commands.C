@@ -69,12 +69,14 @@ void print_plotting_job_commands()
           continue;
         if (!histname.Contains("vbf_n") && !histname.Contains("vbf_lepid"))
           desired_nbins = determine_nbins(hist);
-        printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d --auto_scale_signal \\' \\'\\'    \\'_sigshape\\'\n",
+        printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d --auto_scale_signal \\' \\'\\'    \\'_sigshape\\' &> plots/%s_sigshape.log\n",
             key->GetName(),
-            desired_nbins);
-        printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'\\'    \\'_signorm\\'\n",
+            desired_nbins,
+            key->GetName());
+        printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'\\'    \\'_signorm\\' &> plots/%s_signorm.log \n",
             key->GetName(),
-            desired_nbins);
+            desired_nbins,
+            key->GetName());
         //printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'yes\\'\n",
         //       key->GetName(),
         //       desired_nbins);
@@ -84,23 +86,24 @@ void print_plotting_job_commands()
   TFile* file_signal = new TFile("haddoutput/hist_vbf_signal.root");
   if (file_signal)
   {
-    TList* list = file_signal->GetListOfKeys();
-    for (int ikey = 0; ikey < list->GetEntries(); ++ikey)
+    TList* list_signal = file_signal->GetListOfKeys();
+    for (int ikey = 0; ikey < list_signal->GetEntries(); ++ikey)
     {
-      TKey* key = (TKey*) list->At(ikey);
+      TKey* key = (TKey*) list_signal->At(ikey);
       TString histname = key->GetName();
-      if (histname.Contains("_vbf"))
+      //if (histname.Contains("_vbf"))
       {
-        std::cout << histname << std::endl;
-        TH1F* hist = (TH1F*) file->Get(key->GetName());
+        //std::cout << histname << std::endl;
+        TH1F* hist = (TH1F*) file_signal->Get(key->GetName());
         int desired_nbins = hist->GetNbinsX();
         if (hist->Integral() == 0)
           continue;
         if (!histname.Contains("vbf_n") && !histname.Contains("vbf_lepid"))
           desired_nbins = determine_nbins(hist);
-        printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'yes\\'\n",
+        printf("sh scripts/plot_vbf.sh %50s \\' --autostack --nbinx %3d                     \\' \\'yes\\' &> plots/%s_sigonly.log \n",
             key->GetName(),
-            desired_nbins);
+            desired_nbins,
+            key->GetName());
       }
     }
   }

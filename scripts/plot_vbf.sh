@@ -40,7 +40,7 @@ fi
 
 # parse 4th, 5h, 6th argument provided (must be provided all at once) plot a signal histogram with the chosen mass point
 #MASSPOINT="_100.0_0.0_95.0"
-MASSPOINT="_100.0_100.0_95.0"
+MASSPOINT="_100.0_95.0"
 MASSPOINTLEGEND="100"
 #if [ "x$4" != "x" ]; then
 #  if [ "x$5" != "x" ]; then
