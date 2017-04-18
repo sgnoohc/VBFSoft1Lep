@@ -744,6 +744,11 @@ void doVBFAnalysis()
               {
                 fillVBFCutflow(__COUNTER__);
                 fillVBFHistograms("MMCut");
+                if (VBFSUSYUtilities::getModMTleadLep() < 3.)
+                {
+                  fillVBFCutflow(__COUNTER__);
+                  fillVBFHistograms("ModMTCut");
+                }
               }
             }
           }
@@ -1011,8 +1016,8 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
   bookVBFHistogramsWithPrefix("MMCut");
+  bookVBFHistogramsWithPrefix("ModMTCut");
   //bookVBFHistogramsWithPrefix("NBJetCut");
-  //bookVBFHistogramsWithPrefix("ModMTCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
   //bookVBFHistogramsWithPrefix("EPCut");
