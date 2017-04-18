@@ -859,7 +859,7 @@ namespace AnalysisUtilities
     TLorentzVector met_p4;
 
     ELECTRON_ID_type ELECTRON_ID = kELECTRON_LOOSE;
-    MUON_ID_type MUON_ID = kMUON_TIGHT;
+    MUON_ID_type MUON_ID = kMUON_LOOSE;
     PROD_type prodmode = kPRODSTRONG;
 
     //################################################################################################
