@@ -57,6 +57,12 @@ namespace Vbf {
   TString histname_vbf_met              = "vbf_met";
   TString histname_vbf_leadjetpt        = "vbf_leadjetpt";
   TString histname_vbf_subljetpt        = "vbf_subljetpt";
+  TString histname_vbf_leadjeteta       = "vbf_leadjeteta";
+  TString histname_vbf_subljeteta       = "vbf_subljeteta";
+  TString histname_vbf_leadjete         = "vbf_leadjete";
+  TString histname_vbf_subljete         = "vbf_subljete";
+  TString histname_vbf_leadjeteoverpt   = "vbf_leadjeteoverpt";
+  TString histname_vbf_subljeteoverpt   = "vbf_subljeteoverpt";
   TString histname_vbf_lepcent          = "vbf_lepcent";
   TString histname_vbf_mt               = "vbf_mt";
   TString histname_vbf_modmt            = "vbf_modmt";
@@ -153,11 +159,14 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
   // Set output name (outputs are "output_name"_blah.root)
   Vbf::output_name = output_name;
 
-  // bookISR histograms
-  bookISRHistograms();
+  if (!Vbf::is_signal)
+  {
+    // bookISR histograms
+    //bookISRHistograms();
 
-  // bookVBF histograms
-  bookVBFHistograms();
+    // bookVBF histograms
+    bookVBFHistograms();
+  }
 
 }
 
@@ -706,18 +715,27 @@ void doVBFAnalysis()
 
   if (true)
   {
-    fillVBFCutflow(0);
+    fillVBFCutflow(__COUNTER__);
     fillVBFHistograms("NoCut");
     if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
     {
+      fillVBFCutflow(__COUNTER__);
       fillVBFHistograms("NJetCut");
-      // 1 lepton case
-      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
+      if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
       {
-        fillVBFHistograms("OneLepCut");
-        //if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
-        //{
-        //  fillVBFHistograms("DEtajjCut");
+        fillVBFCutflow(__COUNTER__);
+        fillVBFHistograms("DEtajjCut");
+        // 1 lepton case
+        if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
+        {
+          fillVBFCutflow(__COUNTER__);
+          fillVBFHistograms("OneLepCut");
+        }
+      }
+    }
+  }
+}
+
         //  // apply to all to get rid of low MET QCD junk and also helps reject W+jets for higher MET bins too
         //  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
         //  {
@@ -847,9 +865,6 @@ void doVBFAnalysis()
         //    //}
         //  }
 
-        //}
-      }
-
       //// 2 soft lepton case
       //if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 2)
       //{
@@ -890,10 +905,6 @@ void doVBFAnalysis()
       //    }
       //  }
       //}
-
-    }
-  }
-}
 
       //if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
       //{
@@ -977,8 +988,8 @@ void bookVBFHistograms()
   // Book histograms
   bookVBFHistogramsWithPrefix("NoCut");
   bookVBFHistogramsWithPrefix("NJetCut");
+  bookVBFHistogramsWithPrefix("DEtajjCut");
   bookVBFHistogramsWithPrefix("OneLepCut");
-  //bookVBFHistogramsWithPrefix("DEtajjCut");
   //bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   //bookVBFHistogramsWithPrefix("METCut");
   //bookVBFHistogramsWithPrefix("NBJetCut");
@@ -1037,6 +1048,12 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met             , 180,    0.  ,   450.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjetpt       , 180,    0.  ,   350.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.  ,   150.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjeteta      , 180,   -5.  ,     5.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljeteta      , 180,   -5.  ,     5.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjete        , 180,    0.  ,   750.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljete        , 180,    0.  ,   500.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjeteoverpt  , 180,    0.  ,     5.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljeteoverpt  , 180,    0.  ,     5.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lepcent         , 180,    0.  ,     3.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mt              , 180,    0.  ,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_modmt           , 180,    0.  ,    10.    );
@@ -1167,6 +1184,12 @@ void fillVBFHistograms(TString cutprefix_)
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjetpt, VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljetpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
       fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetpt,  VBFSUSYUtilities::getLeadCenJetPt()                );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjeteta, VBFSUSYUtilities::getLeadingVBFJet().p4.Eta()       );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljeteta, VBFSUSYUtilities::getSubleadingVBFJet().p4.Eta()    );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjete, VBFSUSYUtilities::getLeadingVBFJet().p4.E()       );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljete, VBFSUSYUtilities::getSubleadingVBFJet().p4.E()    );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadjeteoverpt, VBFSUSYUtilities::getLeadingVBFJet().p4.E() / VBFSUSYUtilities::getLeadingVBFJet().p4.Pt()       );
+      fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_subljeteoverpt, VBFSUSYUtilities::getSubleadingVBFJet().p4.E() / VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt()    );
 
       if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
       {

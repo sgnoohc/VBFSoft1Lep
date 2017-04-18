@@ -901,6 +901,15 @@ namespace AnalysisUtilities
                                               ||gen_status[igen] == 1)) setMN1(gen_mass[igen]);
       }
 
+      //if (fabs(mC1_event - 0) < 0.1 && fabs(mN2_event) < 0.1)
+      //{
+      //  for (int igen = 0; igen < ngen; ++igen)
+      //  {
+      //    TString msg = TString::Format("%d %f", gen_pdgId[igen], gen_mass[igen]);
+      //    PrintUtilities::print(msg);
+      //  }
+      //}
+
       return;
     }
 
@@ -938,7 +947,18 @@ namespace AnalysisUtilities
     //
     TString getMassSuffixTString()
     {
-      return TString::Format("_%.1f_%.1f_%.1f", mC1_event, mN2_event, mN1_event).Data();
+      if (fabs(mC1_event-0) > 0.1)
+        return TString::Format("_%.1f_%.1f", mC1_event, mN1_event).Data();
+      else if (fabs(mN2_event-0) > 0.1)
+        return TString::Format("_%.1f_%.1f", mN2_event, mN1_event).Data();
+      else
+      {
+        TString msg = TString::Format("%f %f", mC1_event, mN2_event);
+        PrintUtilities::print(msg);
+        PrintUtilities::error("VBFSUSYUtilities::getMassSuffixTString() asked for a mass suffix but falled into an unknown category");
+      }
+      return "";
+      //return TString::Format("_%.1f_%.1f_%.1f", mC1_event, mN2_event, mN1_event).Data();
       //return TString::Format("_%.1f_%.1f", mC1_event, mN1_event).Data();
     }
 
@@ -947,9 +967,12 @@ namespace AnalysisUtilities
     //
     TString getProdSuffixTString()
     {
-      if (getProductionMode() == kPRODSTRONG) return "_strong";
-      else if (getProductionMode() == kPRODVSTAR ) return "_vstar";
-      else if (getProductionMode() == kPRODVBF) return "_vbf";
+      //if (getProductionMode() == kPRODSTRONG) return "_strong";
+      //else if (getProductionMode() == kPRODVSTAR ) return "_vstar";
+      //else if (getProductionMode() == kPRODVBF) return "_vbf";
+      if (getProductionMode() == kPRODSTRONG) return "_qcd";
+      else if (getProductionMode() == kPRODVSTAR ) return "_qcd";
+      else if (getProductionMode() == kPRODVBF) return "";
       else
         PrintUtilities::error("VBFSUSYUtilities::getProdSuffixTString() production mode not recognized!");
       return "";
@@ -960,8 +983,8 @@ namespace AnalysisUtilities
     //
     TString getSignalSuffix(TString name)
     {
-      //return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
-      return (name + getMassSuffixTString()).Data();
+      return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
+      //return (name + getMassSuffixTString()).Data();
     }
 
     //################################################################################################

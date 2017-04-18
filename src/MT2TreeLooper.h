@@ -168,6 +168,12 @@ namespace Vbf {
   extern TString histname_vbf_met;
   extern TString histname_vbf_leadjetpt;
   extern TString histname_vbf_subljetpt;
+  extern TString histname_vbf_leadjeteta;
+  extern TString histname_vbf_subljeteta;
+  extern TString histname_vbf_leadjete;
+  extern TString histname_vbf_subljete;
+  extern TString histname_vbf_leadjeteoverpt;
+  extern TString histname_vbf_subljeteoverpt;
   extern TString histname_vbf_lepcent;
   extern TString histname_vbf_mt;
   extern TString histname_vbf_modmt;

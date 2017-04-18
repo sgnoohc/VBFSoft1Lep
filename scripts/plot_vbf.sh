@@ -93,7 +93,8 @@ else
   python scripts/makeplot.py \
     --plottype plot1d \
     --plotname plots/${1}_sigonly${4} \
-    --sighist 'haddoutput/hist_vbf_signal.root ::: '${1}${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    --sighist 'haddoutput/hist_vbf_signal.root ::: '${1}${MASSPOINT}'     ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    --sighist 'haddoutput/hist_vbf_signal.root ::: '${1}_qcd${MASSPOINT}' ::: SetLineColor=>4 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_qcd'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     --bkghist 'haddoutput/hist_vbf_signal.root ::: '${1}${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     $2
     #--sighist 'haddoutput/hist_vbf_signal.root ::: '${1}_100.0_100.0_90.0' ::: SetLineColor=>3 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
