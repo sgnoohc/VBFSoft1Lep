@@ -51,10 +51,10 @@ namespace AnalysisUtilities
     // Map to hold 1D histograms with unique names
     typedef map<string, TH1*> Hist1D_DB;
 
-    void plot1D(
+    bool plot1D(
         string name, float xval, double weight, Hist1D_DB &allhistos,
         string title, int numbinsx, float xmin, float xmax);
-    void plot1D(
+    bool plot1D(
         string name, float xval, double weight, Hist1D_DB &allhistos,
         string title, int numbinsx, const float* xbins);
     void plot1D(
@@ -248,6 +248,8 @@ namespace AnalysisUtilities
     bool isISRLepton(Lepton lepton);
     void selectISRLeptons(Leptons leptons);
     int getNSelectedISRLeptons();
+
+    bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi);
 
     //
     // Jet variables

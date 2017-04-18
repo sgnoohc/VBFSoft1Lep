@@ -39,7 +39,8 @@ else
 fi
 
 # parse 4th, 5h, 6th argument provided (must be provided all at once) plot a signal histogram with the chosen mass point
-MASSPOINT="_100.0_0.0_95.0"
+#MASSPOINT="_100.0_0.0_95.0"
+MASSPOINT="_100.0_100.0_95.0"
 MASSPOINTLEGEND="100"
 #if [ "x$4" != "x" ]; then
 #  if [ "x$5" != "x" ]; then
@@ -71,7 +72,7 @@ BKGLEGEND5="Top(2l)"
 BKGLEGEND6="Top(1l)"
 
 # parse 7th argument to decide whether to draw signal only or bkg as well.
-if [ "x" == "x" ]; then
+if [ "x$3" == "x" ]; then
   python scripts/makeplot.py \
     --plottype plot1dsig \
     --plotname plots/$1$4 \
@@ -81,7 +82,7 @@ if [ "x" == "x" ]; then
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG4}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7004 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7004 , SetName=>'${BKGLEGEND4}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG5}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7005 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7005 , SetName=>'${BKGLEGEND5}'%f, Scale=>'$SCALE'' \
     --${BKGCATEG}hist 'haddoutput/hist_vbf_'${BKG6}'.root  ::: '$1' ::: Set'${BKGCOLORING}'Color=>7002 , SetLineWidth=>'${LINEWIDTH}', SetLineColor=>7002 , SetName=>'${BKGLEGEND6}'%f, Scale=>'$SCALE'' \
-    --sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf_100.0_0.0_95.0'    ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>100%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    --sighist         'haddoutput/hist_vbf_signal.root ::: '${1}${MASSPOINT}'    ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>100%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     $2
     #--sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf_150.0_0.0_145.0'   ::: SetLineColor=>1 , SetLineWidth=>4 , SetName=>150%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     #--sighist         'haddoutput/hist_vbf_signal.root ::: '${1}_vbf_200.0_0.0_195.0'   ::: SetLineColor=>4 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
@@ -92,9 +93,10 @@ else
   python scripts/makeplot.py \
     --plottype plot1d \
     --plotname plots/${1}_sigonly${4} \
-    --sighist 'haddoutput/hist_vbf_signal.root ::: '${1}_vbf${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
-    --bkghist 'haddoutput/hist_vbf_signal.root ::: '${1}_vbf${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    --sighist 'haddoutput/hist_vbf_signal.root ::: '${1}${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
+    --bkghist 'haddoutput/hist_vbf_signal.root ::: '${1}${MASSPOINT}' ::: SetLineColor=>2 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow'${MASSPOINT}'%bin1%'$SIGSCALE'' \
     $2
+    #--sighist 'haddoutput/hist_vbf_signal.root ::: '${1}_100.0_100.0_90.0' ::: SetLineColor=>3 , SetLineWidth=>4 , SetName=>'${MASSPOINTLEGEND}'%l, Scale=>normhaddoutput/hist_vbf_signal.root%vbf_rawcutflow_vbf'${MASSPOINT}'%bin1%'$SIGSCALE'' \
 fi
 
 #eof

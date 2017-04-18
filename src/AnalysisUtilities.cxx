@@ -26,8 +26,9 @@ namespace AnalysisUtilities
 
     //################################################################################################
     // Plot 1D histogram. If a histogram doesn't exist book first and fill.
+    // if the histogram exists, return true
     //
-    void plot1D(
+    bool plot1D(
         string name,
         float xval,
         double weight,
@@ -51,20 +52,20 @@ namespace AnalysisUtilities
         currentHisto->SetDirectory(0);
         currentHisto->Fill(xval, weight);
         allhistos.insert(pair<string, TH1D*> (name,currentHisto) );
+        return false;
       }
       // exists already, so just fill it
       else
       {
         (*iter).second->Fill(xval, weight);
+        return true;
       }
-
-      return;
     }
 
     //################################################################################################
     // Plot 1D histogram. If a histogram doesn't exist book first and fill. (with variable binning)
     //
-    void plot1D(string name, float xval, double weight, std::map<string, TH1*> &allhistos,
+    bool plot1D(string name, float xval, double weight, std::map<string, TH1*> &allhistos,
         string title, int numbinsx, const float * xbins)
     {
       // If no title given, set title to name
@@ -81,12 +82,13 @@ namespace AnalysisUtilities
         currentHisto->SetDirectory(0);
         currentHisto->Fill(xval, weight);
         allhistos.insert(std::pair<string, TH1D*> (name,currentHisto) );
+        return false;
       }
       else // exists already, so just fill it
       {
         (*iter).second->Fill(xval, weight);
+        return true;
       }
-
     }
 
     //################################################################################################
@@ -879,24 +881,25 @@ namespace AnalysisUtilities
       setMN2(0);
       setMN1(0);
 
+
       if (abs(gen_pdgId[2]) == 1000024) setMC1(gen_mass[2]);
       if (abs(gen_pdgId[3]) == 1000024) setMC1(gen_mass[3]);
 
       if (abs(gen_pdgId[2]) == 1000023) setMN2(gen_mass[2]);
       if (abs(gen_pdgId[3]) == 1000023) setMN2(gen_mass[3]);
 
-      if (abs(gen_pdgId[9]) == 1000022) setMN1(gen_mass[9]);
-      if (abs(gen_pdgId[10])== 1000022) setMN1(gen_mass[10]);
+      //if (abs(gen_pdgId[10])== 1000022) setMN1(gen_mass[10]);
+
+      //if (abs(gen_pdgId[10])!= 1000022)
+      //  PrintUtilities::error("VBFSUSYUtilities::parseEwkinoMasses() the gen_pdgId[10] != 1000022");
 
       // Old deprecated way of computing
       // If signal sample by checking whether the output name contains "sig"
-      //for (int igen = 0; igen < ngen; ++igen)
-      //{
-      //  if (abs(gen_pdgId[igen]) == 1000024 &&  gen_status[igen] == 22) setMC1(gen_mass[igen]);
-      //  if (abs(gen_pdgId[igen]) == 1000023 &&  gen_status[igen] == 22) setMN2(gen_mass[igen]);
-      //  if (abs(gen_pdgId[igen]) == 1000022 && (gen_status[igen] == 23
-      //                                        ||gen_status[igen] == 1)) setMN1(gen_mass[igen]);
-      //}
+      for (int igen = 0; igen < ngen; ++igen)
+      {
+        if (abs(gen_pdgId[igen]) == 1000022 && (gen_status[igen] == 23
+                                              ||gen_status[igen] == 1)) setMN1(gen_mass[igen]);
+      }
 
       return;
     }
@@ -936,6 +939,7 @@ namespace AnalysisUtilities
     TString getMassSuffixTString()
     {
       return TString::Format("_%.1f_%.1f_%.1f", mC1_event, mN2_event, mN1_event).Data();
+      //return TString::Format("_%.1f_%.1f", mC1_event, mN1_event).Data();
     }
 
     //################################################################################################
@@ -956,7 +960,8 @@ namespace AnalysisUtilities
     //
     TString getSignalSuffix(TString name)
     {
-      return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
+      //return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
+      return (name + getMassSuffixTString()).Data();
     }
 
     //################################################################################################
@@ -1063,7 +1068,7 @@ namespace AnalysisUtilities
         if (getLeadingGoodLepton().p4.Pt() > 30.)
           return -1;
         else
-          return getNSelectedVBFLeptons();
+          return getNSelectedGoodLeptons();
       }
     }
 
@@ -1857,6 +1862,222 @@ namespace AnalysisUtilities
     void checkThreeJets (TString function) { checkNJets   (3, function); }
     void checkOneLepton (TString function) { checkNLeptons(1, function); }
     void checkTwoLeptons(TString function) { checkNLeptons(2, function); }
+
+    //################################################################################################
+    // return if the correction was "successful"
+    // if not, return false and reject the event
+    //
+    bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi)
+    {
+
+      // if both are N2, skip
+      if (gen_pdgId[2] == 1000023 && gen_pdgId[3] == 1000023)
+        return false;
+
+      // if both are C1, accept as is
+      if (gen_pdgId[2] == 1000024 && gen_pdgId[3] == 1000024)
+        return true;
+
+      // if either of the produced susy does not have N2 skip
+      if (gen_pdgId[2] != 1000023 && gen_pdgId[3] != 1000023)
+        return false;
+
+      //  0 *        -3 *      2212 *
+      //  1 *        21 *      2212 *
+      //  2 *   1000024 *        -3 *
+      //  3 *   1000023 *        -3 *
+      //  4 *        21 *        -3 *
+      //  5 *        -4 *        -3 *
+      //  6 *  -1000015 *   1000024 *
+      //  7 *        16 *   1000024 *
+      //  8 *   1000013 *   1000023 *
+      //  9 *       -13 *   1000023 *
+      // 10 *       -15 *  -1000015 *
+      // 11 *        13 *   1000013 *
+
+      // vector to hold the indices
+      std::vector<int> gen_idx;
+
+      // Loop over and select indices
+      for (int igen = 0; igen < ngen; ++igen)
+      {
+
+        // NOTE: If there are taus, don't even bother
+        if (abs(gen_pdgId[igen]) == 15)
+          return false;
+
+        // NOTE: If there are pions don't even bother
+        if (abs(gen_pdgId[igen]) == 211)
+          return false;
+
+        if (abs(gen_pdgId[igen]) != 1000022)
+          gen_idx.push_back(igen);
+      }
+
+      // debug print
+      //for (int igen = 0; igen < ngen; ++igen)
+      //{
+
+      //  float my_genPart_pt      = gen_pt[igen];
+      //  float my_genPart_eta     = gen_eta[igen];
+      //  float my_genPart_phi     = gen_phi[igen];
+      //  float my_genPart_mass    = gen_mass[igen];
+      //  int my_genPart_pdgId     = gen_pdgId[igen];
+      //  int my_genPart_status    = 0;
+      //  int my_genPart_motherId  = gen_sourceId[igen];
+      //  int my_genPart_motherIdx = 0;
+
+      //  if (my_genPart_pdgId == 1000022)
+      //    continue;
+
+      //  printf("%5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
+      //      igen,
+      //      my_genPart_pdgId,
+      //      my_genPart_status,
+      //      my_genPart_pt,
+      //      my_genPart_eta,
+      //      my_genPart_phi,
+      //      my_genPart_mass,
+      //      my_genPart_motherIdx,
+      //      my_genPart_motherId);
+      //}
+
+      std::vector<int> lep_to_rm_idx;
+
+      // add if from N2 directly
+      if (gen_sourceId[gen_idx[ 7]] == 1000023 && (abs(gen_pdgId[gen_idx[ 7]]) == 11 || abs(gen_pdgId[gen_idx[ 7]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[ 7]);
+      if (gen_sourceId[gen_idx[ 9]] == 1000023 && (abs(gen_pdgId[gen_idx[ 9]]) == 11 || abs(gen_pdgId[gen_idx[ 9]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[ 9]);
+      if (gen_sourceId[gen_idx[10]] == 1000023 && (abs(gen_pdgId[gen_idx[10]]) == 11 || abs(gen_pdgId[gen_idx[10]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[10]);
+      if (gen_sourceId[gen_idx[11]] == 1000023 && (abs(gen_pdgId[gen_idx[11]]) == 11 || abs(gen_pdgId[gen_idx[11]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[11]);
+
+      if (lep_to_rm_idx.size() == 0)
+      {
+        TString msg = TString::Format("VBFSUSYUtilities::correctN2() got zero lepton from N2. This is very weird");
+        // debug print
+        for (int igen = 0; igen < ngen; ++igen)
+        {
+
+          float my_genPart_pt      = gen_pt[igen];
+          float my_genPart_eta     = gen_eta[igen];
+          float my_genPart_phi     = gen_phi[igen];
+          float my_genPart_mass    = gen_mass[igen];
+          int my_genPart_pdgId     = gen_pdgId[igen];
+          int my_genPart_status    = 0;
+          int my_genPart_motherId  = gen_sourceId[igen];
+          int my_genPart_motherIdx = 0;
+
+          //if (my_genPart_pdgId == 1000022)
+          //  continue;
+
+          printf("%5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
+              igen,
+              my_genPart_pdgId,
+              my_genPart_status,
+              my_genPart_pt,
+              my_genPart_eta,
+              my_genPart_phi,
+              my_genPart_mass,
+              my_genPart_motherIdx,
+              my_genPart_motherId);
+        }
+
+        PrintUtilities::error(msg);
+      }
+
+      int pdgid_N2_derived_susy = 0;
+
+      if (gen_sourceId[gen_idx[6]] == 1000023) pdgid_N2_derived_susy = gen_pdgId[gen_idx[6]];
+      if (gen_sourceId[gen_idx[8]] == 1000023) pdgid_N2_derived_susy = gen_pdgId[gen_idx[8]];
+
+      if (pdgid_N2_derived_susy == 0)
+      {
+        // debug print
+        for (int igen = 0; igen < ngen; ++igen)
+        {
+
+          float my_genPart_pt      = gen_pt[igen];
+          float my_genPart_eta     = gen_eta[igen];
+          float my_genPart_phi     = gen_phi[igen];
+          float my_genPart_mass    = gen_mass[igen];
+          int my_genPart_pdgId     = gen_pdgId[igen];
+          int my_genPart_status    = 0;
+          int my_genPart_motherId  = gen_sourceId[igen];
+          int my_genPart_motherIdx = 0;
+
+          //if (my_genPart_pdgId == 1000022)
+          //  continue;
+
+          printf("%5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
+              igen,
+              my_genPart_pdgId,
+              my_genPart_status,
+              my_genPart_pt,
+              my_genPart_eta,
+              my_genPart_phi,
+              my_genPart_mass,
+              my_genPart_motherIdx,
+              my_genPart_motherId);
+        }
+
+        TString msg = TString::Format("VBFSUSYUtilities::correctN2() got zero slepton from N2. This is very weird");
+        PrintUtilities::error(msg);
+      }
+
+      // add if from the derived SUSY particle from N2
+      if (gen_sourceId[gen_idx[ 7]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[ 7]);
+      if (gen_sourceId[gen_idx[ 9]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[ 9]);
+      if (gen_sourceId[gen_idx[10]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[10]);
+      if (gen_sourceId[gen_idx[11]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[11]);
+
+      std::vector<TLorentzVector> lep_to_rm;
+      for (unsigned int ilep_to_rm_idx = 0; ilep_to_rm_idx < lep_to_rm_idx.size(); ++ilep_to_rm_idx)
+      {
+        //std::cout << "idx to remove from good selected leptons = " << lep_to_rm_idx.at(ilep_to_rm_idx) << std::endl;
+        float pt  = gen_pt  [lep_to_rm_idx.at(ilep_to_rm_idx)];
+        float eta = gen_eta [lep_to_rm_idx.at(ilep_to_rm_idx)];
+        float phi = gen_phi [lep_to_rm_idx.at(ilep_to_rm_idx)];
+        float mass= gen_mass[lep_to_rm_idx.at(ilep_to_rm_idx)];
+        //std::cout << pt << " " << eta << " " << phi << " " << mass << std::endl;
+        TLorentzVector p4;
+        p4.SetPtEtaPhiM(pt, eta, phi, mass);
+        //p4.Print();
+        lep_to_rm.push_back(p4);
+      }
+
+      Leptons selected_good_leptons_new;
+      for (unsigned int ilep = 0; ilep < selected_good_leptons.size(); ++ilep)
+      {
+        TLorentzVector tag = selected_good_leptons.at(ilep).p4;
+        //std::cout << " tag " << std::endl;
+        //tag.Print();
+        bool removed = false;
+        for (unsigned int ilep_to_rm = 0; ilep_to_rm < lep_to_rm.size(); ++ilep_to_rm)
+        {
+          TLorentzVector probe = lep_to_rm.at(ilep_to_rm);
+          //std::cout << " probe " << std::endl;
+          //probe.Print();
+          //std::cout << tag.DeltaR(probe) << std::endl;
+          //std::cout << fabs(tag.Pt() - probe.Pt()) << std::endl;
+          if (tag.DeltaR(probe) < 0.1 && fabs(tag.Pt() - probe.Pt()) < 1)
+            removed = true;
+        }
+        if (!removed)
+          selected_good_leptons_new.push_back(selected_good_leptons.at(ilep));
+        if (removed)
+        {
+          TLorentzVector newmet = getMETp4() + tag;
+          setMET(newmet.Pt());
+          setMETphi(newmet.Phi());
+        }
+      }
+
+      //std::cout << " test" << selected_good_leptons.size() << std::endl;
+      selected_good_leptons = Leptons(selected_good_leptons_new);
+      //std::cout << " test2 " << selected_good_leptons.size() << std::endl;
+
+      return true;
+    }
+
   }
 
 }

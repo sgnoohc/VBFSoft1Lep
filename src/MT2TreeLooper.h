@@ -57,6 +57,7 @@ void selectLeptons();
 void selectJets();
 void setMET();
 void loadScale1fb();
+bool correctN2();
 
 //=============================================================================
 // ISR analysis
@@ -84,8 +85,8 @@ void doVBFAnalysis();
 // Booking histograms
 void bookVBFHistograms();
 void bookVBFHistogramsWithPrefix(TString cutprefix = "");
-void bookVBFHistogram(TString name, int nbins, float min, float max);
-void bookVBFHistogram(TString name, int nbins, const float* xbins);
+bool bookVBFHistogram(TString name, int nbins, float min, float max);
+bool bookVBFHistogram(TString name, int nbins, const float* xbins);
 
 // Filling histograms
 void fillVBFHistograms(TString cutprefix = "");
