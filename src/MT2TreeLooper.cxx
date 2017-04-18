@@ -752,6 +752,11 @@ void doVBFAnalysis()
                   {
                     fillVBFCutflow(__COUNTER__);
                     fillVBFHistograms("LeadPtCut");
+                    if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
+                    {
+                      fillVBFCutflow(__COUNTER__);
+                      fillVBFHistograms("NBJetCut");
+                    }
                   }
                 }
               }
@@ -1023,7 +1028,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("MMCut");
   bookVBFHistogramsWithPrefix("ModMTCut");
   bookVBFHistogramsWithPrefix("LeadPtCut");
-  //bookVBFHistogramsWithPrefix("NBJetCut");
+  bookVBFHistogramsWithPrefix("NBJetCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
   //bookVBFHistogramsWithPrefix("EPCut");
