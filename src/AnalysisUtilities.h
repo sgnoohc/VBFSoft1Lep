@@ -365,7 +365,9 @@ namespace AnalysisUtilities
     float getLeadLepMETRel();
     float getMTRel();
     float getSuperPtRel();
+    float getSuperPtRelNoWgt();
     float getProdPtRel();
+    float getHT();
 
     float getMinDRLeadCenJet();
     float getMinDRCenJet();

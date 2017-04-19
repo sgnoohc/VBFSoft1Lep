@@ -94,6 +94,7 @@ namespace Vbf {
   TString histname_vbf_dptjet           = "vbf_dptjet";
   TString histname_vbf_ptrel            = "vbf_ptrel";
   TString histname_vbf_superptrel       = "vbf_superptrel";
+  TString histname_vbf_superptrelnowgt  = "vbf_superptrelnowgt";
   TString histname_vbf_prodptrel        = "vbf_prodptrel";
   TString histname_vbf_metrel           = "vbf_metrel";
   TString histname_vbf_mtrel            = "vbf_mtrel";
@@ -745,31 +746,11 @@ void doVBFAnalysis()
             {
               fillVBFCutflow(__COUNTER__);
               fillVBFHistograms("METCut");
-              //if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
-              //{
-              //  fillVBFCutflow(__COUNTER__);
-              //  fillVBFHistograms("MMCut");
-              //  if (VBFSUSYUtilities::getModMTleadLep() < 3.)
-              //  {
-              //    fillVBFCutflow(__COUNTER__);
-              //    fillVBFHistograms("ModMTCut");
-              //    if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
-              //    {
-              //      fillVBFCutflow(__COUNTER__);
-              //      fillVBFHistograms("LeadPtCut");
-              //      if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
-              //      {
-              //        fillVBFCutflow(__COUNTER__);
-              //        fillVBFHistograms("NBJetCut");
-              //        if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
-              //        {
-              //          fillVBFCutflow(__COUNTER__);
-              //          fillVBFHistograms("MET300infCut");
-              //        }
-              //      }
-              //    }
-              //  }
-              //}
+              if (VBFSUSYUtilities::getMTleadLep() < 40.)
+              {
+                fillVBFCutflow(__COUNTER__);
+                fillVBFHistograms("MTCut");
+              }
             }
           }
         }
@@ -777,247 +758,6 @@ void doVBFAnalysis()
     }
   }
 }
-
-//        //  // apply to all to get rid of low MET QCD junk and also helps reject W+jets for higher MET bins too
-//        //  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
-//        //  {
-//        //    fillVBFHistograms("SubleadJetPtCut");
-//        //    if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
-//        //    {
-//        //      fillVBFHistograms("METCut");
-//        //      if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
-//        //      {
-//        //        fillVBFHistograms("NBJetCut");
-//        //        if (VBFSUSYUtilities::getModMTleadLep() < 3.)
-//        //        {
-//        //          fillVBFHistograms("ModMTCut");
-//        //          if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13)
-//        //          {
-//        //            fillVBFHistograms("MMCut");
-//        //          }
-//        //          else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11)
-//        //          {
-//        //            fillVBFHistograms("MPCut");
-//        //          }
-//        //          else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13)
-//        //          {
-//        //            fillVBFHistograms("EMCut");
-//        //          }
-//        //          else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11)
-//        //          {
-//        //            fillVBFHistograms("EPCut");
-//        //          }
-//        //        }
-//        //      }
-//        //    }
-//
-//        //    //int nbtag = VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46);
-//        //    //// 100 - 200 MET bin
-//        //    //if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
-//        //    //{
-//        //    //  fillVBFCutflow(5);
-//        //    //  fillVBFHistograms("MET100200Cut");
-//        //    //  if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 10.)
-//        //    //  {
-//        //    //    fillVBFCutflow(6);
-//        //    //    fillVBFHistograms("MET100200LeadLepPtCut");
-//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11)
-//        //    //    {
-//        //    //      fillVBFHistograms("MET100200ElPlusCut");
-//        //    //    }
-//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11)
-//        //    //    {
-//        //    //      fillVBFHistograms("MET100200ElMinusCut");
-//        //    //    }
-//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13)
-//        //    //    {
-//        //    //      fillVBFHistograms("MET100200MuPlusCut");
-//        //    //    }
-//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
-//        //    //    {
-//        //    //      fillVBFHistograms("MET100200MuMinusCut");
-//        //    //    }
-//        //    //  }
-//        //    //}
-//
-//        //    //// 200 - 300 MET bin
-//        //    //if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
-//        //    //{
-//        //    //  fillVBFCutflow(7);
-//        //    //  fillVBFHistograms("MET200300Cut");
-//        //    //  if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//        //    //  {
-//        //    //    fillVBFCutflow(6);
-//        //    //    fillVBFHistograms("MET200300MTCut");
-//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
-//        //    //    {
-//        //    //      fillVBFCutflow(6);
-//        //    //      fillVBFHistograms("MET200300LeadLepPtCut");
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET200300ElPlusCut");
-//        //    //      }
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET200300ElMinusCut");
-//        //    //      }
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET200300MuPlusCut");
-//        //    //      }
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET200300MuMinusCut");
-//        //    //      }
-//        //    //    }
-//        //    //  }
-//        //    //}
-//
-//        //    //// 300 - inf MET bin
-//        //    //if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
-//        //    //{
-//        //    //  fillVBFCutflow(8);
-//        //    //  fillVBFHistograms("MET300infCut");
-//        //    //  if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//        //    //  {
-//        //    //    fillVBFCutflow(6);
-//        //    //    fillVBFHistograms("MET300infMTCut");
-//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 15.)
-//        //    //    {
-//        //    //      fillVBFCutflow(6);
-//        //    //      fillVBFHistograms("MET300infLeadLepPtCut");
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11 && nbtag < 1)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET300infElPlusCut");
-//        //    //      }
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11 && nbtag < 1)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET300infElMinusCut");
-//        //    //      }
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13 && nbtag < 2)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET300infMuPlusCut");
-//        //    //      }
-//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13 && nbtag < 2)
-//        //    //      {
-//        //    //        fillVBFHistograms("MET300infMuMinusCut");
-//        //    //      }
-//        //    //    }
-//        //    //  }
-//        //    //}
-//        //  }
-//
-//      //// 2 soft lepton case
-//      //if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 2)
-//      //{
-//      //  fillVBFCutflow(9);
-//      //  fillVBFHistograms("TwoLepCut");
-//      //  if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
-//      //  {
-//      //    fillVBFCutflow(10);
-//      //    fillVBFHistograms("TwoLepBVetoCut");
-//      //    if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
-//      //    {
-//      //      fillVBFCutflow(10);
-//      //      fillVBFHistograms("TwoLepDEtajjCut");
-//      //      // 100 - 200 MET bin
-//      //      if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
-//      //      {
-//      //        fillVBFCutflow(5);
-//      //        fillVBFHistograms("TwoLepMET100200Cut");
-//      //        //	            if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 10.)
-//      //        //	            {
-//      //        //	              fillVBFCutflow(6);
-//      //        //	              fillVBFHistograms("MET100200LeadLepPtCut");
-//      //        //	            }
-//      //      }
-//
-//      //      // 200 - 300 MET bin
-//      //      if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
-//      //      {
-//      //        fillVBFCutflow(7);
-//      //        fillVBFHistograms("TwoLepMET200infCut");
-//      //        //	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//      //        //	            {
-//      //        //	              fillVBFCutflow(6);
-//      //        //	              fillVBFHistograms("MET200300MTCut");
-//      //        //	            }
-//      //      }
-//
-//      //    }
-//      //  }
-//      //}
-//
-//      //if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
-//      //{
-//      //  fillVBFCutflow(2);
-//      //  fillVBFHistograms("NBJetCut");
-//      //  if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
-//      //  {
-//      //    fillVBFCutflow(3);
-//      //    fillVBFHistograms("NSoftLepCut");
-//      //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
-//      //    {
-//      //      fillVBFCutflow(4);
-//      //      fillVBFHistograms("MuonCut");
-//      //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pt < 20.)
-//      //      {
-//      //        fillVBFCutflow(5);
-//      //        fillVBFHistograms("LeadPtCut");
-//      //        if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
-//      //        {
-//      //          fillVBFCutflow(6);
-//      //          fillVBFHistograms("METCut");
-//      //          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
-//      //          {
-//      //            fillVBFCutflow(7);
-//      //            fillVBFHistograms("DEtajjCut");
-//      //            if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
-//      //            {
-//      //              fillVBFCutflow(8);
-//      //              fillVBFHistograms("SubleadJetPtCut");
-//      //              if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//      //              {
-//      //                fillVBFCutflow(9);
-//      //                fillVBFHistograms("MTCut");
-//      //                if (VBFSUSYUtilities::getVBFMjj() > 1400.)
-//      //                {
-//      //                  fillVBFCutflow(10);
-//      //                  fillVBFHistograms("MjjCut");
-//      //                }
-//      //              }
-//      //            }
-//      //          }
-//      //        }
-//      //        else
-//      //        {
-//      //          fillVBFCutflow(11);
-//      //          fillVBFHistograms("LowMETCut");
-//      //          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
-//      //          {
-//      //            fillVBFCutflow(12);
-//      //            fillVBFHistograms("DEtajjCut");
-//      //          //  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
-//      //          //  {
-//      //          //    fillVBFCutflow(13);
-//      //          //    fillVBFHistograms("SubleadJetPtCut");
-//      //          //    if (VBFSUSYUtilities::getMTleadLep() < 50.)
-//      //          //    {
-//      //          //      fillVBFCutflow(14);
-//      //          //      fillVBFHistograms("MTCut");
-//      //          //      if (VBFSUSYUtilities::getVBFMjj() > 1400.)
-//      //          //      {
-//      //          //        fillVBFCutflow(15);
-//      //          //        fillVBFHistograms("MjjCut");
-//      //          //      }
-//      //          //    }
-//      //          //  }
-//      //          }
-//      //        }
-//      //      }
-//      //    }
-//      //  }
-//      //}
 
 //______________________________________________________________________________________
 void bookVBFHistograms()
@@ -1039,6 +779,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("ModMTCut");
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
+  bookVBFHistogramsWithPrefix("MTCut");
   bookVBFHistogramsWithPrefix("MET300infCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
@@ -1049,7 +790,6 @@ void bookVBFHistograms()
   //bookVBFHistogramsWithPrefix("NSoftLepCut");
   //bookVBFHistogramsWithPrefix("MuonCut");
   //bookVBFHistogramsWithPrefix("LowMETCut");
-  //bookVBFHistogramsWithPrefix("MTCut");
   //bookVBFHistogramsWithPrefix("CJVCut");
   //bookVBFHistogramsWithPrefix("MjjCut");
   //bookVBFHistogramsWithPrefix("MET100200Cut");
@@ -1129,6 +869,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dptjet          , 180,    0.    ,    300.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptrel           , 180,    0.    ,     30.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_superptrel      , 180,    0.    ,    100.   );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_superptrelnowgt , 180,    0.    ,    100.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_prodptrel       , 180,    0.    ,    100.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180, -200.    ,    600.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtrel           , 180,  -50.    ,    200. );
@@ -1275,6 +1016,7 @@ void fillVBFHistograms(TString cutprefix_)
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dptjet          , VBFSUSYUtilities::getDPtJet()                     );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptrel           , VBFSUSYUtilities::getLeadLepPtRel()               );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_superptrel      , VBFSUSYUtilities::getSuperPtRel()                 );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_superptrelnowgt , VBFSUSYUtilities::getSuperPtRelNoWgt()            );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_prodptrel       , VBFSUSYUtilities::getProdPtRel()                  );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metrel          , VBFSUSYUtilities::getLeadLepMETRel()              );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtrel           , VBFSUSYUtilities::getMTRel()                      );
@@ -1559,3 +1301,269 @@ void computeAcceptanceWrtArxiv1502_05044()
 
 
 //eof
+              //if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+              //{
+              //  fillVBFCutflow(__COUNTER__);
+              //  fillVBFHistograms("MMCut");
+              //  if (VBFSUSYUtilities::getModMTleadLep() < 3.)
+              //  {
+              //    fillVBFCutflow(__COUNTER__);
+              //    fillVBFHistograms("ModMTCut");
+              //    if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
+              //    {
+              //      fillVBFCutflow(__COUNTER__);
+              //      fillVBFHistograms("LeadPtCut");
+              //      if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
+              //      {
+              //        fillVBFCutflow(__COUNTER__);
+              //        fillVBFHistograms("NBJetCut");
+              //        if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
+              //        {
+              //          fillVBFCutflow(__COUNTER__);
+              //          fillVBFHistograms("MET300infCut");
+              //        }
+              //      }
+              //    }
+              //  }
+              //}
+
+//        //  // apply to all to get rid of low MET QCD junk and also helps reject W+jets for higher MET bins too
+//        //  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+//        //  {
+//        //    fillVBFHistograms("SubleadJetPtCut");
+//        //    if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+//        //    {
+//        //      fillVBFHistograms("METCut");
+//        //      if (VBFSUSYUtilities::getNSelectedGoodBJets() == 0)
+//        //      {
+//        //        fillVBFHistograms("NBJetCut");
+//        //        if (VBFSUSYUtilities::getModMTleadLep() < 3.)
+//        //        {
+//        //          fillVBFHistograms("ModMTCut");
+//        //          if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13)
+//        //          {
+//        //            fillVBFHistograms("MMCut");
+//        //          }
+//        //          else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  11)
+//        //          {
+//        //            fillVBFHistograms("MPCut");
+//        //          }
+//        //          else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13)
+//        //          {
+//        //            fillVBFHistograms("EMCut");
+//        //          }
+//        //          else if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -11)
+//        //          {
+//        //            fillVBFHistograms("EPCut");
+//        //          }
+//        //        }
+//        //      }
+//        //    }
+//
+//        //    //int nbtag = VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46);
+//        //    //// 100 - 200 MET bin
+//        //    //if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
+//        //    //{
+//        //    //  fillVBFCutflow(5);
+//        //    //  fillVBFHistograms("MET100200Cut");
+//        //    //  if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 10.)
+//        //    //  {
+//        //    //    fillVBFCutflow(6);
+//        //    //    fillVBFHistograms("MET100200LeadLepPtCut");
+//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11)
+//        //    //    {
+//        //    //      fillVBFHistograms("MET100200ElPlusCut");
+//        //    //    }
+//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11)
+//        //    //    {
+//        //    //      fillVBFHistograms("MET100200ElMinusCut");
+//        //    //    }
+//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13)
+//        //    //    {
+//        //    //      fillVBFHistograms("MET100200MuPlusCut");
+//        //    //    }
+//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+//        //    //    {
+//        //    //      fillVBFHistograms("MET100200MuMinusCut");
+//        //    //    }
+//        //    //  }
+//        //    //}
+//
+//        //    //// 200 - 300 MET bin
+//        //    //if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getMETp4().Pt() <= 300.)
+//        //    //{
+//        //    //  fillVBFCutflow(7);
+//        //    //  fillVBFHistograms("MET200300Cut");
+//        //    //  if (VBFSUSYUtilities::getMTleadLep() < 50.)
+//        //    //  {
+//        //    //    fillVBFCutflow(6);
+//        //    //    fillVBFHistograms("MET200300MTCut");
+//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
+//        //    //    {
+//        //    //      fillVBFCutflow(6);
+//        //    //      fillVBFHistograms("MET200300LeadLepPtCut");
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET200300ElPlusCut");
+//        //    //      }
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET200300ElMinusCut");
+//        //    //      }
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET200300MuPlusCut");
+//        //    //      }
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET200300MuMinusCut");
+//        //    //      }
+//        //    //    }
+//        //    //  }
+//        //    //}
+//
+//        //    //// 300 - inf MET bin
+//        //    //if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
+//        //    //{
+//        //    //  fillVBFCutflow(8);
+//        //    //  fillVBFHistograms("MET300infCut");
+//        //    //  if (VBFSUSYUtilities::getMTleadLep() < 50.)
+//        //    //  {
+//        //    //    fillVBFCutflow(6);
+//        //    //    fillVBFHistograms("MET300infMTCut");
+//        //    //    if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 15.)
+//        //    //    {
+//        //    //      fillVBFCutflow(6);
+//        //    //      fillVBFHistograms("MET300infLeadLepPtCut");
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-11 && nbtag < 1)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET300infElPlusCut");
+//        //    //      }
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 11 && nbtag < 1)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET300infElMinusCut");
+//        //    //      }
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==-13 && nbtag < 2)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET300infMuPlusCut");
+//        //    //      }
+//        //    //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13 && nbtag < 2)
+//        //    //      {
+//        //    //        fillVBFHistograms("MET300infMuMinusCut");
+//        //    //      }
+//        //    //    }
+//        //    //  }
+//        //    //}
+//        //  }
+//
+//      //// 2 soft lepton case
+//      //if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 2)
+//      //{
+//      //  fillVBFCutflow(9);
+//      //  fillVBFHistograms("TwoLepCut");
+//      //  if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+//      //  {
+//      //    fillVBFCutflow(10);
+//      //    fillVBFHistograms("TwoLepBVetoCut");
+//      //    if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+//      //    {
+//      //      fillVBFCutflow(10);
+//      //      fillVBFHistograms("TwoLepDEtajjCut");
+//      //      // 100 - 200 MET bin
+//      //      if (VBFSUSYUtilities::getMETp4().Pt() > 100. && VBFSUSYUtilities::getMETp4().Pt() <= 200.)
+//      //      {
+//      //        fillVBFCutflow(5);
+//      //        fillVBFHistograms("TwoLepMET100200Cut");
+//      //        //	            if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 10.)
+//      //        //	            {
+//      //        //	              fillVBFCutflow(6);
+//      //        //	              fillVBFHistograms("MET100200LeadLepPtCut");
+//      //        //	            }
+//      //      }
+//
+//      //      // 200 - 300 MET bin
+//      //      if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+//      //      {
+//      //        fillVBFCutflow(7);
+//      //        fillVBFHistograms("TwoLepMET200infCut");
+//      //        //	            if (VBFSUSYUtilities::getMTleadLep() < 50.)
+//      //        //	            {
+//      //        //	              fillVBFCutflow(6);
+//      //        //	              fillVBFHistograms("MET200300MTCut");
+//      //        //	            }
+//      //      }
+//
+//      //    }
+//      //  }
+//      //}
+//
+//      //if (VBFSUSYUtilities::getNBTaggedJetsWithCSVCut(0.46) == 0)
+//      //{
+//      //  fillVBFCutflow(2);
+//      //  fillVBFHistograms("NBJetCut");
+//      //  if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+//      //  {
+//      //    fillVBFCutflow(3);
+//      //    fillVBFHistograms("NSoftLepCut");
+//      //    if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == 13)
+//      //    {
+//      //      fillVBFCutflow(4);
+//      //      fillVBFHistograms("MuonCut");
+//      //      if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pt < 20.)
+//      //      {
+//      //        fillVBFCutflow(5);
+//      //        fillVBFHistograms("LeadPtCut");
+//      //        if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+//      //        {
+//      //          fillVBFCutflow(6);
+//      //          fillVBFHistograms("METCut");
+//      //          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+//      //          {
+//      //            fillVBFCutflow(7);
+//      //            fillVBFHistograms("DEtajjCut");
+//      //            if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+//      //            {
+//      //              fillVBFCutflow(8);
+//      //              fillVBFHistograms("SubleadJetPtCut");
+//      //              if (VBFSUSYUtilities::getMTleadLep() < 50.)
+//      //              {
+//      //                fillVBFCutflow(9);
+//      //                fillVBFHistograms("MTCut");
+//      //                if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+//      //                {
+//      //                  fillVBFCutflow(10);
+//      //                  fillVBFHistograms("MjjCut");
+//      //                }
+//      //              }
+//      //            }
+//      //          }
+//      //        }
+//      //        else
+//      //        {
+//      //          fillVBFCutflow(11);
+//      //          fillVBFHistograms("LowMETCut");
+//      //          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+//      //          {
+//      //            fillVBFCutflow(12);
+//      //            fillVBFHistograms("DEtajjCut");
+//      //          //  if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+//      //          //  {
+//      //          //    fillVBFCutflow(13);
+//      //          //    fillVBFHistograms("SubleadJetPtCut");
+//      //          //    if (VBFSUSYUtilities::getMTleadLep() < 50.)
+//      //          //    {
+//      //          //      fillVBFCutflow(14);
+//      //          //      fillVBFHistograms("MTCut");
+//      //          //      if (VBFSUSYUtilities::getVBFMjj() > 1400.)
+//      //          //      {
+//      //          //        fillVBFCutflow(15);
+//      //          //        fillVBFHistograms("MjjCut");
+//      //          //      }
+//      //          //    }
+//      //          //  }
+//      //          }
+//      //        }
+//      //      }
+//      //    }
+//      //  }
+//      //}

@@ -1867,6 +1867,27 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    float getSuperPtRelNoWgt()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      float dphi_lep_met   = fabs(lep.DeltaPhi(met));
+      float dphi_lep_dijet = fabs(lep.DeltaPhi((jet0+jet1)));
+      float dphi_lep_jet0  = fabs(lep.DeltaPhi(jet0));
+      float dphi_lep_jet1  = fabs(lep.DeltaPhi(jet1));
+      float w_dphi_lep_met   = (1-cos(dphi_lep_met)  );
+      float w_dphi_lep_dijet = (1+cos(dphi_lep_dijet));
+      float w_dphi_lep_jet0  = (1+cos(dphi_lep_jet0) );
+      float w_dphi_lep_jet1  = (1+cos(dphi_lep_jet1) );
+      float w_total = w_dphi_lep_met + w_dphi_lep_dijet + w_dphi_lep_jet0 + w_dphi_lep_jet1;
+      return lep.Pt() * w_total;
+    }
+
+    //################################################################################################
     float getProdPtRel()
     {
       checkOneLepton(__FUNCTION__);
@@ -1922,6 +1943,15 @@ namespace AnalysisUtilities
       //float mt = sqrt(2 * getLeadLepPtRel() * getLeadLepMETRel() * ( 1 - cos( getDPhiLepMET() ) ));
       float mt = getLeadLepMETRel() / getLeadLepPtRel();
       return mt;
+    }
+
+    //################################################################################################
+    float getHT()
+    {
+      float ht = 0;
+      for (auto& jet: selected_good_jets)
+        ht += jet.p4.Pt();
+      return ht;
     }
 
     //################################################################################################
