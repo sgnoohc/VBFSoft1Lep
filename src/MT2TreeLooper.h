@@ -165,6 +165,7 @@ namespace Vbf {
   extern TString histname_vbf_dphijj;
   extern TString histname_vbf_cenjetpt;
   extern TString histname_vbf_leadleppt;
+  extern TString histname_vbf_leadlepeta;
   extern TString histname_vbf_met;
   extern TString histname_vbf_leadjetpt;
   extern TString histname_vbf_subljetpt;

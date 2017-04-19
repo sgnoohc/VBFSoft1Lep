@@ -54,6 +54,7 @@ namespace Vbf {
   TString histname_vbf_dphijj           = "vbf_dphijj";
   TString histname_vbf_cenjetpt         = "vbf_cenjetpt";
   TString histname_vbf_leadleppt        = "vbf_leadleppt";
+  TString histname_vbf_leadlepeta       = "vbf_leadlepeta";
   TString histname_vbf_met              = "vbf_met";
   TString histname_vbf_leadjetpt        = "vbf_leadjetpt";
   TString histname_vbf_subljetpt        = "vbf_subljetpt";
@@ -829,6 +830,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphijj          , 180,    0.    ,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetpt        , 180,  -30.    ,   150.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadleppt       , 180,    0.    ,    35.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadlepeta      , 180,   -3.    ,     3.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met             , 180,    0.    ,   450.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_leadjetpt       , 180,    0.    ,   350.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_subljetpt       , 180,    0.    ,   150.    );
@@ -986,6 +988,7 @@ void fillVBFHistograms(TString cutprefix_)
       if (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0)
       {
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadleppt       , VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt()  );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_leadlepeta      , VBFSUSYUtilities::getLeadingGoodLepton().p4.Eta() );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepcent         , VBFSUSYUtilities::getLeptonCentrality()           );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mt              , VBFSUSYUtilities::getMTleadLep()                  );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_modmt           , VBFSUSYUtilities::getModMTleadLep()               );
