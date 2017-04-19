@@ -1819,6 +1819,27 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    float getSuperPtRel()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      float dphi_lep_met   = fabs(lep.DeltaPhi(met));
+      float dphi_lep_dijet = fabs(lep.DeltaPhi((jet0+jet1)));
+      float dphi_lep_jet0  = fabs(lep.DeltaPhi(jet0));
+      float dphi_lep_jet1  = fabs(lep.DeltaPhi(jet1));
+      float w_dphi_lep_met   = 1.7 * (1-cos(dphi_lep_met)  );
+      float w_dphi_lep_dijet = 1.5 * (1+cos(dphi_lep_dijet));
+      float w_dphi_lep_jet0  = 1.4 * (1+cos(dphi_lep_jet0) );
+      float w_dphi_lep_jet1  = 1.0 * (1+cos(dphi_lep_jet1) );
+      float w_total = w_dphi_lep_met + w_dphi_lep_dijet + w_dphi_lep_jet0 + w_dphi_lep_jet1;
+      return lep.Pt() * w_total;
+    }
+
+    //################################################################################################
     float getMETRel(Lepton lepton)
     {
       TLorentzVector lep = lepton.p4;

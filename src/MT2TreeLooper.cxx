@@ -90,6 +90,7 @@ namespace Vbf {
   TString histname_vbf_dphilepmetwframe = "vbf_dphilepmetwframe";
   TString histname_vbf_dptjet           = "vbf_dptjet";
   TString histname_vbf_ptrel            = "vbf_ptrel";
+  TString histname_vbf_superptrel       = "vbf_superptrel";
   TString histname_vbf_metrel           = "vbf_metrel";
   TString histname_vbf_mtrel            = "vbf_mtrel";
   TString histname_vbf_cenjetdr         = "vbf_cenjetdr";
@@ -1120,6 +1121,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   //bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetwframe, 180,    0.    ,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dptjet          , 180,    0.    ,    300.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptrel           , 180,    0.    ,     30.   );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_superptrel      , 180,    0.    ,     30.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180, -200.    ,    600.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtrel           , 180,  -50.    ,    200. );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetdr        , 180,    0.    ,      9.   );
@@ -1261,6 +1263,7 @@ void fillVBFHistograms(TString cutprefix_)
         //fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmetwframe, VBFSUSYUtilities::getDPhiLepMETWFrame()           );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dptjet          , VBFSUSYUtilities::getDPtJet()                     );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ptrel           , VBFSUSYUtilities::getLeadLepPtRel()               );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_superptrel      , VBFSUSYUtilities::getSuperPtRel()                 );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_metrel          , VBFSUSYUtilities::getLeadLepMETRel()              );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mtrel           , VBFSUSYUtilities::getMTRel()                      );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_cenjetdr        , VBFSUSYUtilities::getMinDRLeadCenJet()            );
