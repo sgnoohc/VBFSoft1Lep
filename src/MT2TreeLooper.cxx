@@ -791,7 +791,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("MTCut");
-  /bookVBFHistogramsWithPrefix("MET300infCut");
+  bookVBFHistogramsWithPrefix("MET300infCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
   //bookVBFHistogramsWithPrefix("EPCut");
