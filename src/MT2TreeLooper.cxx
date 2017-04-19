@@ -751,6 +751,11 @@ void doVBFAnalysis()
               {
                 fillVBFCutflow(__COUNTER__);
                 fillVBFHistograms("MTCut");
+                if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
+                {
+                  fillVBFCutflow(__COUNTER__);
+                  fillVBFHistograms("LeadPtCut");
+                }
               }
             }
           }
@@ -781,7 +786,6 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("MTCut");
-  bookVBFHistogramsWithPrefix("MET300infCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
   //bookVBFHistogramsWithPrefix("EPCut");
