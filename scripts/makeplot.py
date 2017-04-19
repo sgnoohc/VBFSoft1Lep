@@ -791,7 +791,8 @@ class HistogramPainter:
                     if index == 0:
                         row_string += '%30s,,,'%y
                     else:
-                        row_string += '%10.1f,'%y + u"\u00B1" + ', %10.1f, '%e
+                        #row_string += '%10.1f,'%y + u"\u00B1" + ', %10.1f, '%e
+                        row_string += '%10.1f,'%y + "+-" + ', %10.1f, '%e
                 row_string += '\n'
                 cutflow_file.write(row_string)
                 index += 1

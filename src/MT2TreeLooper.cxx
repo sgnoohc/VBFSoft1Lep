@@ -755,6 +755,11 @@ void doVBFAnalysis()
                 {
                   fillVBFCutflow(__COUNTER__);
                   fillVBFHistograms("LeadPtCut");
+                  if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
+                  {
+                    fillVBFCutflow(__COUNTER__);
+                    fillVBFHistograms("MET300infCut");
+                  }
                 }
               }
             }
@@ -786,6 +791,7 @@ void bookVBFHistograms()
   bookVBFHistogramsWithPrefix("LeadPtCut");
   bookVBFHistogramsWithPrefix("NBJetCut");
   bookVBFHistogramsWithPrefix("MTCut");
+  /bookVBFHistogramsWithPrefix("MET300infCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
   //bookVBFHistogramsWithPrefix("EPCut");
@@ -811,7 +817,6 @@ void bookVBFHistograms()
   //bookVBFHistogramsWithPrefix("MET200300MuPlusCut");
   //bookVBFHistogramsWithPrefix("MET200300ElMinusCut");
   //bookVBFHistogramsWithPrefix("MET200300MuMinusCut");
-  //bookVBFHistogramsWithPrefix("MET300infCut");
   //bookVBFHistogramsWithPrefix("MET300infMTCut");
   //bookVBFHistogramsWithPrefix("MET300infLeadLepPtCut");
   //bookVBFHistogramsWithPrefix("MET300infElPlusCut");
