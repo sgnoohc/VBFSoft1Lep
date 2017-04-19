@@ -1681,6 +1681,33 @@ namespace AnalysisUtilities
     }
 
     //################################################################################################
+    float getDPhiLeadJetMetLep()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkOneJet(__FUNCTION__);
+      TLorentzVector jetmet = getLeadingVBFJet().p4 + getMETp4();
+      return fabs(jetmet.DeltaPhi(getLeadingGoodLepton().p4));
+    }
+
+    //################################################################################################
+    float getDPhiSubleadJetMetLep()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector jetmet = getSubleadingVBFJet().p4 + getMETp4();
+      return fabs(jetmet.DeltaPhi(getLeadingGoodLepton().p4));
+    }
+
+    //################################################################################################
+    float getDPhiDiJetMetLep()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector tristate = getLeadingVBFJet().p4 + getSubleadingVBFJet().p4 + getMETp4();
+      return fabs(tristate.DeltaPhi(getLeadingGoodLepton().p4));
+    }
+
+    //################################################################################################
     // get met phi centrality wrt to jets
     //
     float getMETPhiCent()
@@ -1836,6 +1863,27 @@ namespace AnalysisUtilities
       float w_dphi_lep_jet0  = 1.4 * (1+cos(dphi_lep_jet0) );
       float w_dphi_lep_jet1  = 1.0 * (1+cos(dphi_lep_jet1) );
       float w_total = w_dphi_lep_met + w_dphi_lep_dijet + w_dphi_lep_jet0 + w_dphi_lep_jet1;
+      return lep.Pt() * w_total;
+    }
+
+    //################################################################################################
+    float getProdPtRel()
+    {
+      checkOneLepton(__FUNCTION__);
+      checkTwoJets(__FUNCTION__);
+      TLorentzVector lep = getLeadingGoodLepton().p4;
+      TLorentzVector met = getMETp4();
+      TLorentzVector jet0 = getLeadingVBFJet().p4;
+      TLorentzVector jet1 = getSubleadingVBFJet().p4;
+      float dphi_lep_met   = fabs(lep.DeltaPhi(met));
+      float dphi_lep_dijet = fabs(lep.DeltaPhi((jet0+jet1)));
+      float dphi_lep_jet0  = fabs(lep.DeltaPhi(jet0));
+      float dphi_lep_jet1  = fabs(lep.DeltaPhi(jet1));
+      float w_dphi_lep_met   = 1.7 * (1-cos(dphi_lep_met)  );
+      float w_dphi_lep_dijet = 1.5 * (1+cos(dphi_lep_dijet));
+      float w_dphi_lep_jet0  = 1.4 * (1+cos(dphi_lep_jet0) );
+      float w_dphi_lep_jet1  = 1.0 * (1+cos(dphi_lep_jet1) );
+      float w_total = w_dphi_lep_met * w_dphi_lep_dijet * w_dphi_lep_jet0 * w_dphi_lep_jet1;
       return lep.Pt() * w_total;
     }
 
