@@ -1120,8 +1120,8 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   //bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphilepmetwframe, 180,    0.    ,     3.1416);
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dptjet          , 180,    0.    ,    300.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_ptrel           , 180,    0.    ,     30.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180, -400.    ,    400.   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtrel           , 180, -400.    ,    400. );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_metrel          , 180, -200.    ,    600.   );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtrel           , 180,  -50.    ,    200. );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_cenjetdr        , 180,    0.    ,      9.   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mll             , 180,    0.    ,    30.0   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dphill          , 180,    0.    ,     3.1416);
