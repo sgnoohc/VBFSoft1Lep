@@ -24,6 +24,9 @@ int determine_nbins(TH1F* hist)
 
   TString histname = hist->GetName();
 
+  if (hist->GetNbinsX() != 180)
+    return hist->GetNbinsX();
+
   for (unsigned int iconf = 0; iconf < possible_bins.size(); ++iconf)
   {
     TH1F* clonedhist = (TH1F*) hist->Clone();

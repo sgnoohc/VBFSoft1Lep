@@ -1091,7 +1091,7 @@ int getMultiBinIndex()
   // if any of them don't fall into the bin return -1
   if (met_bin_idx < 0 || mjj_bin_idx < 0 || lpt_bin_idx < 0) return -1;
 
-  return 1 * lpt_bin_idx + 3 * met_bin_idx + 9 * mjj_bin_idx;
+  return 1 * met_bin_idx + 3 * lpt_bin_idx + 9 * mjj_bin_idx;
   //return 1 * lpt_bin_idx + 3 * met_bin_idx;
 
 }
