@@ -1072,20 +1072,17 @@ int getMultiBinIndex()
   // Mjj [500 , 1000 , 1500 , inf]
   // lPt [  5 ,   10 ,   20 ,  30]
 
-  if      (met >  200) met_bin_idx =  0;
-  else if (met >  300) met_bin_idx =  1;
-  else if (met >  400) met_bin_idx =  2;
-  else                 met_bin_idx = -1;
+  if      (met <  300) met_bin_idx =  0;
+  else if (met <  400) met_bin_idx =  1;
+  else                 met_bin_idx =  2;
 
-  if      (mjj >  500) mjj_bin_idx =  0;
-  else if (mjj > 1000) mjj_bin_idx =  1;
-  else if (mjj > 1500) mjj_bin_idx =  2;
-  else                 mjj_bin_idx = -1;
+  if      (mjj < 1000) mjj_bin_idx =  0;
+  else if (mjj < 1500) mjj_bin_idx =  1;
+  else                 mjj_bin_idx =  2;
 
-  if      (lpt >    5) lpt_bin_idx =  0;
-  else if (lpt >   10) lpt_bin_idx =  1;
-  else if (lpt >   20) lpt_bin_idx =  2;
-  else if (lpt >   30) lpt_bin_idx = -1;
+  if      (lpt <   10) lpt_bin_idx =  0;
+  else if (lpt >   20) lpt_bin_idx =  1;
+  else if (lpt <   30) lpt_bin_idx =  2;
   else                 lpt_bin_idx = -1;
 
   // if any of them don't fall into the bin return -1
