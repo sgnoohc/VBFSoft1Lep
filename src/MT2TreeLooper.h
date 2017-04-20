@@ -94,7 +94,7 @@ void fillVBFHistogram(TString name, float val, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
 int getMultiBinIndex();
-void fillMultiBin();
+void fillMultiBin(TString cutname);
 
 //=============================================================================
 // truth level VBF analysis (mostly to understand signal sample)

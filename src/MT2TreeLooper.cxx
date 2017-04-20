@@ -1040,7 +1040,7 @@ void fillVBFHistograms(TString cutprefix_)
           else PrintUtilities::error("two lepton events were not categorized correctly. Check your leptons");
         }
 
-        fillMultiBin();
+        fillMultiBin(cutprefix);
 
       }
     }
@@ -1096,10 +1096,10 @@ int getMultiBinIndex()
 }
 
 //______________________________________________________________________________________
-void fillMultiBin()
+void fillMultiBin(TString cutname)
 {
-  TString name = "";
-  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(Vbf::histname_vbf_multibin);
+  TString name = cutname + "_" + Vbf::histname_vbf_multibin;
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(name);
   PlotUtil::plot1D(name.Data(), getMultiBinIndex(), Vbf::evt_scale1fb, Vbf::h_vbf_1d);
 }
 

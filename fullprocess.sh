@@ -38,6 +38,8 @@ fi
 
 # plotting
 root -l -b -q scripts/print_plotting_job_commands.C | tail -n+3 > scripts/bulk_plot_jobs.txt
+echo "DONE!"
+echo 
 #rm -rf plots
 #rm -rf ~/public_html/dump/plots_${1}_${TAG}
 #mkdir -p plots
