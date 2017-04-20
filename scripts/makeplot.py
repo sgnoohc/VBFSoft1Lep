@@ -631,6 +631,24 @@ class HistogramPainter:
         self.draw_sig_scan()
         self.canvassaver.save_canvas(canvas)
 
+    # Draw standard 1d plot + significance scan
+    def draw_standard_1d_with_individ_sigscan(self):
+        splitx = int(self.args.canvas_def.split(self.args.delimiter_canvas_def)[0].split(',')[0]) # hard code
+        splity = int(self.args.canvas_def.split(self.args.delimiter_canvas_def)[0].split(',')[1]) # hard code
+        if splity != 2:
+            #print 'override canvas def'
+            self.args.canvas_def = '1,2:0-0.3-1-1-0.1-0.30-0.02-0.20:0-0-1-0.3-0.05-0.30-0.2-0.20'
+        if float(self.args.canvas_size_x) / float(self.args.canvas_size_y) > 1:
+            print 'override canvas ratio since canvas x-size is longer than y-size'
+            self.args.canvas_size_x = 800
+            self.args.canvas_size_y = 700
+        canvas = self.canvasfactory.get_canvas()
+        canvas.cd(1)
+        self.draw_standard_1d_on_current_pad()
+        canvas.cd(2).SetGridy()
+        self.draw_individ_sig_scan()
+        self.canvassaver.save_canvas(canvas)
+
     # Draw standard 1d plot on current pad (bkg-stacked, signal, data)
     def draw_standard_1d_on_current_pad(self):
 
@@ -1127,6 +1145,100 @@ class HistogramPainter:
                 ratio.Draw('epsame')
         self.canvassaver.save_canvas(canvas)
 
+    def draw_individ_sig_scan(self):
+
+        option = "s/sqrt(b)"
+
+        stacked, bkghists = self.histmanager.get_background_stacked_histograms()
+        self.objs.append(stacked)
+        self.objs.append(bkghists)
+        sighists = self.histmanager.get_signal_histograms()
+        self.objs.append(sighists)
+        #self.objs.append(datahist)
+        bkghist = None
+        if len(bkghists) != 0:
+            bkghist = self.histmanager.get_summed_histograms(bkghists)
+        else:
+            print 'asked for a sig scan but not bkg hists exist'
+        self.objs.append(bkghist)
+        sig_scan_individ_hists = []
+        sig_scan_lower_hists = []
+        sig_scan_upper_hists = []
+        hists = []
+        hists.append(bkghist)
+        hists += sighists
+        for index, hist in enumerate(hists):
+            if index == 0:
+                continue
+            sig_scan_individ_hists.append(hist.Clone())
+            sig_scan_lower_hists.append(hist.Clone())
+            sig_scan_upper_hists.append(hist.Clone())
+
+        for index, sig_scan_individ_hist in enumerate(sig_scan_individ_hists):
+            sighist = sighists[index]
+            sig_scan_individ_hist.Reset()
+            for i in xrange(1, bkghist.GetNbinsX()+1):
+                # Individual significance
+                passed_sig = sighist.GetBinContent(i)
+                passed_bkg = bkghist.GetBinContent(i)
+                signif = 0
+                if passed_bkg > 0:
+                    signif = passed_sig / math.sqrt(passed_bkg)
+                sig_scan_individ_hist.SetBinContent(i,signif)
+
+        for index, sig_scan_lower_hist in enumerate(sig_scan_lower_hists):
+            sighist = sighists[index]
+            sigindividhist = sig_scan_individ_hists[index]
+            sig_scan_lower_hist.Reset()
+            for i in xrange(1, bkghist.GetNbinsX()+1):
+                # aggregate Individual significance
+                total_sig = 0
+                for j in xrange(1, i+1):
+                    signif = sigindividhist.GetBinContent(j)
+                    total_sig = math.sqrt(total_sig*total_sig + signif*signif)
+                sig_scan_lower_hist.SetBinContent(i,total_sig)
+
+        for index, sig_scan_upper_hist in enumerate(sig_scan_upper_hists):
+            sighist = sighists[index]
+            sigindividhist = sig_scan_individ_hists[index]
+            sig_scan_upper_hist.Reset()
+            sig_scan_upper_hist.SetLineStyle(2)
+            for i in xrange(1, bkghist.GetNbinsX()+1):
+                # aggregate Individual significance
+                total_sig = 0
+                for j in xrange(i, bkghist.GetNbinsX()+1):
+                    signif = sigindividhist.GetBinContent(j)
+                    total_sig = math.sqrt(total_sig*total_sig + signif*signif)
+                sig_scan_upper_hist.SetBinContent(i,total_sig)
+
+        globalmax = 0
+        for index, sig_scan_lower_hist in enumerate(sig_scan_lower_hists):
+            localmax = sig_scan_lower_hist.GetMaximum()
+            if localmax > globalmax:
+                globalmax = localmax
+            if index == 0:
+                sig_scan_lower_hist.Draw('hist')
+                #sig_scan_lower_hist.SetMaximum(2.0)
+                sig_scan_lower_hist.SetMinimum(0.0)
+                self.histmanager.set_histaxis_settings(sig_scan_lower_hist, 2.0)
+                self.histmanager.set_histaxis_labels(sig_scan_lower_hist)
+                sig_scan_lower_hist.GetYaxis().SetTitle('s/sqrt(b)')
+            else:
+                sig_scan_lower_hist.Draw('histsame')
+            self.objs.append(sig_scan_lower_hist)
+
+        for index, sig_scan_upper_hist in enumerate(sig_scan_upper_hists):
+            localmax = sig_scan_upper_hist.GetMaximum()
+            if localmax > globalmax:
+                globalmax = localmax
+            if index == 0:
+                sig_scan_upper_hist.Draw('histsame')
+            else:
+                sig_scan_upper_hist.Draw('histsame')
+            self.objs.append(sig_scan_upper_hist)
+        sig_scan_lower_hists[0].SetMaximum(globalmax*1.1)
+
+
     # draw data over background
     def draw_sig_scan(self):
 
@@ -1305,4 +1417,5 @@ if __name__ == '__main__':
     if args.plottype == 'plot1dratio' : histpainter.draw_standard_1d_with_ratio()
     if args.plottype == 'ratio1d'     : histpainter.draw_ratio_1d()
     if args.plottype == 'plot1dsig'   : histpainter.draw_standard_1d_with_sigscan()
+    if args.plottype == 'plot1dindsig': histpainter.draw_standard_1d_with_individ_sigscan()
 
