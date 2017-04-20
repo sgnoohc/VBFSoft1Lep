@@ -877,7 +877,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sublleppt       , 180,    0.    ,    20.0   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dilepchannel    ,   4,    0.    ,     4.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtt             , 180,    0.    ,    60.0   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,  27,    0.    ,    27.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,  18,    0.    ,    18.    );
 
   //std::vector<TString> channels;
   //channels.push_back("eplus");
@@ -1077,8 +1077,9 @@ int getMultiBinIndex()
   else                 met_bin_idx =  2;
 
   if      (mjj < 1000) mjj_bin_idx =  0;
-  else if (mjj < 1500) mjj_bin_idx =  1;
-  else                 mjj_bin_idx =  2;
+  else                 mjj_bin_idx =  1;
+  //else if (mjj < 1500) mjj_bin_idx =  1;
+  //else                 mjj_bin_idx =  2;
 
   if      (lpt <   10) lpt_bin_idx =  0;
   else if (lpt <   20) lpt_bin_idx =  1;
@@ -1088,7 +1089,7 @@ int getMultiBinIndex()
   // if any of them don't fall into the bin return -1
   if (met_bin_idx < 0 || mjj_bin_idx < 0 || lpt_bin_idx < 0) return -1;
 
-  return 1 * lpt_bin_idx + 3 * mjj_bin_idx + 9 * met_bin_idx;
+  return 1 * lpt_bin_idx + 3 * mjj_bin_idx + 6 * met_bin_idx;
   //return 1 * lpt_bin_idx + 3 * met_bin_idx;
 
 }
