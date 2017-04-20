@@ -877,7 +877,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sublleppt       , 180,    0.    ,    20.0   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dilepchannel    ,   4,    0.    ,     4.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtt             , 180,    0.    ,    60.0   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,  18,    0.    ,    18.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,   9,    0.    ,     9.    );
 
   //std::vector<TString> channels;
   //channels.push_back("eplus");
@@ -1091,7 +1091,7 @@ int getMultiBinIndex()
   // if any of them don't fall into the bin return -1
   if (met_bin_idx < 0 || mjj_bin_idx < 0 || lpt_bin_idx < 0) return -1;
 
-  return 1 * met_bin_idx + 3 * lpt_bin_idx + 9 * mjj_bin_idx;
+  return 1 * met_bin_idx + 3 * lpt_bin_idx;
   //return 1 * lpt_bin_idx + 3 * met_bin_idx;
 
 }
