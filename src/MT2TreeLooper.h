@@ -93,6 +93,9 @@ void fillVBFHistograms(TString cutprefix = "");
 void fillVBFHistogram(TString name, float val, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
+int getMultiBinIndex();
+void fillMultiBin();
+
 //=============================================================================
 // truth level VBF analysis (mostly to understand signal sample)
 //=============================================================================
@@ -218,6 +221,7 @@ namespace Vbf {
   extern TString histname_vbf_sublleppt;
   extern TString histname_vbf_dilepchannel;
   extern TString histname_vbf_mtt;
+  extern TString histname_vbf_multibin;
 
 }
 

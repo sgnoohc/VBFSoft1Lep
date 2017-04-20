@@ -107,6 +107,7 @@ namespace Vbf {
   TString histname_vbf_sublleppt    = "vbf_sublleppt";
   TString histname_vbf_dilepchannel = "vbf_dilepchannel";
   TString histname_vbf_mtt          = "vbf_mtt";
+  TString histname_vbf_multibin     = "vbf_multibin";
 
   // mll bin
   float mllbin[5] = {5., 10., 20., 30., 50.};
@@ -743,25 +744,10 @@ void doVBFAnalysis()
           {
             fillVBFCutflow(__COUNTER__);
             fillVBFHistograms("OneLepCut");
-            if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
+            if (VBFSUSYUtilities::getMTleadLep() < 40.)
             {
               fillVBFCutflow(__COUNTER__);
-              fillVBFHistograms("METCut");
-              if (VBFSUSYUtilities::getMTleadLep() < 40.)
-              {
-                fillVBFCutflow(__COUNTER__);
-                fillVBFHistograms("MTCut");
-                if (VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt() < 12.)
-                {
-                  fillVBFCutflow(__COUNTER__);
-                  fillVBFHistograms("LeadPtCut");
-                  if (VBFSUSYUtilities::getMETp4().Pt() > 300.)
-                  {
-                    fillVBFCutflow(__COUNTER__);
-                    fillVBFHistograms("MET300infCut");
-                  }
-                }
-              }
+              fillVBFHistograms("MTCut");
             }
           }
         }
@@ -891,6 +877,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sublleppt       , 180,    0.    ,    20.0   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dilepchannel    ,   4,    0.    ,     4.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtt             , 180,    0.    ,    60.0   );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,  27,    0.    ,    27.    );
 
   //std::vector<TString> channels;
   //channels.push_back("eplus");
@@ -1052,10 +1039,68 @@ void fillVBFHistograms(TString cutprefix_)
           else if (leadid * sublid == -169) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dilepchannel, 3);
           else PrintUtilities::error("two lepton events were not categorized correctly. Check your leptons");
         }
+
+        fillMultiBin();
+
       }
     }
   //}
 
+}
+
+//______________________________________________________________________________________
+int getMultiBinIndex()
+{
+  // if no lepton skip
+  if (VBFSUSYUtilities::getNSelectedGoodLeptons() < 1)
+    return -1;
+
+  // if no two jets skip
+  if (VBFSUSYUtilities::getNSelectedGoodJets() < 2)
+    return -1;
+
+  int met_bin_idx = -1;
+  int mjj_bin_idx = -1;
+  int lpt_bin_idx = -1;
+
+  float met = VBFSUSYUtilities::getMETp4().Pt();
+  float mjj = VBFSUSYUtilities::getVBFMjj();
+  float lpt = VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt();
+
+  // TODO: generalize the function
+  // MET [200 ,  300 ,  400 , inf]
+  // Mjj [500 , 1000 , 1500 , inf]
+  // lPt [  5 ,   10 ,   20 ,  30]
+
+  if      (met >  200) met_bin_idx =  0;
+  else if (met >  300) met_bin_idx =  1;
+  else if (met >  400) met_bin_idx =  2;
+  else                 met_bin_idx = -1;
+
+  if      (mjj >  500) mjj_bin_idx =  0;
+  else if (mjj > 1000) mjj_bin_idx =  1;
+  else if (mjj > 1500) mjj_bin_idx =  2;
+  else                 mjj_bin_idx = -1;
+
+  if      (lpt >    5) lpt_bin_idx =  0;
+  else if (lpt >   10) lpt_bin_idx =  1;
+  else if (lpt >   20) lpt_bin_idx =  2;
+  else if (lpt >   30) lpt_bin_idx = -1;
+  else                 lpt_bin_idx = -1;
+
+  // if any of them don't fall into the bin return -1
+  if (met_bin_idx < 0 || mjj_bin_idx < 0 || lpt_bin_idx < 0) return -1;
+
+  return 1 * lpt_bin_idx + 3 * mjj_bin_idx + 9 * met_bin_idx;
+
+}
+
+//______________________________________________________________________________________
+void fillMultiBin()
+{
+  TString name = "";
+  if (Vbf::is_signal) name = VBFSUSYUtilities::getSignalSuffix(Vbf::histname_vbf_multibin);
+  PlotUtil::plot1D(name.Data(), getMultiBinIndex(), Vbf::evt_scale1fb, Vbf::h_vbf_1d);
 }
 
 //______________________________________________________________________________________

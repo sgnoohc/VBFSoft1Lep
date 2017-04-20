@@ -30,17 +30,18 @@ if [ "x$2" == "x" ]; then
   make clean; make -j4
   rm output/*
   sh scripts/xargs_run.sh
-  sh scripts/hadd.sh
+  mkdir -p haddoutput
+  sh scripts/xargs.sh scripts/haddjob.txt
   cp -r haddoutput archive/haddoutput_${1}_${TAG}
   cp src/MT2TreeLooper.cxx archive/haddoutput_${1}_${TAG}
 fi
 
 # plotting
 root -l -b -q scripts/print_plotting_job_commands.C | tail -n+3 > scripts/bulk_plot_jobs.txt
-rm -rf plots
-rm -rf ~/public_html/dump/plots_${1}_${TAG}
-mkdir -p plots
-sh scripts/xargs_plot.sh
-cp src/MT2TreeLooper.cxx plots/
-yes | niceplots plots plots_${1}_${TAG}
-chmod 755 -R ~/public_html/dump/plots_${1}_${TAG}
+#rm -rf plots
+#rm -rf ~/public_html/dump/plots_${1}_${TAG}
+#mkdir -p plots
+#sh scripts/xargs_plot.sh
+#cp src/MT2TreeLooper.cxx plots/
+#yes | niceplots plots plots_${1}_${TAG}
+#chmod 755 -R ~/public_html/dump/plots_${1}_${TAG}
