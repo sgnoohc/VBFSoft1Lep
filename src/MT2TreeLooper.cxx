@@ -877,7 +877,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_sublleppt       , 180,    0.    ,    20.0   );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_dilepchannel    ,   4,    0.    ,     4.    );
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_mtt             , 180,    0.    ,    60.0   );
-  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,   9,    0.    ,     9.    );
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_multibin        ,  27,    0.    ,    27.    );
 
   //std::vector<TString> channels;
   //channels.push_back("eplus");
