@@ -743,7 +743,7 @@ void doVBFAnalysis()
           {
             fillVBFCutflow(__COUNTER__);
             fillVBFHistograms("OneLepCut");
-            if (VBFSUSYUtilities::getMETp4().Pt() > 125.)
+            if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
             {
               fillVBFCutflow(__COUNTER__);
               fillVBFHistograms("METCut");
@@ -1004,8 +1004,8 @@ void fillVBFHistograms(TString cutprefix_)
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj0            , VBFSUSYUtilities::getLeadMlj()                    );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_mlj1            , VBFSUSYUtilities::getSubleadMlj()                 );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_summlj          , VBFSUSYUtilities::getSumMlj()                     );
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht              , Vbf::mt2tree.ht                                   );
-        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio      , Vbf::mt2tree.met_pt / Vbf::mt2tree.ht             );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_ht              , VBFSUSYUtilities::getHT()                         );
+        fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_methtratio      , Vbf::mt2tree.met_pt / VBFSUSYUtilities::getHT()   );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_dphilepmet      , VBFSUSYUtilities::getDPhiLepMET()                 );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sumpt           , VBFSUSYUtilities::getVecSumPt()                   );
         fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_sumptall        , VBFSUSYUtilities::getVecSumPtAll()                );
