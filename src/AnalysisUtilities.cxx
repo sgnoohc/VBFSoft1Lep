@@ -2028,23 +2028,61 @@ namespace AnalysisUtilities
     void checkTwoLeptons(TString function) { checkNLeptons(2, function); }
 
     //################################################################################################
+    //
+    void printTruth(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi)
+    {
+
+      // debug print
+      int idx = 0;
+      for (int igen = 0; igen < ngen; ++igen)
+      {
+
+        float my_genPart_pt      = gen_pt[igen];
+        float my_genPart_eta     = gen_eta[igen];
+        float my_genPart_phi     = gen_phi[igen];
+        float my_genPart_mass    = gen_mass[igen];
+        int my_genPart_pdgId     = gen_pdgId[igen];
+        int my_genPart_status    = 0;
+        int my_genPart_motherId  = gen_sourceId[igen];
+        int my_genPart_motherIdx = 0;
+
+        if (my_genPart_pdgId == 1000022)
+          continue;
+
+        printf("%5d = %5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
+            idx,
+            igen,
+            my_genPart_pdgId,
+            my_genPart_status,
+            my_genPart_pt,
+            my_genPart_eta,
+            my_genPart_phi,
+            my_genPart_mass,
+            my_genPart_motherIdx,
+            my_genPart_motherId);
+        idx++;
+      }
+
+    }
+
+    //################################################################################################
     // return if the correction was "successful"
     // if not, return false and reject the event
     //
-    bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi)
+    bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, bool binary_random)
     {
 
       // if both are N2, skip
-      if (gen_pdgId[2] == 1000023 && gen_pdgId[3] == 1000023)
-        return false;
+      //if (gen_pdgId[2] == 1000023 && gen_pdgId[3] == 1000023)
+      //  return false;
 
-      // if both are C1, accept as is
-      if (gen_pdgId[2] == 1000024 && gen_pdgId[3] == 1000024)
-        return true;
+      //// if both are C1, choose one to randomly remove
+      //if (gen_pdgId[2] == 1000024 && gen_pdgId[3] == 1000024)
+      //  return ;
 
       // if either of the produced susy does not have N2 skip
-      if (gen_pdgId[2] != 1000023 && gen_pdgId[3] != 1000023)
-        return false;
+      //if (gen_pdgId[2] != 1000023 && gen_pdgId[3] != 1000023)
+      //  return false;
 
       //  0 *        -3 *      2212 *
       //  1 *        21 *      2212 *
@@ -2078,120 +2116,108 @@ namespace AnalysisUtilities
           gen_idx.push_back(igen);
       }
 
-      // debug print
-      //for (int igen = 0; igen < ngen; ++igen)
-      //{
+      // find out which mode this is
+      enum {
+        kC1N2 = 0,
+        kN2N1 = 1,
+        kC1C1 = 2,
+        kC1N1 = 3,
+        kN2N2 = 4,
+      };
+      int prod_mode = -1;
 
-      //  float my_genPart_pt      = gen_pt[igen];
-      //  float my_genPart_eta     = gen_eta[igen];
-      //  float my_genPart_phi     = gen_phi[igen];
-      //  float my_genPart_mass    = gen_mass[igen];
-      //  int my_genPart_pdgId     = gen_pdgId[igen];
-      //  int my_genPart_status    = 0;
-      //  int my_genPart_motherId  = gen_sourceId[igen];
-      //  int my_genPart_motherIdx = 0;
+      int ewkino0_pdgId_unsorted = abs(gen_pdgId[2]);
+      int ewkino1_pdgId_unsorted = abs(gen_pdgId[3]);
+      int ewkino0_pdgId = ewkino0_pdgId_unsorted > ewkino1_pdgId_unsorted ? ewkino0_pdgId_unsorted : ewkino1_pdgId_unsorted;
+      int ewkino1_pdgId = ewkino0_pdgId_unsorted > ewkino1_pdgId_unsorted ? ewkino1_pdgId_unsorted : ewkino0_pdgId_unsorted;
 
-      //  if (my_genPart_pdgId == 1000022)
-      //    continue;
+      if (ewkino0_pdgId == 1000024 && ewkino1_pdgId == 1000024) prod_mode = kC1C1;
+      if (ewkino0_pdgId == 1000024 && ewkino1_pdgId == 1000023) prod_mode = kC1N2;
+      if (ewkino0_pdgId == 1000024 && ewkino1_pdgId == 1000022) prod_mode = kC1N1;
+      if (ewkino0_pdgId == 1000023 && ewkino1_pdgId == 1000022) prod_mode = kN2N1;
+      if (ewkino0_pdgId == 1000023 && ewkino1_pdgId == 1000023) prod_mode = kN2N2;
 
-      //  printf("%5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
-      //      igen,
-      //      my_genPart_pdgId,
-      //      my_genPart_status,
-      //      my_genPart_pt,
-      //      my_genPart_eta,
-      //      my_genPart_phi,
-      //      my_genPart_mass,
-      //      my_genPart_motherIdx,
-      //      my_genPart_motherId);
-      //}
+      int ewkino_pdgId_to_remove = 0;
 
-      std::vector<int> lep_to_rm_idx;
-
-      // add if from N2 directly
-      if (gen_sourceId[gen_idx[ 7]] == 1000023 && (abs(gen_pdgId[gen_idx[ 7]]) == 11 || abs(gen_pdgId[gen_idx[ 7]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[ 7]);
-      if (gen_sourceId[gen_idx[ 9]] == 1000023 && (abs(gen_pdgId[gen_idx[ 9]]) == 11 || abs(gen_pdgId[gen_idx[ 9]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[ 9]);
-      if (gen_sourceId[gen_idx[10]] == 1000023 && (abs(gen_pdgId[gen_idx[10]]) == 11 || abs(gen_pdgId[gen_idx[10]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[10]);
-      if (gen_sourceId[gen_idx[11]] == 1000023 && (abs(gen_pdgId[gen_idx[11]]) == 11 || abs(gen_pdgId[gen_idx[11]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[11]);
-
-      if (lep_to_rm_idx.size() == 0)
+      switch (prod_mode)
       {
-        TString msg = TString::Format("VBFSUSYUtilities::correctN2() got zero lepton from N2. This is very weird");
-        // debug print
-        for (int igen = 0; igen < ngen; ++igen)
-        {
+        // total two e/mu in the event, remove randomly one (the random number will be Vbf::mt2tree.evt%2)
+        case kC1C1:
+          ewkino_pdgId_to_remove = 1000024;
+          break;
+        // total three e/mu in the event, remove corresponding to N2
+        case kC1N2:
+          ewkino_pdgId_to_remove = 1000023;
+          break;
+        // Just skip for now this is harder to deal with
+        case kN2N2: return false; break;
+        // Don't remove anything and exit.
+        case kC1N1: return true; break;
+        // total two e/mu in the event, accept as is.
+        case kN2N1: return true; break;
+      }
 
-          float my_genPart_pt      = gen_pt[igen];
-          float my_genPart_eta     = gen_eta[igen];
-          float my_genPart_phi     = gen_phi[igen];
-          float my_genPart_mass    = gen_mass[igen];
-          int my_genPart_pdgId     = gen_pdgId[igen];
-          int my_genPart_status    = 0;
-          int my_genPart_motherId  = gen_sourceId[igen];
-          int my_genPart_motherIdx = 0;
-
-          //if (my_genPart_pdgId == 1000022)
-          //  continue;
-
-          printf("%5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
-              igen,
-              my_genPart_pdgId,
-              my_genPart_status,
-              my_genPart_pt,
-              my_genPart_eta,
-              my_genPart_phi,
-              my_genPart_mass,
-              my_genPart_motherIdx,
-              my_genPart_motherId);
-        }
-
+      if (ewkino_pdgId_to_remove == 0)
+      {
+        printTruth(ngen, gen_pdgId, gen_sourceId, gen_mass, gen_pt, gen_eta, gen_phi);
+        TString msg = TString::Format("VBFSUSYUtilities::correctN2() got no Ewkino decays to remove from the event. The function shouldn't reach this point. check the code.");
         PrintUtilities::error(msg);
       }
 
-      int pdgid_N2_derived_susy = 0;
+      std::vector<int> lep_to_rm_idx;
 
-      if (gen_sourceId[gen_idx[6]] == 1000023) pdgid_N2_derived_susy = gen_pdgId[gen_idx[6]];
-      if (gen_sourceId[gen_idx[8]] == 1000023) pdgid_N2_derived_susy = gen_pdgId[gen_idx[8]];
+      // add if from N2/C1 directly and is to be removed
+      if (abs(gen_sourceId[gen_idx[ 7]]) == ewkino_pdgId_to_remove && (abs(gen_pdgId[gen_idx[ 7]]) == 11 || abs(gen_pdgId[gen_idx[ 7]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[ 7]);
+      if (abs(gen_sourceId[gen_idx[ 9]]) == ewkino_pdgId_to_remove && (abs(gen_pdgId[gen_idx[ 9]]) == 11 || abs(gen_pdgId[gen_idx[ 9]]) == 13) ) lep_to_rm_idx.push_back(gen_idx[ 9]);
 
-      if (pdgid_N2_derived_susy == 0)
+      int pdgid_ewkino_derived_susy = 0;
+      if (abs(gen_sourceId[gen_idx[6]]) == ewkino_pdgId_to_remove) pdgid_ewkino_derived_susy = gen_pdgId[gen_idx[6]];
+      if (abs(gen_sourceId[gen_idx[8]]) == ewkino_pdgId_to_remove) pdgid_ewkino_derived_susy = gen_pdgId[gen_idx[8]];
+
+      if (pdgid_ewkino_derived_susy == 0)
       {
-        // debug print
-        for (int igen = 0; igen < ngen; ++igen)
-        {
-
-          float my_genPart_pt      = gen_pt[igen];
-          float my_genPart_eta     = gen_eta[igen];
-          float my_genPart_phi     = gen_phi[igen];
-          float my_genPart_mass    = gen_mass[igen];
-          int my_genPart_pdgId     = gen_pdgId[igen];
-          int my_genPart_status    = 0;
-          int my_genPart_motherId  = gen_sourceId[igen];
-          int my_genPart_motherIdx = 0;
-
-          //if (my_genPart_pdgId == 1000022)
-          //  continue;
-
-          printf("%5d: %10d %4d %6.2f %6.2f %6.2f %6.2f  <-- %5d : %10d\n",
-              igen,
-              my_genPart_pdgId,
-              my_genPart_status,
-              my_genPart_pt,
-              my_genPart_eta,
-              my_genPart_phi,
-              my_genPart_mass,
-              my_genPart_motherIdx,
-              my_genPart_motherId);
-        }
-
+        printTruth(ngen, gen_pdgId, gen_sourceId, gen_mass, gen_pt, gen_eta, gen_phi);
         TString msg = TString::Format("VBFSUSYUtilities::correctN2() got zero slepton from N2. This is very weird");
         PrintUtilities::error(msg);
       }
 
       // add if from the derived SUSY particle from N2
-      if (gen_sourceId[gen_idx[ 7]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[ 7]);
-      if (gen_sourceId[gen_idx[ 9]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[ 9]);
-      if (gen_sourceId[gen_idx[10]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[10]);
-      if (gen_sourceId[gen_idx[11]] == pdgid_N2_derived_susy) lep_to_rm_idx.push_back(gen_idx[11]);
+      if (prod_mode == kC1N2)
+      {
+        if (gen_sourceId[gen_idx[10]] == pdgid_ewkino_derived_susy && (abs(gen_pdgId[gen_idx[11]]) == 11 || abs(gen_pdgId[gen_idx[11]]) == 13)) lep_to_rm_idx.push_back(gen_idx[10]);
+        if (gen_sourceId[gen_idx[11]] == pdgid_ewkino_derived_susy && (abs(gen_pdgId[gen_idx[11]]) == 11 || abs(gen_pdgId[gen_idx[11]]) == 13)) lep_to_rm_idx.push_back(gen_idx[11]);
+      }
+      // add if C1C1 mode, there will always be two 11 or 13, so just add them all
+      else if (prod_mode == kC1C1)
+      {
+        if (abs(gen_pdgId[gen_idx[10]]) == 11 || abs(gen_pdgId[gen_idx[10]]) == 13) lep_to_rm_idx.push_back(gen_idx[10]);
+        if (abs(gen_pdgId[gen_idx[11]]) == 11 || abs(gen_pdgId[gen_idx[11]]) == 13) lep_to_rm_idx.push_back(gen_idx[11]);
+      }
+
+      if (lep_to_rm_idx.size() == 0)
+      {
+        printTruth(ngen, gen_pdgId, gen_sourceId, gen_mass, gen_pt, gen_eta, gen_phi);
+        TString msg = TString::Format("VBFSUSYUtilities::correctN2() got zero lepton to remove from N2 or C1. This is very weird");
+        PrintUtilities::error(msg);
+      }
+
+      if (prod_mode == kC1N2 && lep_to_rm_idx.size() == 3)
+        return false;
+
+      if (lep_to_rm_idx.size() != 2)
+      {
+        printTruth(ngen, gen_pdgId, gen_sourceId, gen_mass, gen_pt, gen_eta, gen_phi);
+        TString msg = TString::Format("VBFSUSYUtilities::correctN2() got %d leptons to remove from prod mode = %d This is very weird", (int) lep_to_rm_idx.size(), prod_mode);
+        PrintUtilities::error(msg);
+      }
+
+      if (prod_mode == kC1C1)
+      {
+        if (binary_random)
+          lep_to_rm_idx.erase(lep_to_rm_idx.begin());
+        else
+          lep_to_rm_idx.erase(lep_to_rm_idx.begin()+1);
+      }
 
       std::vector<TLorentzVector> lep_to_rm;
       for (unsigned int ilep_to_rm_idx = 0; ilep_to_rm_idx < lep_to_rm_idx.size(); ++ilep_to_rm_idx)

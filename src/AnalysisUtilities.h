@@ -249,7 +249,8 @@ namespace AnalysisUtilities
     void selectISRLeptons(Leptons leptons);
     int getNSelectedISRLeptons();
 
-    bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi);
+    void printTruth(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi);
+    bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, bool binary_random);
 
     //
     // Jet variables

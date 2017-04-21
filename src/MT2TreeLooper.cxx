@@ -264,7 +264,7 @@ void processMT2TreeEvent()
   selectObjects();
 
   // Correct N2 for signal samples (if returned false, move on to next event)
-  //if (!correctN2()) return;
+  if (!correctN2()) return;
 
   //// if both are N2, skip
   //if (Vbf::mt2tree.genStat23_pdgId[2] == 1000023 && Vbf::mt2tree.genStat23_pdgId[3] == 1000023)
@@ -448,7 +448,8 @@ bool correctN2()
                                             Vbf::mt2tree.genStat23_mass,
                                             Vbf::mt2tree.genStat23_pt,
                                             Vbf::mt2tree.genStat23_eta,
-                                            Vbf::mt2tree.genStat23_phi);
+                                            Vbf::mt2tree.genStat23_phi,
+                                            Vbf::mt2tree.evt%2);
     //std::cout << "after " << VBFSUSYUtilities::getNSelectedGoodLeptons() << " " << VBFSUSYUtilities::getMETp4().Pt() << " " << VBFSUSYUtilities::getMETp4().Phi()<< std::endl;
     return res;
   }
@@ -723,31 +724,36 @@ void doVBFAnalysis()
   if (Vbf::is_signal)
     bookVBFHistograms();
 
-  if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+  if (true)
   {
     fillVBFCutflow(__COUNTER__);
-    fillVBFHistograms("PreselCut");
-    if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+    fillVBFHistograms("NoCut");
+    if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
     {
       fillVBFCutflow(__COUNTER__);
-      fillVBFHistograms("NJetCut");
-      if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+      fillVBFHistograms("PreselCut");
+      if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
       {
         fillVBFCutflow(__COUNTER__);
-        fillVBFHistograms("SubleadJetPtCut");
-        if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+        fillVBFHistograms("NJetCut");
+        if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
         {
           fillVBFCutflow(__COUNTER__);
-          fillVBFHistograms("DEtajjCut");
-          // 1 lepton case
-          if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
+          fillVBFHistograms("SubleadJetPtCut");
+          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
           {
             fillVBFCutflow(__COUNTER__);
-            fillVBFHistograms("OneLepCut");
-            if (VBFSUSYUtilities::getMTleadLep() < 40.)
+            fillVBFHistograms("DEtajjCut");
+            // 1 lepton case
+            if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
             {
               fillVBFCutflow(__COUNTER__);
-              fillVBFHistograms("MTCut");
+              fillVBFHistograms("OneLepCut");
+              if (VBFSUSYUtilities::getMTleadLep() < 40.)
+              {
+                fillVBFCutflow(__COUNTER__);
+                fillVBFHistograms("MTCut");
+              }
             }
           }
         }
@@ -766,6 +772,7 @@ void bookVBFHistograms()
   if (alreadyprocessed) return;
   bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  cutflow_nbin,    0.,   cutflow_nbin);
   // Book histograms
+  bookVBFHistogramsWithPrefix("NoCut");
   bookVBFHistogramsWithPrefix("PreselCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");

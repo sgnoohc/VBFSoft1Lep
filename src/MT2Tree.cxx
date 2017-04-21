@@ -62,7 +62,7 @@ void MT2Tree::Init(TTree *tree)
    fChain ->SetBranchStatus("*",0);
    fChain ->SetBranchStatus("run"                                            , 0); fChain ->SetBranchAddress("run"                                            , &run                                            , &b_run);
    fChain ->SetBranchStatus("lumi"                                           , 0); fChain ->SetBranchAddress("lumi"                                           , &lumi                                           , &b_lumi);
-   fChain ->SetBranchStatus("evt"                                            , 0); fChain ->SetBranchAddress("evt"                                            , &evt                                            , &b_evt);
+   fChain ->SetBranchStatus("evt"                                            , 1); fChain ->SetBranchAddress("evt"                                            , &evt                                            , &b_evt);
    fChain ->SetBranchStatus("isData"                                         , 0); fChain ->SetBranchAddress("isData"                                         , &isData                                         , &b_isData);
    fChain ->SetBranchStatus("evt_scale1fb"                                   , 1); fChain ->SetBranchAddress("evt_scale1fb"                                   , &evt_scale1fb                                   , &b_evt_scale1fb);
    fChain ->SetBranchStatus("evt_xsec"                                       , 0); fChain ->SetBranchAddress("evt_xsec"                                       , &evt_xsec                                       , &b_evt_xsec);
