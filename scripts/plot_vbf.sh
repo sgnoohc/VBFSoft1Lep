@@ -19,6 +19,9 @@ function usage()
   exit
 }
 
+if [ "x$1" == "x" ]; then usage; fi
+if [ "x$2" == "x" ]; then usage; fi
+
 # parse the third option to decide whether to draw a plot with only the shape comparison. (each histogram scaled to unity or something alike)
 if [ "x$3" == "x" ]; then
   #SIGSCALE="36*13.2*0.04"
@@ -60,16 +63,16 @@ MASSPOINTLEGEND="100"
 # parse whether it is for vbf analysis or not
 BKG1="w"
 BKG2="nolep"
-BKG3="ewkw_vv"
-BKG4="dyll"
-BKG5="tt"
-BKG6="top"
+BKG3="top"
+BKG4="tt"
+BKG5="dyll"
+BKG6="ewkw_vv"
 BKGLEGEND1="W"
 BKGLEGEND2="Fakes(0l)"
-BKGLEGEND3="EWK-W/VV"
-BKGLEGEND4="DY(2l)"
-BKGLEGEND5="Top(2l)"
-BKGLEGEND6="Top(1l)"
+BKGLEGEND3="Top(1l)"
+BKGLEGEND4="Top(2l)"
+BKGLEGEND5="DY(2l)"
+BKGLEGEND6="EWK-W/VV"
 
 if [[ "$1" == *"cutflow"* ]]; then
   PLOTTYPE=plot1d

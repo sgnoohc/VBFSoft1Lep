@@ -723,10 +723,10 @@ void doVBFAnalysis()
   if (Vbf::is_signal)
     bookVBFHistograms();
 
-  if (true)
+  if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
   {
     fillVBFCutflow(__COUNTER__);
-    fillVBFHistograms("NoCut");
+    fillVBFHistograms("PreselCut");
     if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
     {
       fillVBFCutflow(__COUNTER__);
@@ -766,18 +766,18 @@ void bookVBFHistograms()
   if (alreadyprocessed) return;
   bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  cutflow_nbin,    0.,   cutflow_nbin);
   // Book histograms
-  bookVBFHistogramsWithPrefix("NoCut");
+  bookVBFHistogramsWithPrefix("PreselCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");
   bookVBFHistogramsWithPrefix("OneLepCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("METCut");
-  bookVBFHistogramsWithPrefix("MMCut");
-  bookVBFHistogramsWithPrefix("ModMTCut");
-  bookVBFHistogramsWithPrefix("LeadPtCut");
-  bookVBFHistogramsWithPrefix("NBJetCut");
-  bookVBFHistogramsWithPrefix("MTCut");
-  bookVBFHistogramsWithPrefix("MET300infCut");
+  //bookVBFHistogramsWithPrefix("MMCut");
+  //bookVBFHistogramsWithPrefix("ModMTCut");
+  //bookVBFHistogramsWithPrefix("LeadPtCut");
+  //bookVBFHistogramsWithPrefix("NBJetCut");
+  //bookVBFHistogramsWithPrefix("MTCut");
+  //bookVBFHistogramsWithPrefix("MET300infCut");
   //bookVBFHistogramsWithPrefix("MPCut");
   //bookVBFHistogramsWithPrefix("EMCut");
   //bookVBFHistogramsWithPrefix("EPCut");
@@ -1091,8 +1091,8 @@ int getMultiBinIndex()
   // if any of them don't fall into the bin return -1
   if (met_bin_idx < 0 || mjj_bin_idx < 0 || lpt_bin_idx < 0) return -1;
 
-  //return 1 * met_bin_idx + 3 * lpt_bin_idx;
-  return 1 * lpt_bin_idx + 3 * met_bin_idx;
+  return 1 * met_bin_idx + 3 * lpt_bin_idx;
+  //return 1 * lpt_bin_idx + 3 * met_bin_idx;
   //return 1 * lpt_bin_idx + 3 * met_bin_idx;
 
 }
