@@ -1120,8 +1120,8 @@ namespace AnalysisUtilities
     //
     TString getSignalSuffix(TString name)
     {
-      return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
-      //return (name + getMassSuffixTString()).Data();
+      //return (name + getProdSuffixTString() + getMassSuffixTString()).Data();
+      return (name + getMassSuffixTString()).Data();
     }
 
     //################################################################################################
