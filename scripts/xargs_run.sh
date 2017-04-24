@@ -12,9 +12,9 @@ mkdir -p output
 
 # filter some jobs
 if [ "x${1}" != "x" ]; then
-  cat scripts/jobs.txt | grep $1 > /tmp/jobs.txt
+  cat scripts/jobs.txt | grep $1 | grep -v \# > /tmp/jobs.txt
 else
-  cat scripts/jobs.txt > /tmp/jobs.txt
+  cat scripts/jobs.txt | grep -v \# > /tmp/jobs.txt
 fi
 
 # link input files if needed

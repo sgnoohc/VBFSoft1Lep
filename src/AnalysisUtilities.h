@@ -49,17 +49,25 @@ namespace AnalysisUtilities
   namespace PlotUtil
   {
     // Map to hold 1D histograms with unique names
-    typedef map<string, TH1*> Hist1D_DB;
+    typedef map<string, TH1*> Hist_DB;
 
     bool plot1D(
-        string name, float xval, double weight, Hist1D_DB &allhistos,
+        string name, float xval, double weight, Hist_DB &allhistos,
         string title, int numbinsx, float xmin, float xmax);
     bool plot1D(
-        string name, float xval, double weight, Hist1D_DB &allhistos,
+        string name, float xval, double weight, Hist_DB &allhistos,
         string title, int numbinsx, const float* xbins);
     void plot1D(
-        string name, float xval, double weight, Hist1D_DB &allhistos);
-    void savePlots(Hist1D_DB&, const char*);
+        string name, float xval, double weight, Hist_DB &allhistos);
+    bool plot2D(
+        string name, float xval, float yval, double weight, Hist_DB &allhistos,
+        string title, int numbinsx, float xmin, float xmax, int numbinsy, float ymin, float ymax);
+    bool plot2D(
+        string name, float xval, float yval, double weight, Hist_DB &allhistos,
+        string title, int numbinsx, const float* xbins, int numbinsy, const float* ybins);
+    void plot2D(
+        string name, float xval, float yval, double weight, Hist_DB &allhistos);
+    void savePlots(Hist_DB&, const char*);
   }
 
   //#################################################################################################
@@ -134,7 +142,7 @@ namespace AnalysisUtilities
   {
     void fillEffStudyHisto(
       string study_name,
-      PlotUtil::Hist1D_DB& h_1d,
+      PlotUtil::Hist_DB& h_1d,
       double probe_el_pt, double probe_el_eta, double probe_el_phi,
       double tag_el_pt  , double tag_el_eta  , double tag_el_phi  ,
       bool passIsoCleaning,

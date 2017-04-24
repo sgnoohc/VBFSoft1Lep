@@ -32,7 +32,7 @@ namespace AnalysisUtilities
         string name,
         float xval,
         double weight,
-        Hist1D_DB &allhistos,
+        Hist_DB &allhistos,
         string title,
         int numbinsx,
         float xmin,
@@ -98,7 +98,7 @@ namespace AnalysisUtilities
         string name,
         float xval,
         double weight,
-        Hist1D_DB &allhistos)
+        Hist_DB &allhistos)
     {
 
       //// Find whether a histogram with the name already exists
@@ -124,8 +124,112 @@ namespace AnalysisUtilities
 
     //################################################################################################
     // Plot 1D histogram. If a histogram doesn't exist book first and fill.
+    // if the histogram exists, return true
     //
-    void savePlots(Hist1D_DB &h_1d, const char* outfilename)
+    bool plot2D(
+        string name,
+        float xval,
+        float yval,
+        double weight,
+        Hist_DB &allhistos,
+        string title,
+        int numbinsx,
+        float xmin,
+        float xmax,
+        int numbinsy,
+        float ymin,
+        float ymax
+        )
+    {
+      // If no title given, set title to name
+      if (title == "") title = name;
+
+      // Find whether a histogram with the name already exists
+      map<string, TH1*>::iterator iter= allhistos.find(name);
+
+      // If the histogram is not found, make a new one
+      if(iter == allhistos.end())
+      {
+        TH2D* currentHisto= new TH2D(name.c_str(), title.c_str(), numbinsx, xmin, xmax, numbinsy, ymin, ymax);
+        currentHisto->Sumw2();
+        currentHisto->SetDirectory(0);
+        currentHisto->Fill(xval, yval, weight);
+        allhistos.insert(pair<string, TH1*> (name,currentHisto) );
+        return false;
+      }
+      // exists already, so just fill it
+      else
+      {
+        ((TH2D*) (*iter).second)->Fill(xval, yval, weight);
+        return true;
+      }
+    }
+
+    //################################################################################################
+    // Plot 1D histogram. If a histogram doesn't exist book first and fill. (with variable binning)
+    //
+    bool plot2D(string name, float xval, float yval, double weight, std::map<string, TH1*> &allhistos,
+        string title, int numbinsx, const float * xbins, int numbinsy, const float* ybins)
+    {
+      // If no title given, set title to name
+      if (title=="") title=name;
+
+      // Find whether a histogram with the name already exists
+      std::map<string, TH1*>::iterator iter= allhistos.find(name);
+
+      // If the histogram is not found, make a new one.
+      if(iter == allhistos.end())
+      {
+        TH2D* currentHisto= new TH2D(name.c_str(), title.c_str(), numbinsx, xbins, numbinsy, ybins);
+        currentHisto->Sumw2();
+        currentHisto->SetDirectory(0);
+        currentHisto->Fill(xval, yval, weight);
+        allhistos.insert(std::pair<string, TH1*> (name,currentHisto) );
+        return false;
+      }
+      else // exists already, so just fill it
+      {
+        ((TH2D*) (*iter).second)->Fill(xval, yval, weight);
+        return true;
+      }
+    }
+
+    //################################################################################################
+    // Plot 1D histogram. If a histogram doesn't exist throw an error
+    //
+    void plot2D(
+        string name,
+        float xval,
+        float yval,
+        double weight,
+        Hist_DB &allhistos)
+    {
+
+      //// Find whether a histogram with the name already exists
+      //map<string, TH1*>::iterator iter= allhistos.find(name);
+
+      //// If the histogram is not found, make a new one
+      //if (iter == allhistos.end())
+      //{
+      //  TString error_msg = TString::Format("PlotUtil::plot2D() trying to fill %s when it doesn't exist", name.c_str());
+      //  PrintUtilities::error(error_msg);
+      //}
+      //// exists already, so just fill it
+      //else
+      //{
+      //  (*iter).second->Fill(xval, weight);
+      //}
+
+
+      ((TH2D*) allhistos[name])->Fill(xval, yval, weight);
+
+      return;
+    }
+
+    //################################################################################################
+    // Plot 1D histogram. If a histogram doesn't exist book first and fill.
+    //
+    void savePlots(Hist_DB &h_1d, const char* outfilename)
     {
 
       // Create a TFile
@@ -135,7 +239,35 @@ namespace AnalysisUtilities
       printf("[AnalysisUtilities::PlotUtil::savePlots] Saving histograms to %s\n", outfilename);
 
       // Loop over the histograms
-      Hist1D_DB::iterator it1d;
+      Hist_DB::iterator it1d;
+      for (it1d = h_1d.begin(); it1d!=h_1d.end(); it1d++)
+      {
+        // save the histograms
+        it1d->second->Write();
+        delete it1d->second;
+      }
+
+      // Write to file and close
+      outfile.Write();
+      outfile.Close();
+
+      return;
+    }
+
+    //################################################################################################
+    // Plot 1D histogram. If a histogram doesn't exist book first and fill.
+    //
+    void savePlots2D(Hist_DB &h_1d, const char* outfilename)
+    {
+
+      // Create a TFile
+      TFile outfile(outfilename,"RECREATE") ;
+
+      // Print the info that I am saving to the file
+      printf("[AnalysisUtilities::PlotUtil::savePlots] Saving histograms to %s\n", outfilename);
+
+      // Loop over the histograms
+      Hist_DB::iterator it1d;
       for (it1d = h_1d.begin(); it1d!=h_1d.end(); it1d++)
       {
         // save the histograms
@@ -754,7 +886,7 @@ namespace AnalysisUtilities
     //
     void fillEffStudyHisto(
         string study_name,
-        PlotUtil::Hist1D_DB& h_1d,
+        PlotUtil::Hist_DB& h_1d,
         double probe_el_pt, double probe_el_eta, double probe_el_phi,
         double tag_el_pt  , double tag_el_eta  , double tag_el_phi  ,
         bool pass,

@@ -89,10 +89,13 @@ void bookVBFHistograms();
 void bookVBFHistogramsWithPrefix(TString cutprefix = "");
 bool bookVBFHistogram(TString name, int nbins, float min, float max);
 bool bookVBFHistogram(TString name, int nbins, const float* xbins);
+bool bookVBFHistogram(TString name, int nbins, float min, float max, int nbinsy, float ymin, float ymax);
+bool bookVBFHistogram(TString name, int nbins, const float* xbins, int nbinsy, const float* ybins);
 
 // Filling histograms
 void fillVBFHistograms(TString cutprefix = "");
 void fillVBFHistogram(TString name, float val, float wgt=-999);
+void fillVBFHistogram2D(TString name, float val, float yval, float wgt=-999);
 void fillVBFCutflow(int cutflowbin);
 
 int getMultiBinIndex();
@@ -133,11 +136,12 @@ namespace Vbf {
   extern bool is_signal;
   extern bool is_signal_tchiwz;
   extern TString output_name;
-  extern PlotUtil::Hist1D_DB h_isr_1d;
-  extern PlotUtil::Hist1D_DB h_vbf_1d;
-  extern PlotUtil::Hist1D_DB h_arxiv_1d;
-  extern PlotUtil::Hist1D_DB h_truth_1d;
-  extern PlotUtil::Hist1D_DB h_truthlepaccept_1d;
+  extern PlotUtil::Hist_DB h_isr_1d;
+  extern PlotUtil::Hist_DB h_vbf_1d;
+  extern PlotUtil::Hist_DB h_vbf_2d;
+  extern PlotUtil::Hist_DB h_arxiv_1d;
+  extern PlotUtil::Hist_DB h_truth_1d;
+  extern PlotUtil::Hist_DB h_truthlepaccept_1d;
 
   // Event data
   extern MT2Tree mt2tree;
@@ -232,6 +236,9 @@ namespace Vbf {
   extern TString histname_vbf_dilepchannel;
   extern TString histname_vbf_mtt;
   extern TString histname_vbf_multibin;
+
+  // 2d histogram
+  extern TString histname_vbf_met_v_dphilepmet;
 
 }
 

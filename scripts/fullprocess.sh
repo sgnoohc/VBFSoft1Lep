@@ -40,10 +40,10 @@ fi
 root -l -b -q scripts/print_plotting_job_commands.C | tail -n+3 > scripts/bulk_plot_jobs.txt
 echo "DONE!"
 echo ""
-rm -rf plots
-rm -rf ~/public_html/dump/plots_${1}_${TAG}
-mkdir -p plots
-sh scripts/xargs_plot.sh
-cp src/MT2TreeLooper.cxx plots/
-yes | niceplots plots plots_${1}_${TAG}
-chmod 755 -R ~/public_html/dump/plots_${1}_${TAG}
+#rm -rf plots
+#rm -rf ~/public_html/dump/plots_${1}_${TAG}
+#mkdir -p plots
+#sh scripts/xargs_plot.sh
+#cp src/MT2TreeLooper.cxx plots/
+#yes | niceplots plots plots_${1}_${TAG}
+#chmod 755 -R ~/public_html/dump/plots_${1}_${TAG}
