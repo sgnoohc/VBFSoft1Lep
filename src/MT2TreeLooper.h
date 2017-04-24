@@ -49,12 +49,14 @@ void loadMT2TreeEvent();
 // Read MT2Tree
 VBFSUSYUtilities::Leptons getLeptonsFromMT2Tree();
 VBFSUSYUtilities::Jets getJetsFromMT2Tree();
+VBFSUSYUtilities::Truths getTruthsFromMT2Tree();
 void parseEwkinoMasses();
 
 // Prep MT2Tree for analysis
 void selectObjects();
 void selectLeptons();
 void selectJets();
+void selectTruths();
 void setMET();
 void loadScale1fb();
 bool correctN2();
@@ -110,6 +112,12 @@ void truthVBFAnalysis();
 // The per event analysis module
 void computeAcceptanceWrtArxiv1502_05044();
 
+//=============================================================================
+// truth level VBF analysis (mostly to understand signal sample)
+//=============================================================================
+
+// The per event analysis module
+void truthTChiWZLeptonAcceptance();
 
 
 
@@ -123,11 +131,13 @@ namespace Vbf {
 
   // Analysis level variables
   extern bool is_signal;
+  extern bool is_signal_tchiwz;
   extern TString output_name;
   extern PlotUtil::Hist1D_DB h_isr_1d;
   extern PlotUtil::Hist1D_DB h_vbf_1d;
   extern PlotUtil::Hist1D_DB h_arxiv_1d;
   extern PlotUtil::Hist1D_DB h_truth_1d;
+  extern PlotUtil::Hist1D_DB h_truthlepaccept_1d;
 
   // Event data
   extern MT2Tree mt2tree;

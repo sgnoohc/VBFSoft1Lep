@@ -15,11 +15,13 @@ namespace Vbf {
 
   // Analysis level variables
   bool is_signal;
+  bool is_signal_tchiwz;
   TString output_name;
   PlotUtil::Hist1D_DB h_isr_1d;
   PlotUtil::Hist1D_DB h_vbf_1d;
   PlotUtil::Hist1D_DB h_arxiv_1d;
   PlotUtil::Hist1D_DB h_truth_1d;
+  PlotUtil::Hist1D_DB h_truthlepaccept_1d;
 
   // Event data
   MT2Tree mt2tree;
@@ -164,7 +166,9 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
   // by checking the output file name
   Vbf::is_signal = output_name.Contains("sig")
                 || output_name.Contains("higgsino")
+                || output_name.Contains("TChiWZ")
                 || output_name.Contains("VBF");
+  Vbf::is_signal_tchiwz = output_name.Contains("TChiWZ");
 
   // Set output name (outputs are "output_name"_blah.root)
   Vbf::output_name = output_name;
@@ -220,6 +224,7 @@ void afterLoop()
   PlotUtil::savePlots(Vbf::h_vbf_1d, Vbf::output_name+"_vbf.root");
   PlotUtil::savePlots(Vbf::h_arxiv_1d, Vbf::output_name+"_arxiv.root");
   PlotUtil::savePlots(Vbf::h_truth_1d, Vbf::output_name+"_truth.root");
+  PlotUtil::savePlots(Vbf::h_truthlepaccept_1d, Vbf::output_name+"_truth.root");
 
   // Fun exit
   PrintUtilities::exit();
@@ -315,6 +320,15 @@ void processMT2TreeEvent()
   //
   //===============================================================================================
   //computeAcceptanceWrtArxiv1502_05044();
+
+  //===============================================================================================
+  //
+  //
+  // compute lepton acceptance from TChiWZ truth
+  //
+  //
+  //===============================================================================================
+  //truthTChiWZLeptonAcceptance();
 
 }
 
@@ -421,6 +435,25 @@ VBFSUSYUtilities::Jets getJetsFromMT2Tree()
 }
 
 //______________________________________________________________________________________
+VBFSUSYUtilities::Truths getTruthsFromMT2Tree()
+{
+  VBFSUSYUtilities::Truths truths;
+  for (int igen = 0; igen < Vbf::mt2tree.ngenStat23; ++igen)
+  {
+    VBFSUSYUtilities::Truth truth;
+    truth.truth_pt            = Vbf::mt2tree.genStat23_pt[igen];
+    truth.truth_eta           = Vbf::mt2tree.genStat23_eta[igen];
+    truth.truth_phi           = Vbf::mt2tree.genStat23_phi[igen];
+    truth.truth_mass          = Vbf::mt2tree.genStat23_mass[igen];
+    truth.truth_pdgId         = Vbf::mt2tree.genStat23_pdgId[igen];
+    truth.truth_sourceId      = Vbf::mt2tree.genStat23_sourceId[igen];
+    truth.p4.SetPtEtaPhiM(truth.truth_pt, truth.truth_eta, truth.truth_phi, truth.truth_mass);
+    truths.push_back(truth);
+  }
+  return truths;
+}
+
+//______________________________________________________________________________________
 void parseEwkinoMasses()
 {
   // Parse the ewkino mass
@@ -439,7 +472,20 @@ void parseEwkinoMasses()
 //______________________________________________________________________________________
 bool correctN2()
 {
-  if (Vbf::is_signal)
+  if (Vbf::is_signal_tchiwz)
+  {
+    //std::cout << "before" << VBFSUSYUtilities::getNSelectedGoodLeptons() << " " << VBFSUSYUtilities::getMETp4().Pt() << " " << VBFSUSYUtilities::getMETp4().Phi()<< std::endl;
+    bool res =  VBFSUSYUtilities::correctTChiWZ_ZLLFilter(Vbf::mt2tree.ngenStat23,
+                                                          Vbf::mt2tree.genStat23_pdgId,
+                                                          Vbf::mt2tree.genStat23_sourceId,
+                                                          Vbf::mt2tree.genStat23_mass,
+                                                          Vbf::mt2tree.genStat23_pt,
+                                                          Vbf::mt2tree.genStat23_eta,
+                                                          Vbf::mt2tree.genStat23_phi);
+    //std::cout << "after " << VBFSUSYUtilities::getNSelectedGoodLeptons() << " " << VBFSUSYUtilities::getMETp4().Pt() << " " << VBFSUSYUtilities::getMETp4().Phi()<< std::endl;
+    return res;
+  }
+  else if (Vbf::is_signal)
   {
     //std::cout << "before" << VBFSUSYUtilities::getNSelectedGoodLeptons() << " " << VBFSUSYUtilities::getMETp4().Pt() << " " << VBFSUSYUtilities::getMETp4().Phi()<< std::endl;
     bool res =  VBFSUSYUtilities::correctN2(Vbf::mt2tree.ngenStat23,
@@ -462,6 +508,8 @@ void selectObjects()
   selectLeptons();
   selectJets();
   setMET();
+  if (Vbf::output_name.Contains("TChiWZ"))
+    selectTruths();
 }
 
 //______________________________________________________________________________________
@@ -482,6 +530,14 @@ void selectJets()
   VBFSUSYUtilities::Jets mt2tree_jets = getJetsFromMT2Tree();
   VBFSUSYUtilities::selectGoodJets(mt2tree_jets);
   VBFSUSYUtilities::selectGoodBJets(mt2tree_jets);
+}
+
+//______________________________________________________________________________________
+void selectTruths()
+{
+  // Select jets
+  VBFSUSYUtilities::Truths mt2tree_truths = getTruthsFromMT2Tree();
+  VBFSUSYUtilities::selectTruths(mt2tree_truths);
 }
 
 //______________________________________________________________________________________
@@ -728,31 +784,36 @@ void doVBFAnalysis()
   {
     fillVBFCutflow(__COUNTER__);
     fillVBFHistograms("NoCut");
-    if (VBFSUSYUtilities::getMETp4().Pt() > 200. && VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
+    if (VBFSUSYUtilities::getMETp4().Pt() > 200.)
     {
       fillVBFCutflow(__COUNTER__);
-      fillVBFHistograms("PreselCut");
-      if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
+      fillVBFHistograms("METCut");
+      if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() >= 1)
       {
         fillVBFCutflow(__COUNTER__);
-        fillVBFHistograms("NJetCut");
-        if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
+        fillVBFHistograms("OneLepInclCut");
+        if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
         {
           fillVBFCutflow(__COUNTER__);
-          fillVBFHistograms("SubleadJetPtCut");
-          if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+          fillVBFHistograms("OneLepCut");
+          if (VBFSUSYUtilities::getMTleadLep() < 40.)
           {
             fillVBFCutflow(__COUNTER__);
-            fillVBFHistograms("DEtajjCut");
-            // 1 lepton case
-            if (VBFSUSYUtilities::getNSelectedSoftGoodLeptons() == 1)
+            fillVBFHistograms("MTCut");
+            if (VBFSUSYUtilities::getNSelectedGoodJets() >= 2)
             {
               fillVBFCutflow(__COUNTER__);
-              fillVBFHistograms("OneLepCut");
-              if (VBFSUSYUtilities::getMTleadLep() < 40.)
+              fillVBFHistograms("NJetCut");
+              if (VBFSUSYUtilities::getSubleadingVBFJet().p4.Pt() > 50.)
               {
                 fillVBFCutflow(__COUNTER__);
-                fillVBFHistograms("MTCut");
+                fillVBFHistograms("SubleadJetPtCut");
+                if (VBFSUSYUtilities::getVBFDEtajj() > 3.8)
+                {
+                  fillVBFCutflow(__COUNTER__);
+                  fillVBFHistograms("DEtajjCut");
+                  // 1 lepton case
+                }
               }
             }
           }
@@ -773,13 +834,14 @@ void bookVBFHistograms()
   bookVBFHistogram(Vbf::histname_vbf_rawcutflow ,  cutflow_nbin,    0.,   cutflow_nbin);
   // Book histograms
   bookVBFHistogramsWithPrefix("NoCut");
+  bookVBFHistogramsWithPrefix("METCut");
+  bookVBFHistogramsWithPrefix("OneLepInclCut");
   bookVBFHistogramsWithPrefix("PreselCut");
   bookVBFHistogramsWithPrefix("NJetCut");
   bookVBFHistogramsWithPrefix("DEtajjCut");
   bookVBFHistogramsWithPrefix("OneLepCut");
   bookVBFHistogramsWithPrefix("SubleadJetPtCut");
   bookVBFHistogramsWithPrefix("MTCut");
-  //bookVBFHistogramsWithPrefix("METCut");
   //bookVBFHistogramsWithPrefix("MMCut");
   //bookVBFHistogramsWithPrefix("ModMTCut");
   //bookVBFHistogramsWithPrefix("LeadPtCut");
@@ -1137,7 +1199,7 @@ void fillVBFHistogram(TString name, float val, float wgt)
   if (wgt == -999)
     PlotUtil::plot1D(name.Data(), val, Vbf::evt_scale1fb, Vbf::h_vbf_1d);
   else
-    PlotUtil::plot1D(name.Data(), val, wgt, Vbf::h_vbf_1d);
+    PlotUtil::plot1D(name.Data(), val,               wgt, Vbf::h_vbf_1d);
 }
 
 //______________________________________________________________________________________
@@ -1268,6 +1330,82 @@ void truthVBFAnalysis()
 
   // fill by "production" mode
   PlotUtil::plot1D(histname_prodmode.Data(), VBFSUSYUtilities::getProductionMode(), 1, Vbf::h_truth_1d, histname_prodmode.Data(), 3, 0, 3);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//______________________________________________________________________________________
+//
+//
+//
+//
+// truth VBF analysis
+//
+//
+//
+//
+//______________________________________________________________________________________
+
+//______________________________________________________________________________________
+void truthTChiWZLeptonAcceptance()
+{
+
+  if (!Vbf::output_name.Contains("TChiWZ"))
+    return;
+
+  if (VBFSUSYUtilities::eventHasTaus(Vbf::mt2tree.ngenStat23, Vbf::mt2tree.genStat23_pdgId))
+    return;
+
+  VBFSUSYUtilities::Truths w_leptons = VBFSUSYUtilities::getWLeptons();
+  VBFSUSYUtilities::Truths z_leptons = VBFSUSYUtilities::getZLeptons();
+
+  if (w_leptons.size() > 1)
+  {
+    VBFSUSYUtilities::printTruth(Vbf::mt2tree.ngenStat23, Vbf::mt2tree.genStat23_pdgId, Vbf::mt2tree.genStat23_sourceId, Vbf::mt2tree.genStat23_mass, Vbf::mt2tree.genStat23_pt, Vbf::mt2tree.genStat23_eta, Vbf::mt2tree.genStat23_phi);
+    PrintUtilities::error("truthTChiWZLeptonAcceptance(): Found >1 leptons from W. somethings not right!");
+  }
+
+  for (auto& lep: w_leptons)
+    PlotUtil::plot1D("wleppt" , lep.truth_pt, 1 , Vbf::h_truthlepaccept_1d , "wleppt" , 180. , 0 , 50.);
+
+  if (z_leptons.size() != 2)
+  {
+    PrintUtilities::error("truthTChiWZLeptonAcceptance(): Found !=2 leptons from Z. somethings not right!");
+  }
+
+  float leadpt = z_leptons[0].truth_pt > z_leptons[1].truth_pt ? z_leptons[0].truth_pt : z_leptons[1].truth_pt;
+  float sublpt = z_leptons[0].truth_pt > z_leptons[1].truth_pt ? z_leptons[1].truth_pt : z_leptons[0].truth_pt;
+
+  PlotUtil::plot1D("zleppt"  , leadpt, 1 , Vbf::h_truthlepaccept_1d , "zleppt"  , 180. , 0 , 50.);
+  PlotUtil::plot1D("zleppt"  , sublpt, 1 , Vbf::h_truthlepaccept_1d , "zleppt"  , 180. , 0 , 50.);
+  PlotUtil::plot1D("zleppt0" , leadpt, 1 , Vbf::h_truthlepaccept_1d , "zleppt0" , 180. , 0 , 50.);
+  PlotUtil::plot1D("zleppt1" , sublpt, 1 , Vbf::h_truthlepaccept_1d , "zleppt1" , 180. , 0 , 50.);
 
 }
 

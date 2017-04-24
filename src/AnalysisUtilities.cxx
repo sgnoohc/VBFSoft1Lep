@@ -853,6 +853,11 @@ namespace AnalysisUtilities
     Leptons selected_isr_leptons;
     Jets    selected_good_jets;
     Jets    selected_good_bjets;
+    Truths selected_ewkinos;
+    Truths selected_lsps;
+    Truths selected_z_leptons;
+    Truths selected_w_leptons;
+    Truths selected_leptons;
 
     float met_pt;
     float met_phi;
@@ -1058,8 +1063,8 @@ namespace AnalysisUtilities
       if ( !(lepton.lep_pt >= 5.) ) fail |= true;
       if ( (abs(lepton.lep_pdgId) == 11) && !( (fabs(lepton.lep_eta) < 2.5)       ) ) fail |= true;
       if ( (abs(lepton.lep_pdgId) == 13) && !( (fabs(lepton.lep_eta) < 2.4)       ) ) fail |= true;
-      if ( (abs(lepton.lep_pdgId) == 11) && !( (lepton.lep_tightId > ELECTRON_ID) ) ) fail |= true;
-      if ( (abs(lepton.lep_pdgId) == 13) && !( (lepton.lep_tightId > MUON_ID)     ) ) fail |= true;
+      //if ( (abs(lepton.lep_pdgId) == 11) && !( (lepton.lep_tightId > ELECTRON_ID) ) ) fail |= true;
+      //if ( (abs(lepton.lep_pdgId) == 13) && !( (lepton.lep_tightId > MUON_ID)     ) ) fail |= true;
       if ( !( fabs(lepton.lep_sip3d) < 2.                                         ) ) fail |= true;
       if ( !( fabs(lepton.lep_dxy)   < 0.01                                       ) ) fail |= true;
       if ( !( fabs(lepton.lep_dz)    < 0.01                                       ) ) fail |= true;
@@ -1272,6 +1277,83 @@ namespace AnalysisUtilities
       for (auto& jet: jets)
         if (isGoodBJet(jet))
           addGoodBJet(jet);
+    }
+
+    //################################################################################################
+    void resetSelectedTruths()
+    {
+      selected_ewkinos.clear();
+      selected_lsps.clear();
+      selected_leptons.clear();
+      selected_w_leptons.clear();
+      selected_z_leptons.clear();
+    }
+
+    //################################################################################################
+    bool isWLepton(Truth truth)
+    {
+      if (abs(truth.truth_pdgId) == 11 || abs(truth.truth_pdgId) == 13)
+        if (abs(truth.truth_sourceId) == 24)
+          return true;
+      return false;
+    }
+
+    //################################################################################################
+    void addWLepton(Truth truth)
+    {
+      selected_w_leptons.push_back(truth);
+      addLepton(truth);
+    }
+
+    //################################################################################################
+    bool isZLepton(Truth truth)
+    {
+      if (abs(truth.truth_pdgId) == 11 || abs(truth.truth_pdgId) == 13)
+        if (abs(truth.truth_sourceId) == 23)
+          return true;
+      return false;
+    }
+
+    //################################################################################################
+    void addZLepton(Truth truth)
+    {
+      selected_z_leptons.push_back(truth);
+      addLepton(truth);
+    }
+
+    //################################################################################################
+    void addLepton(Truth truth)
+    {
+      selected_leptons.push_back(truth);
+    }
+
+    //################################################################################################
+    Truths getWLeptons()
+    {
+      return selected_w_leptons;
+    }
+
+    //################################################################################################
+    Truths getZLeptons()
+    {
+      return selected_z_leptons;
+    }
+
+    //################################################################################################
+    Truths getLeptons()
+    {
+      return selected_leptons;
+    }
+
+    //################################################################################################
+    void selectTruths(Truths truths)
+    {
+      resetSelectedTruths();
+      for (auto& truth: truths)
+        if (isWLepton(truth))
+          addWLepton(truth);
+        else if (isZLepton(truth))
+          addZLepton(truth);
     }
 
     //################################################################################################
@@ -2061,7 +2143,117 @@ namespace AnalysisUtilities
             my_genPart_motherIdx,
             my_genPart_motherId);
         idx++;
+
       }
+
+    }
+
+    //################################################################################################
+    bool eventHasTaus(int ngen, int* gen_pdgId)
+    {
+      for (int igen = 0; igen < ngen; ++igen)
+        if (abs(gen_pdgId[igen]) == 15)
+          return true;
+      return false;
+    }
+
+    //################################################################################################
+    // return if the correction was "successful"
+    // if not, return false and reject the event
+    //
+    bool correctTChiWZ_ZLLFilter(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, bool binary_random)
+    {
+
+      // vector to hold indices
+      std::vector<int> lep_to_rm_idx;
+
+      // vector to hold indices
+      std::vector<int> w_leps;
+
+      // Loop over and select indices
+      for (int igen = 0; igen < ngen; ++igen)
+      {
+
+        // NOTE: If there are taus, don't even bother
+        if (abs(gen_pdgId[igen]) == 15)
+          return false;
+
+        bool is_lepton = (abs(gen_pdgId[igen]) == 11 || abs(gen_pdgId[igen]) == 13);
+        bool is_from_z = gen_sourceId[igen] == 23;
+        bool is_from_w = gen_sourceId[igen] == 24;
+
+        if      ( is_lepton && is_from_z ) lep_to_rm_idx.push_back(igen);
+        else if ( is_lepton && is_from_z ) lep_to_rm_idx.push_back(igen);
+
+        if ( is_lepton && is_from_w )
+          w_leps.push_back(igen);
+
+      }
+
+      // if not a W->leptonic remove
+      if (w_leps.size() == 0)
+        return false;
+
+      removeGoodLeptonsOverlappingWithTruthLeptonsAndAddToMET(gen_mass, gen_pt, gen_eta, gen_phi, lep_to_rm_idx);
+
+      return true;
+
+    }
+
+    //################################################################################################
+    // return if the correction was "successful"
+    // if not, return false and reject the event
+    //
+    void removeGoodLeptonsOverlappingWithTruthLeptonsAndAddToMET(float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, std::vector<int> lep_to_rm_idx)
+    {
+
+      std::vector<TLorentzVector> lep_to_rm;
+      for (unsigned int ilep_to_rm_idx = 0; ilep_to_rm_idx < lep_to_rm_idx.size(); ++ilep_to_rm_idx)
+      {
+        //std::cout << "idx to remove from good selected leptons = " << lep_to_rm_idx.at(ilep_to_rm_idx) << std::endl;
+        float pt  = gen_pt  [lep_to_rm_idx.at(ilep_to_rm_idx)];
+        float eta = gen_eta [lep_to_rm_idx.at(ilep_to_rm_idx)];
+        float phi = gen_phi [lep_to_rm_idx.at(ilep_to_rm_idx)];
+        float mass= gen_mass[lep_to_rm_idx.at(ilep_to_rm_idx)];
+        //std::cout << pt << " " << eta << " " << phi << " " << mass << std::endl;
+        TLorentzVector p4;
+        p4.SetPtEtaPhiM(pt, eta, phi, mass);
+        //p4.Print();
+        lep_to_rm.push_back(p4);
+      }
+
+      Leptons selected_good_leptons_new;
+      for (unsigned int ilep = 0; ilep < selected_good_leptons.size(); ++ilep)
+      {
+        TLorentzVector tag = selected_good_leptons.at(ilep).p4;
+        //std::cout << " tag " << std::endl;
+        //tag.Print();
+        bool removed = false;
+        for (unsigned int ilep_to_rm = 0; ilep_to_rm < lep_to_rm.size(); ++ilep_to_rm)
+        {
+          TLorentzVector probe = lep_to_rm.at(ilep_to_rm);
+          //std::cout << " probe " << std::endl;
+          //probe.Print();
+          //std::cout << tag.DeltaR(probe) << std::endl;
+          //std::cout << fabs(tag.Pt() - probe.Pt()) << std::endl;
+          if (tag.DeltaR(probe) < 0.1 && fabs(tag.Pt() - probe.Pt()) < 1)
+            removed = true;
+        }
+        if (!removed)
+          selected_good_leptons_new.push_back(selected_good_leptons.at(ilep));
+        if (removed)
+        {
+          TLorentzVector newmet = getMETp4() + tag;
+          setMET(newmet.Pt());
+          setMETphi(newmet.Phi());
+        }
+      }
+
+      //std::cout << " test" << selected_good_leptons.size() << std::endl;
+      selected_good_leptons = Leptons(selected_good_leptons_new);
+      //std::cout << " test2 " << selected_good_leptons.size() << std::endl;
+
+      return;
 
     }
 
@@ -2219,51 +2411,7 @@ namespace AnalysisUtilities
           lep_to_rm_idx.erase(lep_to_rm_idx.begin()+1);
       }
 
-      std::vector<TLorentzVector> lep_to_rm;
-      for (unsigned int ilep_to_rm_idx = 0; ilep_to_rm_idx < lep_to_rm_idx.size(); ++ilep_to_rm_idx)
-      {
-        //std::cout << "idx to remove from good selected leptons = " << lep_to_rm_idx.at(ilep_to_rm_idx) << std::endl;
-        float pt  = gen_pt  [lep_to_rm_idx.at(ilep_to_rm_idx)];
-        float eta = gen_eta [lep_to_rm_idx.at(ilep_to_rm_idx)];
-        float phi = gen_phi [lep_to_rm_idx.at(ilep_to_rm_idx)];
-        float mass= gen_mass[lep_to_rm_idx.at(ilep_to_rm_idx)];
-        //std::cout << pt << " " << eta << " " << phi << " " << mass << std::endl;
-        TLorentzVector p4;
-        p4.SetPtEtaPhiM(pt, eta, phi, mass);
-        //p4.Print();
-        lep_to_rm.push_back(p4);
-      }
-
-      Leptons selected_good_leptons_new;
-      for (unsigned int ilep = 0; ilep < selected_good_leptons.size(); ++ilep)
-      {
-        TLorentzVector tag = selected_good_leptons.at(ilep).p4;
-        //std::cout << " tag " << std::endl;
-        //tag.Print();
-        bool removed = false;
-        for (unsigned int ilep_to_rm = 0; ilep_to_rm < lep_to_rm.size(); ++ilep_to_rm)
-        {
-          TLorentzVector probe = lep_to_rm.at(ilep_to_rm);
-          //std::cout << " probe " << std::endl;
-          //probe.Print();
-          //std::cout << tag.DeltaR(probe) << std::endl;
-          //std::cout << fabs(tag.Pt() - probe.Pt()) << std::endl;
-          if (tag.DeltaR(probe) < 0.1 && fabs(tag.Pt() - probe.Pt()) < 1)
-            removed = true;
-        }
-        if (!removed)
-          selected_good_leptons_new.push_back(selected_good_leptons.at(ilep));
-        if (removed)
-        {
-          TLorentzVector newmet = getMETp4() + tag;
-          setMET(newmet.Pt());
-          setMETphi(newmet.Phi());
-        }
-      }
-
-      //std::cout << " test" << selected_good_leptons.size() << std::endl;
-      selected_good_leptons = Leptons(selected_good_leptons_new);
-      //std::cout << " test2 " << selected_good_leptons.size() << std::endl;
+      removeGoodLeptonsOverlappingWithTruthLeptonsAndAddToMET(gen_mass, gen_pt, gen_eta, gen_phi, lep_to_rm_idx);
 
       return true;
     }

@@ -250,7 +250,10 @@ namespace AnalysisUtilities
     int getNSelectedISRLeptons();
 
     void printTruth(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi);
+    bool correctTChiWZ_ZLLFilter(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, bool binary_random=0);
     bool correctN2(int ngen, int* gen_pdgId, int* gen_sourceId, float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, bool binary_random);
+    bool eventHasTaus(int ngen, int* gen_pdgId);
+    void removeGoodLeptonsOverlappingWithTruthLeptonsAndAddToMET(float* gen_mass, float* gen_pt, float* gen_eta, float* gen_phi, std::vector<int> lep_to_rm_idx);
 
     //
     // Jet variables
@@ -302,6 +305,38 @@ namespace AnalysisUtilities
     void setMETphi(float met_phi);
     void setMETp4();
     TLorentzVector getMETp4();
+
+    //
+    // Truth variables
+    //
+
+    // Truth struct
+    struct Truth {
+      float truth_pt;
+      float truth_eta;
+      float truth_phi;
+      float truth_mass;
+      int   truth_pdgId;
+      int   truth_sourceId;
+      TLorentzVector p4;
+    };
+    typedef std::vector<Truth> Truths;
+    extern Truths selected_ewkinos;
+    extern Truths selected_lsps;
+    extern Truths selected_leptons;
+    extern Truths selected_w_leptons;
+    extern Truths selected_z_leptons;
+
+    bool isWLepton(Truth truth);
+    void addWLepton(Truth truth);
+    bool isZLepton(Truth truth);
+    void addZLepton(Truth truth);
+    void addLepton(Truth truth);
+    void selectTruths(Truths truths);
+
+    Truths getWLeptons();
+    Truths getZLeptons();
+    Truths getLeptons();
 
     //
     // guarntee functions
