@@ -114,6 +114,8 @@ namespace Vbf {
 
   // 2d histogram
   TString histname_vbf_met_v_dphilepmet = "vbf2d_met_v_dphilepmet";
+  TString histname_vbf_lpt_v_dphilepmet = "vbf2d_lpt_v_dphilepmet";
+  TString histname_vbf_lpt_v_met        = "vbf2d_lpt_v_met";
 
   // mll bin
   float mllbin[5] = {5., 10., 20., 30., 50.};
@@ -913,6 +915,7 @@ void bookVBFHistogramsWithPrefix(TString prefix)
 
   // 2d histograms
   bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_met_v_dphilepmet,  10,    0.    ,   450.    ,  10,    0.     , 3.1416);
+  bookVBFHistogram(prefix + "_" + Vbf::histname_vbf_lpt_v_dphilepmet,  10,    0.    ,    20.    ,  10,    0.     , 3.1416);
 
 }
 
@@ -960,6 +963,8 @@ void fillVBFHistograms(TString cutprefix_)
     if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId == -13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 2);
     if (VBFSUSYUtilities::getLeadingGoodLepton().lep_pdgId ==  13) fillVBFHistogram(cutprefix + "_" + Vbf::histname_vbf_lepid , 3);
     fillVBFHistogram2D(cutprefix + "_" + Vbf::histname_vbf_met_v_dphilepmet, VBFSUSYUtilities::getMETp4().Pt(), VBFSUSYUtilities::getDPhiLepMET());
+    fillVBFHistogram2D(cutprefix + "_" + Vbf::histname_vbf_lpt_v_dphilepmet, VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt(), VBFSUSYUtilities::getDPhiLepMET());
+    fillVBFHistogram2D(cutprefix + "_" + Vbf::histname_vbf_lpt_v_met       , VBFSUSYUtilities::getMETp4().Pt(), VBFSUSYUtilities::getLeadingGoodLepton().p4.Pt());
   }
 
   if ((VBFSUSYUtilities::getNSelectedGoodJets() >= 2) && (VBFSUSYUtilities::getNSelectedGoodLeptons() > 0))

@@ -239,6 +239,8 @@ namespace Vbf {
 
   // 2d histogram
   extern TString histname_vbf_met_v_dphilepmet;
+  extern TString histname_vbf_lpt_v_dphilepmet;
+  extern TString histname_vbf_lpt_v_met;
 
 }
 
