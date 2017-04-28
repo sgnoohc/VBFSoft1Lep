@@ -6,6 +6,9 @@
 #include "MT2TreeLooper.h"
 
 MT2Tree mytree;
+ObjUtil::Leptons leptons;
+ObjUtil::Jets jets;
+ObjUtil::MET met;
 
 //______________________________________________________________________________________
 int MT2TreeLooper(TChain* chain, TString output_name, int nevents)

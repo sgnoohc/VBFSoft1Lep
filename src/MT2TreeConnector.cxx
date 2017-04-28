@@ -30,7 +30,7 @@ ObjUtil::Leptons getLeptons(MT2Tree& mytree)
     lepton.ptRel        = mytree.lep_ptRel[ilep];
     lepton.tightIdNoIso = mytree.lep_tightIdNoIso[ilep];
     lepton.sip3d        = mytree.lep_sip3d[ilep];
-    lepton.p4.SetPtEtaPhiM(lepton.lep_pt, lepton.lep_eta, lepton.lep_phi, lepton.lep_mass);
+    lepton.p4.SetPtEtaPhiM(mytree.lep_pt[ilep], mytree.lep_eta[ilep], mytree.lep_phi[ilep], mytree.lep_mass[ilep]);
     if (isGoodLepton(lepton))
       leptons.push_back(lepton);
   }
@@ -52,7 +52,7 @@ ObjUtil::Jets getJets(MT2Tree& mytree)
     jet.area          = mytree.jet_area[ijet];
     jet.id            = mytree.jet_id[ijet];
     jet.puId          = mytree.jet_puId[ijet];
-    jet.p4.SetPtEtaPhiM(jet.jet_pt, jet.jet_eta, jet.jet_phi, jet.jet_mass);
+    jet.p4.SetPtEtaPhiM(mytree.jet_pt[ijet], mytree.jet_eta[ijet], mytree.jet_phi[ijet], mytree.jet_mass[ijet]);
     if (isGoodJet(jet))
       jets.push_back(jet);
   }
@@ -74,7 +74,7 @@ ObjUtil::Jets getBJets(MT2Tree& mytree)
     jet.area          = mytree.jet_area[ijet];
     jet.id            = mytree.jet_id[ijet];
     jet.puId          = mytree.jet_puId[ijet];
-    jet.p4.SetPtEtaPhiM(jet.jet_pt, jet.jet_eta, jet.jet_phi, jet.jet_mass);
+    jet.p4.SetPtEtaPhiM(mytree.jet_pt[ijet], mytree.jet_eta[ijet], mytree.jet_phi[ijet], mytree.jet_mass[ijet]);
     if (isGoodBJet(jet))
       jets.push_back(jet);
   }
@@ -90,7 +90,7 @@ ObjUtil::METs getMETs(MT2Tree& mytree)
 ObjUtil::MET getMET(MT2Tree& mytree)
 {
   ObjUtil::MET met;
-  met.SetPtEtaPhiM(mytree.met_pt, 0, mytree.met_phi, 0);
+  met.p4.SetPtEtaPhiM(mytree.met_pt, 0, mytree.met_phi, 0);
   return met;
 }
 
