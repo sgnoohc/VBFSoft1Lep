@@ -21,6 +21,6 @@ int main(int argc, char* argv[])
 
   TChain *chsig = new TChain("mt2");
   chsig->Add(input_file_path);
-  WWWTreeLooper(chsig, output_file_path, max_nevents);
+  MT2TreeLooper(chsig, output_file_path, max_nevents);
 
 }

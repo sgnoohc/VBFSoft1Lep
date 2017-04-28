@@ -11,31 +11,28 @@ ObjUtil::Leptons getLeptons(MT2Tree& mytree)
   for (int ilep = 0; ilep < mytree.nlep; ++ilep)
   {
     ObjUtil::Lepton lepton;
-    lepton.lep_pt           = mytree.lep_pt[ilep];
-    lepton.lep_eta          = mytree.lep_eta[ilep];
-    lepton.lep_phi          = mytree.lep_phi[ilep];
-    lepton.lep_mass         = mytree.lep_mass[ilep];
-    lepton.lep_charge       = mytree.lep_charge[ilep];
-    lepton.lep_pdgId        = mytree.lep_pdgId[ilep];
-    lepton.lep_dxy          = mytree.lep_dxy[ilep];
-    lepton.lep_dz           = mytree.lep_dz[ilep];
-    lepton.lep_tightId      = mytree.lep_tightId[ilep];
-    lepton.lep_heepId       = mytree.lep_heepId[ilep];
-    lepton.lep_relIso03     = mytree.lep_relIso03[ilep];
-    lepton.lep_relIso04     = mytree.lep_relIso04[ilep];
-    lepton.lep_miniRelIso   = mytree.lep_miniRelIso[ilep];
-    lepton.lep_relIsoAn04   = mytree.lep_relIsoAn04[ilep];
-    lepton.lep_mcMatchId    = mytree.lep_mcMatchId[ilep];
-    lepton.lep_lostHits     = mytree.lep_lostHits[ilep];
-    lepton.lep_convVeto     = mytree.lep_convVeto[ilep];
-    lepton.lep_tightCharge  = mytree.lep_tightCharge[ilep];
-    lepton.lep_mva          = mytree.lep_mva[ilep];
-    lepton.lep_ptRatio      = mytree.lep_ptRatio[ilep];
-    lepton.lep_ptRel        = mytree.lep_ptRel[ilep];
-    lepton.lep_tightIdNoIso = mytree.lep_tightIdNoIso[ilep];
-    lepton.lep_sip3d        = mytree.lep_sip3d[ilep];
+    lepton.charge       = mytree.lep_charge[ilep];
+    lepton.pdgId        = mytree.lep_pdgId[ilep];
+    lepton.dxy          = mytree.lep_dxy[ilep];
+    lepton.dz           = mytree.lep_dz[ilep];
+    lepton.tightId      = mytree.lep_tightId[ilep];
+    lepton.heepId       = mytree.lep_heepId[ilep];
+    lepton.relIso03     = mytree.lep_relIso03[ilep];
+    lepton.relIso04     = mytree.lep_relIso04[ilep];
+    lepton.miniRelIso   = mytree.lep_miniRelIso[ilep];
+    lepton.relIsoAn04   = mytree.lep_relIsoAn04[ilep];
+    lepton.mcMatchId    = mytree.lep_mcMatchId[ilep];
+    lepton.lostHits     = mytree.lep_lostHits[ilep];
+    lepton.convVeto     = mytree.lep_convVeto[ilep];
+    lepton.tightCharge  = mytree.lep_tightCharge[ilep];
+    lepton.mva          = mytree.lep_mva[ilep];
+    lepton.ptRatio      = mytree.lep_ptRatio[ilep];
+    lepton.ptRel        = mytree.lep_ptRel[ilep];
+    lepton.tightIdNoIso = mytree.lep_tightIdNoIso[ilep];
+    lepton.sip3d        = mytree.lep_sip3d[ilep];
     lepton.p4.SetPtEtaPhiM(lepton.lep_pt, lepton.lep_eta, lepton.lep_phi, lepton.lep_mass);
-    leptons.push_back(lepton);
+    if (isGoodLepton(lepton))
+      leptons.push_back(lepton);
   }
   return leptons;
 }
@@ -46,21 +43,40 @@ ObjUtil::Jets getJets(MT2Tree& mytree)
   for (int ijet = 0; ijet < mytree.njet; ++ijet)
   {
     ObjUtil::Jet jet;
-    jet.jet_pt            = mytree.jet_pt[ijet];
-    jet.jet_eta           = mytree.jet_eta[ijet];
-    jet.jet_phi           = mytree.jet_phi[ijet];
-    jet.jet_mass          = mytree.jet_mass[ijet];
-    jet.jet_btagCSV       = mytree.jet_btagCSV[ijet];
-    jet.jet_rawPt         = mytree.jet_rawPt[ijet];
-    jet.jet_mcPt          = mytree.jet_mcPt[ijet];
-    jet.jet_mcFlavour     = mytree.jet_mcFlavour[ijet];
-    jet.jet_hadronFlavour = mytree.jet_hadronFlavour[ijet];
-    jet.jet_qgl           = mytree.jet_qgl[ijet];
-    jet.jet_area          = mytree.jet_area[ijet];
-    jet.jet_id            = mytree.jet_id[ijet];
-    jet.jet_puId          = mytree.jet_puId[ijet];
+    jet.btagCSV       = mytree.jet_btagCSV[ijet];
+    jet.rawPt         = mytree.jet_rawPt[ijet];
+    jet.mcPt          = mytree.jet_mcPt[ijet];
+    jet.mcFlavour     = mytree.jet_mcFlavour[ijet];
+    jet.hadronFlavour = mytree.jet_hadronFlavour[ijet];
+    jet.qgl           = mytree.jet_qgl[ijet];
+    jet.area          = mytree.jet_area[ijet];
+    jet.id            = mytree.jet_id[ijet];
+    jet.puId          = mytree.jet_puId[ijet];
     jet.p4.SetPtEtaPhiM(jet.jet_pt, jet.jet_eta, jet.jet_phi, jet.jet_mass);
-    jets.push_back(jet);
+    if (isGoodJet(jet))
+      jets.push_back(jet);
+  }
+  return jets;
+}
+
+ObjUtil::Jets getBJets(MT2Tree& mytree)
+{
+  ObjUtil::Jets jets;
+  for (int ijet = 0; ijet < mytree.njet; ++ijet)
+  {
+    ObjUtil::Jet jet;
+    jet.btagCSV       = mytree.jet_btagCSV[ijet];
+    jet.rawPt         = mytree.jet_rawPt[ijet];
+    jet.mcPt          = mytree.jet_mcPt[ijet];
+    jet.mcFlavour     = mytree.jet_mcFlavour[ijet];
+    jet.hadronFlavour = mytree.jet_hadronFlavour[ijet];
+    jet.qgl           = mytree.jet_qgl[ijet];
+    jet.area          = mytree.jet_area[ijet];
+    jet.id            = mytree.jet_id[ijet];
+    jet.puId          = mytree.jet_puId[ijet];
+    jet.p4.SetPtEtaPhiM(jet.jet_pt, jet.jet_eta, jet.jet_phi, jet.jet_mass);
+    if (isGoodBJet(jet))
+      jets.push_back(jet);
   }
   return jets;
 }
@@ -76,6 +92,35 @@ ObjUtil::MET getMET(MT2Tree& mytree)
   ObjUtil::MET met;
   met.SetPtEtaPhiM(mytree.met_pt, 0, mytree.met_phi, 0);
   return met;
+}
+
+bool isGoodLepton(ObjUtil::Lepton& lepton)
+{
+  if ( !(lepton.p4.Pt() >= 5.                                        ) ) return false;
+  if ( (abs(lepton.pdgId) == 11) && !( (fabs(lepton.p4.Eta()) < 2.5) ) ) return false;
+  if ( (abs(lepton.pdgId) == 13) && !( (fabs(lepton.p4.Eta()) < 2.4) ) ) return false;
+  if ( !( fabs(lepton.sip3d) < 2.                                    ) ) return false;
+  if ( !( fabs(lepton.dxy)   < 0.01                                  ) ) return false;
+  if ( !( fabs(lepton.dz)    < 0.01                                  ) ) return false;
+  if ( !( fabs(lepton.relIso03) < 0.5                                ) ) return false;
+  if ( !( fabs(lepton.relIso03*lepton.p4.Pt()) < 5.                  ) ) return false;
+  //if ( (abs(lepton.lep_pdgId) == 11) && !( (lepton.lep_tightId > ELECTRON_ID) ) ) return false;
+  //if ( (abs(lepton.lep_pdgId) == 13) && !( (lepton.lep_tightId > MUON_ID)     ) ) return false;
+  return true;
+}
+
+bool isGoodJet(ObjUtil::Jet& jet)
+{
+  if ( !(jet.p4.Pt() > 25. ) ) return false;
+  return true;
+}
+
+bool isGoodBJet(ObjUtil::Jet& jet)
+{
+  if ( !(jet.p4.Pt() > 25.        ) ) return false;
+  if ( !(fabs(jet.p4.Eta()) < 2.4 ) ) return false;
+  if ( !(jet.btagCSV > 0.46       ) ) return false;
+  return true;
 }
 
 //eof

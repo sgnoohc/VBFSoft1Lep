@@ -83,7 +83,6 @@ void loadMT2TreeEvent()
 //______________________________________________________________________________________
 void processMT2TreeEvent()
 {
-
   /// Set objects
   setObjects();
 }
