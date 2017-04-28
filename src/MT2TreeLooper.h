@@ -25,9 +25,8 @@
 using namespace Ditto;
 
 extern MT2Tree mytree;
-extern ObjUtil::Leptons leptons;
-extern ObjUtil::Jets jets;
-extern ObjUtil::MET met;
+extern TString output_name;
+extern Analyses::AnalysisData ana_data;
 
 int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
 void loop();

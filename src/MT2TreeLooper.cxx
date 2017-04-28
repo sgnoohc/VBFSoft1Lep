@@ -6,9 +6,8 @@
 #include "MT2TreeLooper.h"
 
 MT2Tree mytree;
-ObjUtil::Leptons leptons;
-ObjUtil::Jets jets;
-ObjUtil::MET met;
+TString output_name;
+Analyses::AnalysisData ana_data;
 
 //______________________________________________________________________________________
 int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
@@ -27,7 +26,7 @@ int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
 }
 
 //______________________________________________________________________________________
-void beforeLoop(TChain* chain, TString output_name, int nevents)
+void beforeLoop(TChain* chain, TString output_name_, int nevents)
 {
 
   // Fun start ASCII art
@@ -35,6 +34,8 @@ void beforeLoop(TChain* chain, TString output_name, int nevents)
 
   // Initialize configurations for event looping
   LoopUtil::resetLoopCondition(chain, nevents);
+
+  output_name = output_name_;
 
 }
 
@@ -88,20 +89,30 @@ void processMT2TreeEvent()
 {
   /// Set objects
   setObjects();
+
+  ///
+  Analyses::SM_WWW_3l0SFOS(ana_data);
+  Analyses::SM_WWW_SSmm(ana_data);
 }
 
 //______________________________________________________________________________________
 void setObjects()
 {
   /// Get and set objects
-  leptons = getLeptons(mytree);
-  jets = getJets(mytree);
-  met = getMET(mytree);
+  ana_data.leptons = getLeptons(mytree);
+  ana_data.jets    = getJets(mytree);
+  ana_data.bjets   = getBJets(mytree);
+  ana_data.met     = getMET(mytree);
+  ana_data.wgt     = mytree.evt_scale1fb;
 }
 
 //______________________________________________________________________________________
 void afterLoop()
 {
+
+  /// Save plots
+  PlotUtil::savePlots(ana_data.hist_db, output_name.Data());
+
   // Fun exit
   PrintUtil::exit();
 }
