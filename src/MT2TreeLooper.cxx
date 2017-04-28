@@ -83,6 +83,18 @@ void loadMT2TreeEvent()
 //______________________________________________________________________________________
 void processMT2TreeEvent()
 {
+
+  /// Set objects
+  setObjects();
+}
+
+//______________________________________________________________________________________
+void setObjects()
+{
+  /// Get and set objects
+  leptons = getLeptons(mytree);
+  jets = getJets(mytree);
+  met = getMET(mytree);
 }
 
 //______________________________________________________________________________________
