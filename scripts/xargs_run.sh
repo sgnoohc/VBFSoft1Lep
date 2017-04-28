@@ -5,7 +5,7 @@
 #  .
 # ..: P. Chang, philip@physics.ucsd.edu
 
-cores=40
+cores=24
 
 # create output directory if needed
 mkdir -p output

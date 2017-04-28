@@ -1,20 +1,14 @@
-// vim: tabstop=2:softtabstop=2:shiftwidth=2:expandtab
-
-//  .
-// ..: P. Chang, philip@physics.ucsd.edu
-
 #include "susyvbf.h"
 
 int main(int argc, char* argv[])
 {
-
   if (argc != 3 && argc != 4)
   {
-    PrintUtilities::print("Usage:");
-    PrintUtilities::print("");
-    PrintUtilities::print("        ./susyvbf INPUT_FILE_PATH OUTPUT.root [MAXEVENTS]  # the last three argument must be provided at the same time");
-    PrintUtilities::print("");
-    PrintUtilities::error("Please check your arguement!");
+    PrintUtil::print("Usage:");
+    PrintUtil::print("");
+    PrintUtil::print("        ./susyvbf INPUT_FILE_PATH OUTPUT.root [MAXEVENTS]  # the last three argument must be provided at the same time");
+    PrintUtil::print("");
+    PrintUtil::error("Please check your arguement!");
   }
 
   const char* input_file_path = argv[1];
@@ -27,8 +21,6 @@ int main(int argc, char* argv[])
 
   TChain *chsig = new TChain("mt2");
   chsig->Add(input_file_path);
-  MT2TreeLooper(chsig, output_file_path, max_nevents);
+  WWWTreeLooper(chsig, output_file_path, max_nevents);
 
 }
-
-//eof
