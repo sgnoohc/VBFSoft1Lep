@@ -90,9 +90,9 @@ void processMT2TreeEvent()
   /// Set objects
   setObjects();
 
-  ///
-  Analyses::SM_WWW_3l0SFOS(ana_data);
-  Analyses::SM_WWW_SSmm(ana_data);
+  /// Analyses to perform
+  //Analyses::SM_WWW_3l0SFOS(ana_data);
+  //Analyses::SM_WWW_SSmm(ana_data);
 }
 
 //______________________________________________________________________________________
