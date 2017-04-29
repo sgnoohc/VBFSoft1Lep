@@ -1,1 +1,7 @@
 src/*.o
+archive/
+haddoutput/
+input/
+output/
+plots/
+run/
