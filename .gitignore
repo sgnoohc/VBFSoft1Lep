@@ -1,1 +1,1 @@
-src/MT2Tree.o src/MT2TreeConnector.o src/MT2TreeLooper.o src/susyvbf.o
+src/*.o
