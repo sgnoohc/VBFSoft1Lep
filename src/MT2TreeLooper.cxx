@@ -8,6 +8,7 @@
 MT2Tree mytree;
 TString output_name;
 Analyses::AnalysisData ana_data;
+Analyses::AnalysisData ana_data_isr;
 
 //______________________________________________________________________________________
 int MT2TreeLooper(TChain* chain, TString output_name, int nevents)
@@ -91,8 +92,7 @@ void processMT2TreeEvent()
   setObjects();
 
   /// Analyses to perform
-  //Analyses::SM_WWW_3l0SFOS(ana_data);
-  //Analyses::SM_WWW_SSmm(ana_data);
+  Analyses::SUSY_ISR_Soft2l_SUS_16_048(ana_data);
 }
 
 //______________________________________________________________________________________
@@ -103,7 +103,10 @@ void setObjects()
   ana_data.jets    = getJets(mytree);
   ana_data.bjets   = getBJets(mytree);
   ana_data.met     = getMET(mytree);
-  ana_data.wgt     = mytree.evt_scale1fb;
+  if (output_name.Contains("TChi"))
+    ana_data.wgt   = 1.;
+  else
+    ana_data.wgt   = mytree.evt_scale1fb;
 }
 
 //______________________________________________________________________________________

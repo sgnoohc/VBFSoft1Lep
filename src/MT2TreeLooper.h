@@ -27,6 +27,7 @@ using namespace Ditto;
 extern MT2Tree mytree;
 extern TString output_name;
 extern Analyses::AnalysisData ana_data;
+extern Analyses::AnalysisData ana_data_isr;
 
 int MT2TreeLooper(TChain* chain, TString output_name, int nEvents);
 void loop();

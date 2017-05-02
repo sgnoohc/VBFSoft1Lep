@@ -31,8 +31,7 @@ ObjUtil::Leptons getLeptons(MT2Tree& mytree)
     lepton.tightIdNoIso = mytree.lep_tightIdNoIso[ilep];
     lepton.sip3d        = mytree.lep_sip3d[ilep];
     lepton.p4.SetPtEtaPhiM(mytree.lep_pt[ilep], mytree.lep_eta[ilep], mytree.lep_phi[ilep], mytree.lep_mass[ilep]);
-    if (isGoodLepton(lepton))
-      leptons.push_back(lepton);
+    leptons.push_back(lepton);
   }
   return leptons;
 }
@@ -53,8 +52,7 @@ ObjUtil::Jets getJets(MT2Tree& mytree)
     jet.id            = mytree.jet_id[ijet];
     jet.puId          = mytree.jet_puId[ijet];
     jet.p4.SetPtEtaPhiM(mytree.jet_pt[ijet], mytree.jet_eta[ijet], mytree.jet_phi[ijet], mytree.jet_mass[ijet]);
-    if (isGoodJet(jet))
-      jets.push_back(jet);
+    jets.push_back(jet);
   }
   return jets;
 }
@@ -75,8 +73,7 @@ ObjUtil::Jets getBJets(MT2Tree& mytree)
     jet.id            = mytree.jet_id[ijet];
     jet.puId          = mytree.jet_puId[ijet];
     jet.p4.SetPtEtaPhiM(mytree.jet_pt[ijet], mytree.jet_eta[ijet], mytree.jet_phi[ijet], mytree.jet_mass[ijet]);
-    if (isGoodBJet(jet))
-      jets.push_back(jet);
+    jets.push_back(jet);
   }
   return jets;
 }
@@ -92,35 +89,6 @@ ObjUtil::MET getMET(MT2Tree& mytree)
   ObjUtil::MET met;
   met.p4.SetPtEtaPhiM(mytree.met_pt, 0, mytree.met_phi, 0);
   return met;
-}
-
-bool isGoodLepton(ObjUtil::Lepton& lepton)
-{
-  if ( !(lepton.p4.Pt() >= 5.                                        ) ) return false;
-  if ( (abs(lepton.pdgId) == 11) && !( (fabs(lepton.p4.Eta()) < 2.5) ) ) return false;
-  if ( (abs(lepton.pdgId) == 13) && !( (fabs(lepton.p4.Eta()) < 2.4) ) ) return false;
-  if ( !( fabs(lepton.sip3d) < 2.                                    ) ) return false;
-  if ( !( fabs(lepton.dxy)   < 0.01                                  ) ) return false;
-  if ( !( fabs(lepton.dz)    < 0.01                                  ) ) return false;
-  if ( !( fabs(lepton.relIso03) < 0.5                                ) ) return false;
-  if ( !( fabs(lepton.relIso03*lepton.p4.Pt()) < 5.                  ) ) return false;
-  //if ( (abs(lepton.lep_pdgId) == 11) && !( (lepton.lep_tightId > ELECTRON_ID) ) ) return false;
-  //if ( (abs(lepton.lep_pdgId) == 13) && !( (lepton.lep_tightId > MUON_ID)     ) ) return false;
-  return true;
-}
-
-bool isGoodJet(ObjUtil::Jet& jet)
-{
-  if ( !(jet.p4.Pt() > 25. ) ) return false;
-  return true;
-}
-
-bool isGoodBJet(ObjUtil::Jet& jet)
-{
-  if ( !(jet.p4.Pt() > 25.        ) ) return false;
-  if ( !(fabs(jet.p4.Eta()) < 2.4 ) ) return false;
-  if ( !(jet.btagCSV > 0.46       ) ) return false;
-  return true;
 }
 
 //eof

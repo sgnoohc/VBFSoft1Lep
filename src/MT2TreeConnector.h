@@ -17,9 +17,5 @@ ObjUtil::Jets getBJets(MT2Tree& mytree);
 ObjUtil::METs getMETs(MT2Tree& mytree);
 ObjUtil::MET getMET(MT2Tree& mytree);
 
-bool isGoodLepton(ObjUtil::Lepton& lepton);
-bool isGoodJet(ObjUtil::Jet& jet);
-bool isGoodBJet(ObjUtil::Jet& jet);
-
 #endif
 //eof
