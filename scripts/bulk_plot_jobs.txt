@@ -1,0 +1,866 @@
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_cenjetdr \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_cenjetdr \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_cenjetpt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_cenjetpt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_detajj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_detajj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                         DEtajjCut_vbf_dphidijetlep \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                         DEtajjCut_vbf_dphidijetlep \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_dphidijetlepmet \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_dphidijetlepmet \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                         DEtajjCut_vbf_dphidijetmet \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                         DEtajjCut_vbf_dphidijetmet \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_dphidijetmetlep \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_dphidijetmetlep \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_dphijj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_dphijj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphileadjetlep \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphileadjetlep \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphileadjetmet \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphileadjetmet \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                    DEtajjCut_vbf_dphileadjetmetlep \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                    DEtajjCut_vbf_dphileadjetmetlep \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_dphilepmet \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_dphilepmet \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_dphilepmetboost \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_dphilepmetboost \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphisubljetlep \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphisubljetlep \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphisubljetmet \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_dphisubljetmet \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                    DEtajjCut_vbf_dphisubljetmetlep \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                    DEtajjCut_vbf_dphisubljetmetlep \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_dptjet \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_dptjet \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                                   DEtajjCut_vbf_ht \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                                   DEtajjCut_vbf_ht \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_leadjete \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_leadjete \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_leadjeteoverpt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_leadjeteoverpt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_leadjeteta \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_leadjeteta \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_leadjetpt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_leadjetpt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_leadlepeta \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_leadlepeta \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_leadleppt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_leadleppt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                              DEtajjCut_vbf_lepcent \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                              DEtajjCut_vbf_lepcent \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_lepphicent \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_lepphicent \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                                  DEtajjCut_vbf_met \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                                  DEtajjCut_vbf_met \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_methtratio \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_methtratio \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_metphicent \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_metphicent \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_metrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_metrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                                  DEtajjCut_vbf_mjj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                                  DEtajjCut_vbf_mjj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                                 DEtajjCut_vbf_mlj0 \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                                 DEtajjCut_vbf_mlj0 \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                                 DEtajjCut_vbf_mlj1 \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                                 DEtajjCut_vbf_mlj1 \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_modmt \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_modmt \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                                   DEtajjCut_vbf_mt \' --autostack --nbinx  30 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                                   DEtajjCut_vbf_mt \' --autostack --nbinx  30                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_mtrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_mtrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_prodptrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_prodptrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_ptrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_ptrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_subljete \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_subljete \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_subljeteoverpt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                       DEtajjCut_vbf_subljeteoverpt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_subljeteta \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_subljeteta \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_subljetpt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                            DEtajjCut_vbf_subljetpt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_summlj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                               DEtajjCut_vbf_summlj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_sumpt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                                DEtajjCut_vbf_sumpt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_sumptall \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                             DEtajjCut_vbf_sumptall \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_superptrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                           DEtajjCut_vbf_superptrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_superptrelnowgt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/DEtajjCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                      DEtajjCut_vbf_superptrelnowgt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/DEtajjCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                                METCut_vbf_cenjetdr \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                                METCut_vbf_cenjetdr \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                                METCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                                METCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_detajj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_detajj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                            METCut_vbf_dilepchannel \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dilepchannel_sigshape.log
+sh scripts/plot_vbf.sh                            METCut_vbf_dilepchannel \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dilepchannel_signorm.log 
+sh scripts/plot_vbf.sh                            METCut_vbf_dphidijetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                            METCut_vbf_dphidijetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                         METCut_vbf_dphidijetlepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                         METCut_vbf_dphidijetlepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                            METCut_vbf_dphidijetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                            METCut_vbf_dphidijetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                         METCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                         METCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                          METCut_vbf_dphileadjetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                          METCut_vbf_dphileadjetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                          METCut_vbf_dphileadjetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                          METCut_vbf_dphileadjetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                       METCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                       METCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_dphilepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_dphilepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                         METCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                         METCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_dphill \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphill_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_dphill \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphill_signorm.log 
+sh scripts/plot_vbf.sh                          METCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                          METCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                          METCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                          METCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                       METCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                       METCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                                      METCut_vbf_ht \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                                      METCut_vbf_ht \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                                METCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                                METCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                          METCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                          METCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_leadjeteta \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_leadjeteta \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                               METCut_vbf_leadjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                               METCut_vbf_leadjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                               METCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                               METCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                                 METCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                                 METCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                                   METCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                                   METCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_lepphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_lepphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                                     METCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                                     METCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_methtratio \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_methtratio \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_metphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_metphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                                     METCut_vbf_mjj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                                     METCut_vbf_mjj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                                    METCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                                    METCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                                    METCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                                    METCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                                     METCut_vbf_mll \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mll_sigshape.log
+sh scripts/plot_vbf.sh                                     METCut_vbf_mll \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mll_signorm.log 
+sh scripts/plot_vbf.sh                                   METCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                                   METCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                                      METCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                                      METCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                                   METCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                                   METCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                                     METCut_vbf_mtt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_mtt_sigshape.log
+sh scripts/plot_vbf.sh                                     METCut_vbf_mtt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_mtt_signorm.log 
+sh scripts/plot_vbf.sh                                METCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                                METCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                                   METCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                                   METCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                               METCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                               METCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                               METCut_vbf_prodptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                               METCut_vbf_prodptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                                    METCut_vbf_ptll \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_ptll_sigshape.log
+sh scripts/plot_vbf.sh                                    METCut_vbf_ptll \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_ptll_signorm.log 
+sh scripts/plot_vbf.sh                                   METCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                                   METCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                                METCut_vbf_subljete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                                METCut_vbf_subljete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                          METCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                          METCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_subljeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_subljeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                               METCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                               METCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                               METCut_vbf_sublleppt \' --autostack --nbinx  12 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_sublleppt_sigshape.log
+sh scripts/plot_vbf.sh                               METCut_vbf_sublleppt \' --autostack --nbinx  12                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_sublleppt_signorm.log 
+sh scripts/plot_vbf.sh                                  METCut_vbf_summlj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                                  METCut_vbf_summlj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                                   METCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                                   METCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                                METCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                                METCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                              METCut_vbf_superptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                              METCut_vbf_superptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                         METCut_vbf_superptrelnowgt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/METCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                         METCut_vbf_superptrelnowgt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/METCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                                 MTCut_vbf_cenjetdr \' --autostack --nbinx  12 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                                 MTCut_vbf_cenjetdr \' --autostack --nbinx  12                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                                 MTCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                                 MTCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                                   MTCut_vbf_detajj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                                   MTCut_vbf_detajj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                             MTCut_vbf_dphidijetlep \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                             MTCut_vbf_dphidijetlep \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                          MTCut_vbf_dphidijetlepmet \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                          MTCut_vbf_dphidijetlepmet \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                             MTCut_vbf_dphidijetmet \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                             MTCut_vbf_dphidijetmet \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                          MTCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                          MTCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                   MTCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                                   MTCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphileadjetlep \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphileadjetlep \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphileadjetmet \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphileadjetmet \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                        MTCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                        MTCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_dphilepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_dphilepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                          MTCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                          MTCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                           MTCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                        MTCut_vbf_dphisubljetmetlep \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                        MTCut_vbf_dphisubljetmetlep \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                   MTCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                                   MTCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                                       MTCut_vbf_ht \' --autostack --nbinx  12 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                                       MTCut_vbf_ht \' --autostack --nbinx  12                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                                 MTCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                                 MTCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                           MTCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                           MTCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_leadjeteta \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_leadjeteta \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                                MTCut_vbf_leadjetpt \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                                MTCut_vbf_leadjetpt \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                                MTCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                                MTCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                                  MTCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                                  MTCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                                    MTCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                                    MTCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_lepphicent \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_lepphicent \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                                      MTCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                                      MTCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_methtratio \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_methtratio \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_metphicent \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_metphicent \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                                   MTCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                                   MTCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                                      MTCut_vbf_mjj \' --autostack --nbinx  30 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                                      MTCut_vbf_mjj \' --autostack --nbinx  30                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                                     MTCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                                     MTCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                                     MTCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                                     MTCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                                    MTCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                                    MTCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                                       MTCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                                       MTCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                                    MTCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                                    MTCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                                 MTCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                                 MTCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                                   MTCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                                   MTCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                                    MTCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                                    MTCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                                MTCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                                MTCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                                MTCut_vbf_prodptrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                                MTCut_vbf_prodptrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                                    MTCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                                    MTCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                                 MTCut_vbf_subljete \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                                 MTCut_vbf_subljete \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                           MTCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                           MTCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_subljeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_subljeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                                MTCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                                MTCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                                   MTCut_vbf_summlj \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                                   MTCut_vbf_summlj \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                                    MTCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                                    MTCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                                 MTCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                                 MTCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                               MTCut_vbf_superptrel \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                               MTCut_vbf_superptrel \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                          MTCut_vbf_superptrelnowgt \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/MTCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                          MTCut_vbf_superptrelnowgt \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/MTCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                               NJetCut_vbf_cenjetdr \' --autostack --nbinx  12 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                               NJetCut_vbf_cenjetdr \' --autostack --nbinx  12                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                               NJetCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                               NJetCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_detajj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_detajj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                           NJetCut_vbf_dphidijetlep \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                           NJetCut_vbf_dphidijetlep \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                        NJetCut_vbf_dphidijetlepmet \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                        NJetCut_vbf_dphidijetlepmet \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                           NJetCut_vbf_dphidijetmet \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                           NJetCut_vbf_dphidijetmet \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                        NJetCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                        NJetCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphileadjetlep \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphileadjetlep \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphileadjetmet \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphileadjetmet \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                      NJetCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                      NJetCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_dphilepmet \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_dphilepmet \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                        NJetCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                        NJetCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                         NJetCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                      NJetCut_vbf_dphisubljetmetlep \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                      NJetCut_vbf_dphisubljetmetlep \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                                     NJetCut_vbf_ht \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                                     NJetCut_vbf_ht \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                               NJetCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                               NJetCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                         NJetCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                         NJetCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_leadjeteta \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_leadjeteta \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                              NJetCut_vbf_leadjetpt \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                              NJetCut_vbf_leadjetpt \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                              NJetCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                              NJetCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                                NJetCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                                NJetCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_lepphicent \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_lepphicent \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                                    NJetCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                                    NJetCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_methtratio \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_methtratio \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_metphicent \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_metphicent \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                                    NJetCut_vbf_mjj \' --autostack --nbinx  30 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                                    NJetCut_vbf_mjj \' --autostack --nbinx  30                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                                   NJetCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                                   NJetCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                                   NJetCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                                   NJetCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                                     NJetCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                                     NJetCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                               NJetCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                               NJetCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                              NJetCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                              NJetCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                              NJetCut_vbf_prodptrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                              NJetCut_vbf_prodptrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                               NJetCut_vbf_subljete \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                               NJetCut_vbf_subljete \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                         NJetCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                         NJetCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_subljeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_subljeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                              NJetCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                              NJetCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_summlj \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                                 NJetCut_vbf_summlj \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                                  NJetCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                               NJetCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                               NJetCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                             NJetCut_vbf_superptrel \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                             NJetCut_vbf_superptrel \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                        NJetCut_vbf_superptrelnowgt \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NJetCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                        NJetCut_vbf_superptrelnowgt \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/NJetCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                                 NoCut_vbf_cenjetdr \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                                 NoCut_vbf_cenjetdr \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                                 NoCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                                 NoCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_detajj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_detajj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                             NoCut_vbf_dilepchannel \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dilepchannel_sigshape.log
+sh scripts/plot_vbf.sh                             NoCut_vbf_dilepchannel \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dilepchannel_signorm.log 
+sh scripts/plot_vbf.sh                             NoCut_vbf_dphidijetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                             NoCut_vbf_dphidijetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                          NoCut_vbf_dphidijetlepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                          NoCut_vbf_dphidijetlepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                             NoCut_vbf_dphidijetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                             NoCut_vbf_dphidijetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                          NoCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                          NoCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphileadjetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphileadjetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphileadjetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphileadjetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                        NoCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                        NoCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_dphilepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_dphilepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                          NoCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                          NoCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_dphill \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphill_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_dphill \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphill_signorm.log 
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                           NoCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                        NoCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                        NoCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                                       NoCut_vbf_ht \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                                       NoCut_vbf_ht \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                                 NoCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                                 NoCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                           NoCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                           NoCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_leadjeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_leadjeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                                NoCut_vbf_leadjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                                NoCut_vbf_leadjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                                NoCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                                NoCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                                  NoCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                                  NoCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                                    NoCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                                    NoCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_lepphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_lepphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                                      NoCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                                      NoCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_methtratio \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_methtratio \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_metphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_metphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                                      NoCut_vbf_mjj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                                      NoCut_vbf_mjj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                                     NoCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                                     NoCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                                     NoCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                                     NoCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                                      NoCut_vbf_mll \' --autostack --nbinx  30 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mll_sigshape.log
+sh scripts/plot_vbf.sh                                      NoCut_vbf_mll \' --autostack --nbinx  30                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mll_signorm.log 
+sh scripts/plot_vbf.sh                                    NoCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                                    NoCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                                       NoCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                                       NoCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                                    NoCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                                    NoCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                                      NoCut_vbf_mtt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_mtt_sigshape.log
+sh scripts/plot_vbf.sh                                      NoCut_vbf_mtt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_mtt_signorm.log 
+sh scripts/plot_vbf.sh                                 NoCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                                 NoCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                                    NoCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                                    NoCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                                NoCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                                NoCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                                NoCut_vbf_prodptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                                NoCut_vbf_prodptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                                     NoCut_vbf_ptll \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_ptll_sigshape.log
+sh scripts/plot_vbf.sh                                     NoCut_vbf_ptll \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_ptll_signorm.log 
+sh scripts/plot_vbf.sh                                    NoCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                                    NoCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                                 NoCut_vbf_subljete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                                 NoCut_vbf_subljete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                           NoCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                           NoCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_subljeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_subljeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                                NoCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                                NoCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                                NoCut_vbf_sublleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_sublleppt_sigshape.log
+sh scripts/plot_vbf.sh                                NoCut_vbf_sublleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_sublleppt_signorm.log 
+sh scripts/plot_vbf.sh                                   NoCut_vbf_summlj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                                   NoCut_vbf_summlj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                                    NoCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                                    NoCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                                 NoCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                                 NoCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                               NoCut_vbf_superptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                               NoCut_vbf_superptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                          NoCut_vbf_superptrelnowgt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/NoCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                          NoCut_vbf_superptrelnowgt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/NoCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_cenjetdr \' --autostack --nbinx  18 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_cenjetdr \' --autostack --nbinx  18                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_detajj \' --autostack --nbinx  15 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_detajj \' --autostack --nbinx  15                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepCut_vbf_dphidijetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepCut_vbf_dphidijetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_dphidijetlepmet \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_dphidijetlepmet \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepCut_vbf_dphidijetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepCut_vbf_dphidijetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphileadjetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphileadjetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphileadjetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphileadjetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                    OneLepCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                    OneLepCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_dphilepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_dphilepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                    OneLepCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                    OneLepCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                                   OneLepCut_vbf_ht \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                                   OneLepCut_vbf_ht \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_leadjeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_leadjeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_leadjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_leadjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                              OneLepCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                              OneLepCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_lepphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_lepphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                                  OneLepCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                                  OneLepCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_methtratio \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_methtratio \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_metphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_metphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                                  OneLepCut_vbf_mjj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                                  OneLepCut_vbf_mjj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                                 OneLepCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                                 OneLepCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                                 OneLepCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                                 OneLepCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                                   OneLepCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                                   OneLepCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_prodptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_prodptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_subljete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_subljete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_subljeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_subljeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_summlj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepCut_vbf_summlj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                                OneLepCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_superptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepCut_vbf_superptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_superptrelnowgt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                      OneLepCut_vbf_superptrelnowgt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_cenjetdr \' --autostack --nbinx  18 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_cenjetdr \' --autostack --nbinx  18                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_detajj \' --autostack --nbinx  18 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_detajj \' --autostack --nbinx  18                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                     OneLepInclCut_vbf_dilepchannel \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dilepchannel_sigshape.log
+sh scripts/plot_vbf.sh                     OneLepInclCut_vbf_dilepchannel \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dilepchannel_signorm.log 
+sh scripts/plot_vbf.sh                     OneLepInclCut_vbf_dphidijetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                     OneLepInclCut_vbf_dphidijetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_dphidijetlepmet \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_dphidijetlepmet \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                     OneLepInclCut_vbf_dphidijetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                     OneLepInclCut_vbf_dphidijetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphileadjetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphileadjetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphileadjetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphileadjetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh                OneLepInclCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                OneLepInclCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_dphilepmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_dphilepmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_dphill \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphill_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_dphill \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphill_signorm.log 
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh                OneLepInclCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                OneLepInclCut_vbf_dphisubljetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepInclCut_vbf_ht \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepInclCut_vbf_ht \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_leadjeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_leadjeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_leadjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_leadjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                          OneLepInclCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                          OneLepInclCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_lepphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_lepphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                              OneLepInclCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                              OneLepInclCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_methtratio \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_methtratio \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_metphicent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_metphicent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                              OneLepInclCut_vbf_mjj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                              OneLepInclCut_vbf_mjj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepInclCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepInclCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepInclCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepInclCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                              OneLepInclCut_vbf_mll \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_mll_sigshape.log
+sh scripts/plot_vbf.sh                              OneLepInclCut_vbf_mll \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_mll_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                               OneLepInclCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                               OneLepInclCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_prodptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_prodptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                             OneLepInclCut_vbf_ptll \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_ptll_sigshape.log
+sh scripts/plot_vbf.sh                             OneLepInclCut_vbf_ptll \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_ptll_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_subljete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_subljete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                   OneLepInclCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_subljeteta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_subljeteta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_sublleppt \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_sublleppt_sigshape.log
+sh scripts/plot_vbf.sh                        OneLepInclCut_vbf_sublleppt \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_sublleppt_signorm.log 
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_summlj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                           OneLepInclCut_vbf_summlj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                            OneLepInclCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                         OneLepInclCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_superptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                       OneLepInclCut_vbf_superptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_superptrelnowgt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/OneLepInclCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                  OneLepInclCut_vbf_superptrelnowgt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/OneLepInclCut_vbf_superptrelnowgt_signorm.log 
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_cenjetdr \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_cenjetdr_sigshape.log
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_cenjetdr \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_cenjetdr_signorm.log 
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_cenjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_cenjetpt_sigshape.log
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_cenjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_cenjetpt_signorm.log 
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_detajj \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_detajj_sigshape.log
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_detajj \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_detajj_signorm.log 
+sh scripts/plot_vbf.sh                   SubleadJetPtCut_vbf_dphidijetlep \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphidijetlep_sigshape.log
+sh scripts/plot_vbf.sh                   SubleadJetPtCut_vbf_dphidijetlep \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphidijetlep_signorm.log 
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_dphidijetlepmet \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphidijetlepmet_sigshape.log
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_dphidijetlepmet \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphidijetlepmet_signorm.log 
+sh scripts/plot_vbf.sh                   SubleadJetPtCut_vbf_dphidijetmet \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphidijetmet_sigshape.log
+sh scripts/plot_vbf.sh                   SubleadJetPtCut_vbf_dphidijetmet \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphidijetmet_signorm.log 
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_dphidijetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphidijetmetlep_sigshape.log
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_dphidijetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphidijetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_dphijj \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphijj_sigshape.log
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_dphijj \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphijj_signorm.log 
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphileadjetlep \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphileadjetlep_sigshape.log
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphileadjetlep \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphileadjetlep_signorm.log 
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphileadjetmet \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphileadjetmet_sigshape.log
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphileadjetmet \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphileadjetmet_signorm.log 
+sh scripts/plot_vbf.sh              SubleadJetPtCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphileadjetmetlep_sigshape.log
+sh scripts/plot_vbf.sh              SubleadJetPtCut_vbf_dphileadjetmetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphileadjetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_dphilepmet \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphilepmet_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_dphilepmet \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphilepmet_signorm.log 
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_dphilepmetboost \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphilepmetboost_sigshape.log
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_dphilepmetboost \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphilepmetboost_signorm.log 
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphisubljetlep \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphisubljetlep_sigshape.log
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphisubljetlep \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphisubljetlep_signorm.log 
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphisubljetmet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphisubljetmet_sigshape.log
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_dphisubljetmet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphisubljetmet_signorm.log 
+sh scripts/plot_vbf.sh              SubleadJetPtCut_vbf_dphisubljetmetlep \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dphisubljetmetlep_sigshape.log
+sh scripts/plot_vbf.sh              SubleadJetPtCut_vbf_dphisubljetmetlep \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dphisubljetmetlep_signorm.log 
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_dptjet \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_dptjet_sigshape.log
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_dptjet \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_dptjet_signorm.log 
+sh scripts/plot_vbf.sh                             SubleadJetPtCut_vbf_ht \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_ht_sigshape.log
+sh scripts/plot_vbf.sh                             SubleadJetPtCut_vbf_ht \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_ht_signorm.log 
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_leadjete \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_leadjete_sigshape.log
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_leadjete \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_leadjete_signorm.log 
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_leadjeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_leadjeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_leadjeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_leadjeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_leadjeteta \' --autostack --nbinx  20 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_leadjeteta_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_leadjeteta \' --autostack --nbinx  20                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_leadjeteta_signorm.log 
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_leadjetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_leadjetpt_sigshape.log
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_leadjetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_leadjetpt_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_leadlepeta \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_leadlepeta_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_leadlepeta \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_leadlepeta_signorm.log 
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_leadleppt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_leadleppt_sigshape.log
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_leadleppt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_leadleppt_signorm.log 
+sh scripts/plot_vbf.sh                        SubleadJetPtCut_vbf_lepcent \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_lepcent_sigshape.log
+sh scripts/plot_vbf.sh                        SubleadJetPtCut_vbf_lepcent \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_lepcent_signorm.log 
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_lepid \' --autostack --nbinx   4 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_lepid_sigshape.log
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_lepid \' --autostack --nbinx   4                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_lepid_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_lepphicent \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_lepphicent_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_lepphicent \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_lepphicent_signorm.log 
+sh scripts/plot_vbf.sh                            SubleadJetPtCut_vbf_met \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_met_sigshape.log
+sh scripts/plot_vbf.sh                            SubleadJetPtCut_vbf_met \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_met_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_methtratio \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_methtratio_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_methtratio \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_methtratio_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_metphicent \' --autostack --nbinx  30 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_metphicent_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_metphicent \' --autostack --nbinx  30                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_metphicent_signorm.log 
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_metrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_metrel_sigshape.log
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_metrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_metrel_signorm.log 
+sh scripts/plot_vbf.sh                            SubleadJetPtCut_vbf_mjj \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_mjj_sigshape.log
+sh scripts/plot_vbf.sh                            SubleadJetPtCut_vbf_mjj \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_mjj_signorm.log 
+sh scripts/plot_vbf.sh                           SubleadJetPtCut_vbf_mlj0 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_mlj0_sigshape.log
+sh scripts/plot_vbf.sh                           SubleadJetPtCut_vbf_mlj0 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_mlj0_signorm.log 
+sh scripts/plot_vbf.sh                           SubleadJetPtCut_vbf_mlj1 \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_mlj1_sigshape.log
+sh scripts/plot_vbf.sh                           SubleadJetPtCut_vbf_mlj1 \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_mlj1_signorm.log 
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_modmt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_modmt_sigshape.log
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_modmt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_modmt_signorm.log 
+sh scripts/plot_vbf.sh                             SubleadJetPtCut_vbf_mt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_mt_sigshape.log
+sh scripts/plot_vbf.sh                             SubleadJetPtCut_vbf_mt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_mt_signorm.log 
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_mtrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_mtrel_sigshape.log
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_mtrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_mtrel_signorm.log 
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_multibin \' --autostack --nbinx   9 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_multibin_sigshape.log
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_multibin \' --autostack --nbinx   9                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_multibin_signorm.log 
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_nbjets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_nbjets_sigshape.log
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_nbjets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_nbjets_signorm.log 
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_njets \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_njets_sigshape.log
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_njets \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_njets_signorm.log 
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_nsoftleps \' --autostack --nbinx   5 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_nsoftleps_sigshape.log
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_nsoftleps \' --autostack --nbinx   5                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_nsoftleps_signorm.log 
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_prodptrel \' --autostack --nbinx  10 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_prodptrel_sigshape.log
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_prodptrel \' --autostack --nbinx  10                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_prodptrel_signorm.log 
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_ptrel \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_ptrel_sigshape.log
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_ptrel \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_ptrel_signorm.log 
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_subljete \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_subljete_sigshape.log
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_subljete \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_subljete_signorm.log 
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_subljeteoverpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_subljeteoverpt_sigshape.log
+sh scripts/plot_vbf.sh                 SubleadJetPtCut_vbf_subljeteoverpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_subljeteoverpt_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_subljeteta \' --autostack --nbinx  36 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_subljeteta_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_subljeteta \' --autostack --nbinx  36                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_subljeteta_signorm.log 
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_subljetpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_subljetpt_sigshape.log
+sh scripts/plot_vbf.sh                      SubleadJetPtCut_vbf_subljetpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_subljetpt_signorm.log 
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_summlj \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_summlj_sigshape.log
+sh scripts/plot_vbf.sh                         SubleadJetPtCut_vbf_summlj \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_summlj_signorm.log 
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_sumpt \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_sumpt_sigshape.log
+sh scripts/plot_vbf.sh                          SubleadJetPtCut_vbf_sumpt \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_sumpt_signorm.log 
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_sumptall \' --autostack --nbinx  90 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_sumptall_sigshape.log
+sh scripts/plot_vbf.sh                       SubleadJetPtCut_vbf_sumptall \' --autostack --nbinx  90                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_sumptall_signorm.log 
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_superptrel \' --autostack --nbinx  60 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_superptrel_sigshape.log
+sh scripts/plot_vbf.sh                     SubleadJetPtCut_vbf_superptrel \' --autostack --nbinx  60                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_superptrel_signorm.log 
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_superptrelnowgt \' --autostack --nbinx  45 --auto_scale_signal \' \'\'    \'_sigshape\' &> plots/SubleadJetPtCut_vbf_superptrelnowgt_sigshape.log
+sh scripts/plot_vbf.sh                SubleadJetPtCut_vbf_superptrelnowgt \' --autostack --nbinx  45                     \' \'\'    \'_signorm\' &> plots/SubleadJetPtCut_vbf_superptrelnowgt_signorm.log 
